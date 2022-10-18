@@ -1,0 +1,35 @@
+.modal-evaluacion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.modal-evaluacion .overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-evaluacion .modal-container {
+  width: 90%;
+  height: 500px;
+}
+
+@media screen and (min-width: 1000px) {
+    .modal-evaluacion .modal-container {
+        width: 900px;
+      }
+}

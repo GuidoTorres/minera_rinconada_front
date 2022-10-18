@@ -1,0 +1,79 @@
+.modal-rol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.modal-rol .overlay {
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.modal-rol .modal-container {
+  width: 80%;
+  height: 300px;
+  background-color: white;
+  position: absolute;
+  z-index: 2;
+  border-radius: 6px;
+  margin-top: -250px;
+}
+
+.modal-rol .modal-header {
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.modal-rol .modal-body {
+  padding: 0px 20px 0px 20px;
+}
+
+.modal-rol .modal-body section {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-rol .modal-body div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 4px;
+}
+.modal-rol .modal-body input {
+  height: 30px;
+}
+.modal-rol .modal-body select {
+  height: 30px;
+}
+
+.modal-rol .modal-body button {
+  margin-top: 10px;
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+  border-radius: 6px;
+  height: 35px;
+  font-size: 17px;
+}
+
+.modal-rol .modal-body button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+@media screen and (min-width: 500px) {
+  .modal-rol .modal-container {
+    width: 400px;
+    height: 300px;
+  }
+}
