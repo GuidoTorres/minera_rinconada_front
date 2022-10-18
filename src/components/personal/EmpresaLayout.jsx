@@ -23,7 +23,7 @@ const EmpresaLayout = () => {
 
   const handleEdit = (e) => {
     setDataToEdit(e);
-    setRegistraEmpresa(true);
+    setRegistrarEmpresa(true);
   };
 
   const handleDelete = (e) => {
@@ -46,7 +46,7 @@ const EmpresaLayout = () => {
 
   useEffect(() => {
     const filtered = data.filter(
-      (item) => item.razon_social.toLowerCase().includes(filterText.toLowerCase())
+      (item) => item.razon_social && item.razon_social.toLowerCase().includes(filterText.toLowerCase())
 
     );
 

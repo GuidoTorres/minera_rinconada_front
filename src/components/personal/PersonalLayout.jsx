@@ -71,13 +71,18 @@ const PersonalLayout = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = data?.filter((item) =>
-      item?.nombre.toLowerCase().includes(filterText.toLowerCase())||
-      item?.apellido_paterno.toLowerCase().includes(filterText.toLowerCase())||
-      item?.apellido_materno.toLowerCase().includes(filterText.toLowerCase()) ||
-      item?.dni.toString().includes(filterText)
-
-
+    const filtered =
+      data &&
+      data.filter(
+        (item) =>
+          item. nombre && item.nombre.toLowerCase().includes(filterText.toLowerCase()) ||
+          item?.apellido_paterno && item.apellido_paterno
+            .toLowerCase()
+            .includes(filterText.toLowerCase()) ||
+            item?.apellido_materno && item.apellido_materno
+            .toLowerCase()
+            .includes(filterText.toLowerCase()) ||
+            item?.dni && item.dni.toString().includes(filterText)
       );
 
     setSearch(filtered);
@@ -97,25 +102,25 @@ const PersonalLayout = () => {
         row.nombre + " " + row.apellido_paterno + " " + row.apellido_materno,
       width: "300px",
       center: true,
-      sortable: true
+      sortable: true,
     },
     {
       id: "Campamento",
       name: "Campamento",
       selector: (row) => (!row.campamento ? "Por asignar" : row.campamento),
-      sortable: true   
+      sortable: true,
     },
     {
       id: "Dni",
       name: "Dni",
       selector: (row) => row.dni,
-      sortable: true
+      sortable: true,
     },
     {
       id: "telefono",
       name: "Telefono",
       selector: (row) => row.telefono,
-      sortable: true
+      sortable: true,
     },
     {
       id: "Contrato",
