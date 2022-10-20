@@ -1,112 +1,114 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import "./tabla.css";
 import { AiFillEdit, AiFillEye, AiFillFileExcel } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
 import { PersonalContext } from "../../context/PersonalContext";
 import ModalRegistroPersonal from "../personal/ModalRegistroPersonal";
+import { CrudContext } from "../../context/CrudContext";
+import { alertaEliminarExito } from "../../helpers/alertMessage";
+import ModalHistorialEvaluacion from "../personal/ModalHistorialEvaluacion";
+import Swal from "sweetalert2";
 
-const Tabla = ({ columns, table }) => {
 
-  const {registrarPersonal, setRegistrarPersonal} = useContext(PersonalContext)
+const Tabla = ({ columns, table, actualizarTabla }) => {
+  const route= "trabajador"
+  const {
+    registrarPersonal,
+    setRegistrarPersonal,
+    setHistorialEvaluacion,
+    historialEvaluacion,
+    setDataToEdit
+  } = useContext(PersonalContext);
+  const {  deleteData, updateData, setData } =
+    useContext(CrudContext);
+  const [id, setId] = useState("");
 
   const handleEdit = (e) => {
+    setDataToEdit(e);
+    setRegistrarPersonal(true);
+  };
 
-    setRegistrarPersonal(true)
-    console.log(table);
-  }
+  const handleDelete = (e) => {
+    alertaEliminarExito("trabajador").then((res) => {
+      if (res.isConfirmed) {
+        deleteData(e, route);
+
+        Swal.fire(
+          "Eliminado!",
+          "El trabajador se eliminó correctamente.",
+          "success"
+        );
+      }
+      actualizarTabla();
+    });
+  };
+  const handleEvaluacion = (e) => {
+    setHistorialEvaluacion(true);
+    setId(e);
+  };
+
+  const personal = [
+    {
+      id: "Nro",
+      name: "Nro",
+      selector: (row) => row.id,
+      width: "60px",
+    },
+    {
+      id: "Trabajador",
+      name: "Trabajador",
+      selector: (row) =>
+        row.nombre + " " + row.apellido_paterno + " " + row.apellido_materno,
+      width: "300px",
+      center: true,
+      sortable: true,
+    },
+    {
+      id: "Campamento",
+      name: "Campamento",
+      selector: (row) => (!row.campamento ? "Por asignar" : row.campamento),
+      sortable: true,
+    },
+    {
+      id: "Dni",
+      name: "Dni",
+      selector: (row) => row.dni,
+      sortable: true,
+    },
+    {
+      id: "telefono",
+      name: "Telefono",
+      selector: (row) => row.telefono,
+      sortable: true,
+    },
+
+    {
+      id: "Evaluación",
+      name: "Evaluación",
+      selector: (row) => row.id,
+
+      button: true,
+      cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
+    },
+
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <AiFillEdit onClick={() => handleEdit(e)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+        </>
+      ),
+    },
+  ];
 
   const expandedComponent = ({ data }) => (
-    <>
-      <table
-        style={{ marginBottom: "20px", marginTop: "10px", marginLeft: "30px" }}
-      >
-        <thead>
-          <tr>
-            <th style={{ border: "1px solid black", width: "250px" }}>
-              Nombre{" "}
-            </th>
-            <th style={{ border: "1px solid black", width: "250px" }}>Dni</th>
-            <th style={{ border: "1px solid black", width: "250px" }}>
-              Tipo de trabajador
-            </th>
-            <th style={{ border: "1px solid black", width: "250px" }}>
-              Contrato
-            </th>
-            <th style={{ border: "1px solid black", width: "250px" }}>
-              Evaluación
-            </th>
-            <th style={{ border: "1px solid black", width: "250px" }}>
-              Acciones
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.trabajador.map((item, i) => (
-            <tr key={i}>
-              <td
-                style={{
-                  border: "1px solid black",
-                  paddingTop: "8px",
-                  paddingLeft: "4px",
-                }}
-              >
-                {item.nombre} {item.apellido_paterno} {item.apellido_materno}
-              </td>
-              <td
-                style={{
-                  border: "1px solid black",
-                  textAlign: "center",
-                  paddingTop: "8px",
-                }}
-              >
-                {item.dni}
-              </td>
-              <td
-                style={{
-                  border: "1px solid black",
-                  textAlign: "center",
-                  paddingTop: "8px",
-                }}
-              >
-                {item.tipo_trabajador}
-              </td>
-              <td
-                style={{
-                  border: "1px solid black",
-                  textAlign: "center",
-                  paddingTop: "8px",
-                }}
-              >
-                {" "}
-                <AiFillEye onClick={handleEdit}/>
-              </td>
-              <td
-                style={{
-                  border: "1px solid black",
-                  textAlign: "center",
-                  paddingTop: "8px",
-                }}
-              >
-                {" "}
-                <AiFillEye />
-              </td>
-              <td
-                style={{
-                  border: "1px solid black",
-                  textAlign: "center",
-                  paddingTop: "8px",
-                }}
-              >
-                {" "}
-                <AiFillEdit />
-                <BsFillTrash2Fill />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+    <div style={{ padding: "10px 20px 10px 20px" }}>
+      <DataTable columns={personal} data={data.trabajador} />
+    </div>
   );
 
   return (
@@ -120,17 +122,14 @@ const Tabla = ({ columns, table }) => {
         highlightOnHover
         expandableRows
         expandableRowsComponent={expandedComponent}
-        expandableRowDisabled={(row) =>
-          row.trabajador.length === 0 ? true : false
-        }
+        expandableRowDisabled={(row) => (row.length === 0 ? true : false)}
         responsive
         noHeader={true}
         noDataComponent={"No se encontraron resultados."}
       />
 
-      {registrarPersonal && (
-        <ModalRegistroPersonal  />
-      )}
+      {registrarPersonal && <ModalRegistroPersonal actualizarTabla={actualizarTabla}/>}
+      {historialEvaluacion && <ModalHistorialEvaluacion  selected={id} />}
     </div>
   );
 };

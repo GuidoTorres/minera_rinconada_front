@@ -17,8 +17,7 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
     useContext(PersonalContext);
   const { getData, createData, updateData, setData3, data3 } = useContext(CrudContext);
   const [trabajador, setTrabajador] = useState(trabajadorValues);
-  const [asociacion, setAsociacion] = useState(asociacionValues);
-  const [empresa, setEmpresa] = useState(asociacionValues);
+
 
   const getAsociacion = async () => {
     const response = await getData("asociacion");
@@ -46,26 +45,14 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
       return { ...values, [name]: value };
     });
 
-    if (e.target.value === "Asociación") {
-      setAsociacion((values) => {
-        return { ...values, [name]: value };
-      });
-    }
-
-    if (e.target.value === "Empresa") {
-      setEmpresa((values) => {
-        return { ...values, [name]: value };
-      });
-    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(trabajador);
-    console.log(asociacion);
-    console.log(empresa);
 
-    if (!trabajador.dni || !trabajador.tipo_trabajador) {
+
+    if (!trabajador.dni ) {
       alertaError();
     } else if (dataToEdit === null) {
       createData(trabajador, route);
@@ -222,8 +209,8 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
                 <div>
                   <label>Asignar asociación</label>
                   <select
-                    name="estado_civil"
-                    value={trabajador.estado_civil}
+                    name="asociacion_id"
+                    value={trabajador.asociacion_id}
                     onChange={handleData}
                   >
                     <option value="-1">Seleccione</option>

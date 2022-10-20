@@ -16,23 +16,36 @@ const Sidebar = () => {
   return (
     <div
       className="sidebar-container"
-      style={{ width: resize ? "70px" : "250px" }}
+      // style={{ width: resize ? "70px" : "250px" }}
     >
-      <div className="icon-container">
+      <div
+        className="icon-container"
+        // style={{ width: resize ? "70px" : "250px" }}
+      >
         <AiOutlineMenu className="hamburguer" onClick={toggle} />
       </div>
       <div
         className="sidebar-logo"
-        style={{ height: resize ? "60px" : "150px", width: resize ? "60px" : "150px" }}
+        // style={{
+        //   height: resize ? "60px" : "150px",
+        //   width: resize ? "60px" : "150px",
+        //   marginLeft: resize ? "0px": "50px" 
+        // }}
       ></div>
-      <div className="sidebar-areas">
+      <div className="sidebar-areas" 
+      //  style={{ width: resize ? "70px" : "250px" }}
+       >
         <ul>
           {SidebarData.map((item, i) => {
             return (
               <Link className="link" key={i} to={item.path}>
-                <span>
+                <span  
+                // style={{ width: resize ? "70px" : "250px" }}
+                >
                   {item.icon}
-                  <li style={{ display: resize ? "none" : "block" }}>
+                  <li 
+                  // style={{ display: resize ? "none" : "block" }}
+                  >
                     {item.title}
                   </li>
                 </span>

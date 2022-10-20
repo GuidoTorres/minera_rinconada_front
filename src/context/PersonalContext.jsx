@@ -15,7 +15,9 @@ export const PersonalProvider = ({ children }) => {
   const [registrarEvaluacion, setRegistrarEvaluacion] = useState(false);
   const [registrarAsociacion, setRegistrarAsociacion] = useState(false);
   const [registrarEmpresa, setRegistrarEmpresa] = useState(false);
-  
+  const [registrarContratoAsociacion, setRegistrarContratoAsociacion] =
+    useState(false);
+
   return (
     <PersonalContext.Provider
       value={{
@@ -41,6 +43,8 @@ export const PersonalProvider = ({ children }) => {
         setRegistrarAsociacion,
         registrarEmpresa,
         setRegistrarEmpresa,
+        registrarContratoAsociacion,
+        setRegistrarContratoAsociacion,
       }}
     >
       {children}

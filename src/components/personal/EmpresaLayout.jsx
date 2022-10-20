@@ -8,13 +8,23 @@ import Buscador from "./Buscador";
 import { AiFillEdit, AiFillEye, AiFillFileExcel } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
 import ModalRegistrarEmpresa from "./ModalRegistrarEmpresa";
+import ModalHistorialContrato from "./ModalHistorialContrato";
+import ModalHistorialEvaluacion from "./ModalHistorialEvaluacion";
 
 const EmpresaLayout = () => {
   const route = "empresa";
-  const { registrarEmpresa, setRegistrarEmpresa, setDataToEdit, filterText } =
-    useContext(PersonalContext);
+  const {
+    registrarEmpresa,
+    setRegistrarEmpresa,
+    setDataToEdit,
+    filterText,
+    setHistorialContrato,
+    historialContrato,
+    setHistorialEvaluacion, historialEvaluacion
+  } = useContext(PersonalContext);
   const { getData, deleteData, data, setData } = useContext(CrudContext);
-  const [search, setSearch] = useState([])
+  const [search, setSearch] = useState([]);
+  const [id, setId] = useState("");
 
   const getEmpresa = async () => {
     const response = await getData(route);
@@ -44,10 +54,21 @@ const EmpresaLayout = () => {
     getEmpresa();
   }, []);
 
+  const handleContrato = (e) => {
+    setHistorialContrato(true);
+    setId(e);
+  };
+
+  // const handleEvaluacion = () => {
+  //   setHistorialEvaluacion(true);
+  //   setId();
+  // };
+
   useEffect(() => {
     const filtered = data.filter(
-      (item) => item.razon_social && item.razon_social.toLowerCase().includes(filterText.toLowerCase())
-
+      (item) =>
+        item.razon_social &&
+        item.razon_social.toLowerCase().includes(filterText.toLowerCase())
     );
 
     setSearch(filtered);
@@ -85,18 +106,18 @@ const EmpresaLayout = () => {
       button: true,
       cell: (e) => (
         <>
-           <AiFillEye onClick={() => handleContrato(e)} />
+          <AiFillEye onClick={() => handleContrato(e)} />
         </>
       ),
     },
-    {
-      id: "Evaluación",
-      name: "Evaluación",
-    //   selector: (row) => row.id,
+    // {
+    //   id: "Evaluación",
+    //   name: "Evaluación",
+    //   //   selector: (row) => row.id,
 
-      button: true,
-        cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
-    },
+    //   button: true,
+    //   cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
+    // },
 
     // {
     //   id: "Deshabilitar",
@@ -111,7 +132,7 @@ const EmpresaLayout = () => {
       cell: (e) => (
         <>
           <AiFillEdit onClick={() => handleEdit(e)} />
-              <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
         </>
       ),
     },
@@ -120,10 +141,12 @@ const EmpresaLayout = () => {
   return (
     <>
       <Header text={"Empresas"} user={"Usuario"} ruta={"/personal"} />
-      <Buscador abrirModal={setRegistrarEmpresa}/>
-      <Tabla columns={empresa} table={search}/>
+      <Buscador abrirModal={setRegistrarEmpresa} />
+      <Tabla columns={empresa} table={search} />
 
-      {registrarEmpresa && <ModalRegistrarEmpresa/>}
+      {registrarEmpresa && <ModalRegistrarEmpresa />}
+      {historialContrato && <ModalHistorialContrato selected={id} />}
+      {historialEvaluacion && <ModalHistorialEvaluacion selected={id}/>}
     </>
   );
 };

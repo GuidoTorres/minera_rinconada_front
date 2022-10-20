@@ -6,7 +6,7 @@ const Administrador = () => {
   return (
     <div style={{ height: "100%" }}>
       <AdministracionLayout/>
-      <Outlet />
+      <h1></h1>
     </div>
   );
 };

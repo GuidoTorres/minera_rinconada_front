@@ -58,12 +58,13 @@ const PersonalLayout = () => {
   const handleEvaluacion = (e) => {
     setHistorialEvaluacion(true);
     setId(e);
+    console.log(e);
   };
   const handleContrato = (e) => {
     setHistorialContrato(true);
     setId(e);
-    console.log(e);
   };
+
 
   useEffect(() => {
     getTrabajadores();
@@ -107,7 +108,7 @@ const PersonalLayout = () => {
     {
       id: "Campamento",
       name: "Campamento",
-      selector: (row) => (!row.campamento ? "Por asignar" : row.campamento),
+      selector: (row) => (row.campamento.length !== 0 ? row.campamento : "Por asignar"),
       sortable: true,
     },
     {

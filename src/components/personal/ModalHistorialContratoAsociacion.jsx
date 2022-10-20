@@ -10,29 +10,22 @@ import { alertaEliminarExito } from "../../helpers/alertMessage";
 import ModalRegistrarContrato from "./ModalRegistrarContrato";
 import Swal from "sweetalert2";
 
-const ModalHistorialContrato = ({ selected }) => {
-  const route = "contrato";
+const ModalHistorialContratoAsociacion = ({selected}) => {
   const {
     setHistorialContrato,
     setRegistrarContrato,
     setDataToEdit,
     registrarContrato,
-    filterText,
-    registrarContratoAsociacion,
-    setRegistrarContratoAsociacion,
+    registrarContratoAsociacion,setRegistrarContratoAsociacion
+
   } = useContext(PersonalContext);
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
   const [id, setId] = useState("");
 
   const getContrato = async () => {
-    if (selected.codigo) {
-      const route = "asociacion";
-      const response = await getDataById(route, selected.id);
-      setData1(response.data);
-    } else {
-      const response = await getDataById(route, selected.id);
-      setData1(response.data);
-    }
+    const route = "asociacion";
+    const response = await getDataById(route, selected.id);
+    setData1(response.data);
   };
 
   const handleEdit = (e) => {
@@ -74,17 +67,17 @@ const ModalHistorialContrato = ({ selected }) => {
     {
       id: "Tipo de Contrato",
       name: "Tipo de Contrato",
-      selector: (row) => row?.contrato?.tipo_contrato,
+      selector: (row) => row?.tipo_contrato,
     },
     {
       id: "Fecha de inicio",
       name: "Fecha de inicio",
-      selector: (row) => row?.contrato?.fecha_inicio.split("T")[0],
+      selector: (row) => row?.fecha_inicio,
     },
     {
       id: "Fecha de fin",
       name: "Fecha de fin",
-      selector: (row) => row?.contrato?.fecha_fin.split("T")[0],
+      selector: (row) => row?.fecha_fin,
     },
     {
       id: "Estado",
@@ -93,7 +86,7 @@ const ModalHistorialContrato = ({ selected }) => {
     {
       id: "Nota",
       name: "Nota",
-      selector: (row) => row?.contrato?.nota_contrato,
+      selector: (row) => row?.nota_contrato,
     },
     {
       id: "Acciones",
@@ -131,4 +124,4 @@ const ModalHistorialContrato = ({ selected }) => {
   );
 };
 
-export default ModalHistorialContrato;
+export default ModalHistorialContratoAsociacion;

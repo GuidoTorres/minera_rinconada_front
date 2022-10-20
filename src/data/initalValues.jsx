@@ -28,7 +28,7 @@ export const trabajadorValues = {
   estado_civil: "",
   genero: "",
   direccion: "",
-  tipo_trabajador: "normal"
+  asociacion_id: null
 };
 
 export const evaluacionValues = {

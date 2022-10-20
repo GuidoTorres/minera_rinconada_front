@@ -48,6 +48,7 @@ const ModalHistorialEvaluacion = ({ selected }) => {
 
   useEffect(() => {
     getEvaluacion();
+
   }, []);
 
   const closeModal = () => {
@@ -64,11 +65,7 @@ const ModalHistorialEvaluacion = ({ selected }) => {
       id: "Nombre",
       name: "Nombre",
       selector: (row) =>
-        row?.contrato?.trabajador?.nombre +
-        " " +
-        row?.contrato?.trabajador?.apellido_paterno +
-        " " +
-        row?.contrato?.trabajador?.apellido_materno,
+        row?.nombre,
       width: "250px",
     },
     {

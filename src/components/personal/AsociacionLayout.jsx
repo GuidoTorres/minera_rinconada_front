@@ -10,6 +10,8 @@ import { BsFillTrash2Fill } from "react-icons/bs";
 import { alertaEliminarExito } from "../../helpers/alertMessage";
 import Swal from "sweetalert2";
 import ModalRegistroPersonal from "./ModalRegistroPersonal";
+import ModalHistorialContrato from "./ModalHistorialContrato";
+import ModalHistorialContratoAsociacion from "./ModalHistorialContratoAsociacion";
 
 const AsociacionLayout = () => {
   const route = "asociacion";
@@ -20,10 +22,13 @@ const AsociacionLayout = () => {
     setDataToEdit,
     filterText,
     registrarPersonal,
+    setHistorialContrato,
+    historialContrato,
   } = useContext(PersonalContext);
   const { getData, deleteData, data, setData } = useContext(CrudContext);
-  const [selectedFile, setSelectedFile] = useState([]);
   const [asociacionId, setAsociacionId] = useState();
+  const [id, setId] = useState("");
+
   const [search, setSearch] = useState([]);
 
   const getAsociaciones = async () => {
@@ -55,15 +60,43 @@ const AsociacionLayout = () => {
     console.log(data);
   }, []);
 
-  // useEffect(() => {
-  //   const filtered = data && data.filter(
-  //     (item) => item?.trabajador?.nombre
+  useEffect(() => {
+    const filtered =
+      data &&
+      data
+        .map((item) => [
+          {
+            codigo: item?.codigo,
+            id: item?.id,
+            nombre: item?.nombre,
+            trabajador: item && item.trabajador && item.trabajador.filter(
+              (prueba) =>
+                prueba?.nombre
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase()) ||
+                prueba?.apellido_paterno
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase()) ||
+                prueba?.apellido_materno
+                  .toLowerCase()
+                  .includes(filterText.toLowerCase())
+            ),
+          },
+        ])
+        .flat();
+    setSearch(filtered);
 
-  //   );
-
-  //   setSearch(filtered);
-  //   console.log(filtered);
-  // }, [filterText, data]);
+    if (filterText) {
+      const filtered2 =
+        filtered &&
+        filtered.filter(
+          (item) =>
+            item.nombre.toLowerCase().includes(filterText.toLowerCase()) ||
+            item.trabajador.length
+        );
+      setSearch(filtered2);
+    }
+  }, [filterText, data]);
 
   const changeHandler = (e) => {
     inputFileRef.current.click();
@@ -75,13 +108,16 @@ const AsociacionLayout = () => {
     let formData = new FormData();
     formData.append("myFile", e.target.files[0]);
 
-    fetch(`https://rinconada.herokuapp.com/api/v1/asociacion/upload/${asociacionId}`, {
-      method: "post",
-      body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
+    fetch(
+      `http://localhost:3000/api/v1/asociacion/upload/${asociacionId}`,
+      {
+        method: "post",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((res) => {
         if (res.status == 200) {
@@ -94,6 +130,11 @@ const AsociacionLayout = () => {
         }
       });
     inputFileRef.current.value = null;
+  };
+
+  const handleContrato = (e) => {
+    setHistorialContrato(true);
+    setId(e);
   };
 
   const personal = [
@@ -137,6 +178,23 @@ const AsociacionLayout = () => {
         </>
       ),
     },
+    {
+      id: "Contrato",
+      name: "Contrato",
+      button: true,
+      cell: (e) => (
+        <div
+          style={{
+            width: "40px",
+            display: "flex",
+            justifyContent: "space-around",
+            fontSize: "13px",
+          }}
+        >
+          <AiFillEye onClick={() => handleContrato(e)} />
+        </div>
+      ),
+    },
     // {
     //   id: "Evaluación",
     //   name: "Evaluación",
@@ -176,12 +234,16 @@ const AsociacionLayout = () => {
       <Header text={"Asociaciones"} user={"Usuario"} ruta={"/personal"} />
       <Buscador abrirModal={setRegistrarAsociacion} />
 
-      <Tabla columns={personal} table={data} />
+      <Tabla
+        columns={personal}
+        table={search}
+        actualizarTabla={getAsociaciones}
+      />
 
       {registrarAsociacion && (
         <ModalRegistrarAsociacion actualizarTabla={getAsociaciones} />
       )}
-
+      {historialContrato && <ModalHistorialContratoAsociacion selected={id}/>}
     </>
   );
 };

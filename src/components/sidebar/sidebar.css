@@ -4,45 +4,64 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  width: 70px;
+  border-right: 1px solid black;
 }
 
-
-.icon-container{
-
+.icon-container {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  padding-right: 20px;
-  font-size: 20px;
+  justify-content: center;
   padding-top: 20px;
-
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70px;
 }
 
 .sidebar-logo {
   border-radius: 50%;
-  height: 150px;
-  width: 150px;
+  height: 60px;
+  width: 60px;
   border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -250px;
+  position: absolute;
+  top: 80px;
+  left: 5px;
+  /* margin-top: -250px; */
 }
 
 .sidebar-areas {
   margin-top: 80px;
   width: 100%;
+  position: absolute;
+  top: 150px;
+  left: 0;
+  width: 70px;
+  color: black;
 }
 .sidebar-areas span {
   display: flex;
-
-  margin-top: 20px;
-  padding-left: 80px;
+  color: black;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
 }
 
+.sidebar-areas span a {
+  font-size: 18px;
+  display: none;
+  color: black;
+  font-size: 20px;
+}
 .sidebar-areas span li {
   font-size: 18px;
+  display: none;
 }
 
 .link {
@@ -56,39 +75,51 @@
   color: white;
 }
 
-.link li {
-  margin-left: 10px;
-}
-
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 800px) {
   .sidebar-container {
-    border-right: 1px solid black;
-    justify-content: flex-start;
     width: 250px;
   }
 
-  .sidebar-logo {
-    margin-top: 30px;
+  .icon-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 250px;
+    padding-right: 20px;
   }
 
+  .sidebar-logo {
+    height: 150px;
+    width: 150px;
+    margin-left: 50px;
+  }
   .sidebar-areas {
     margin-top: 80px;
-    font-size: 25px;
-  }
-
-  .link {
-    text-decoration: none;
+    width: 100%;
+    position: absolute;
+    top: 200px;
+    left: 0;
+    width: 250px;
     color: black;
   }
-  .link span {
-    border-top: 1px solid black;
-    border-right: none;
-    height: 60px;
+
+  .sidebar-areas span {
     display: flex;
-    padding-left: 20px;
+    color: black;
+    font-size: 20px;
     display: flex;
-    margin-top: 0;
     align-items: center;
     justify-content: flex-start;
+    height: 50px;
+    width: 250px;
+    padding-left: 20px;
+    border-top: 1px solid black;
+  }
+  .sidebar-areas span:nth-child(1) {
+    border-bottom: 1px solid black;
+  }
+
+  .sidebar-areas span li {
+    font-size: 18px;
+    display: block;
   }
 }
