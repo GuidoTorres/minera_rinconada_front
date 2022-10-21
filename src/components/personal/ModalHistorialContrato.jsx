@@ -36,7 +36,7 @@ const ModalHistorialContrato = ({ selected }) => {
   const handleEdit = (e) => {
     setDataToEdit(e);
     setRegistrarContrato(true);
-    setId(e.contratoId);
+    setId(e);
   };
 
   const handleDelete = (id) => {

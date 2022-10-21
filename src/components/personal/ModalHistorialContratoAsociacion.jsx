@@ -62,7 +62,7 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
     {
       id: "Id contrato",
       name: "Id contrato",
-      selector: (row) => row.id,
+      selector: (row) => row?.id,
     },
     {
       id: "Tipo de Contrato",

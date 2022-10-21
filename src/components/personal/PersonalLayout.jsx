@@ -146,15 +146,13 @@ const PersonalLayout = () => {
             display: "flex",
             justifyContent: "space-around",
             fontSize: "13px",
-            pointerEvents : e.evaluacion_id !== "" ? "auto": "none"
+            pointerEvents: e.evaluacion_id !== "" ? "auto" : "none",
           }}
         >
           {e?.evaluacion_laboral !== "" ? e.evaluacion_laboral : "--"}
           <AiFillEye
             onClick={() => {
-              
-                 handleContrato(e)
-                
+              handleContrato(e);
             }}
           />
         </div>

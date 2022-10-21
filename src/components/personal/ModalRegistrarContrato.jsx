@@ -35,7 +35,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     campamento_id: "",
     nota_contrato: "",
     puesto: "",
-    trabajador_id: data?.id,
+    evaluacion_id: data?.evaluacion_id,
   };
 
   const { setRegistrarContrato, setDataToEdit, dataToEdit } =
@@ -61,7 +61,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   };
 
   useEffect(() => {
-    console.log(dataToEdit);
+    console.log(selected);
     if (dataToEdit) {
       setContrato(dataToEdit);
     } else {
@@ -96,7 +96,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     }
 
     if (dataToEdit) {
-      updateData(contrato, dataToEdit.id, route);
+      updateData(contrato, selected.id, route);
       alertaEditarExito("Contrato").then((res) => {
         closeModal();
         if (res.isConfirmed) {
