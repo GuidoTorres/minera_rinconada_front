@@ -106,7 +106,7 @@ const AsociacionLayout = () => {
     formData.append("myFile", e.target.files[0]);
 
     fetch(
-      `http://localhost:3000/api/v1/asociacion/upload/${asociacionId}`,
+      `https://rinconada.herokuapp.com/api/v1/asociacion/upload/${asociacionId}`,
       {
         method: "post",
         body: formData,
