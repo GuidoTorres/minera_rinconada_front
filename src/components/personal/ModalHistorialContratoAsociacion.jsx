@@ -7,15 +7,14 @@ import "./styles/modalHistorialContrato.css";
 import { PersonalContext } from "../../context/PersonalContext";
 import { CrudContext } from "../../context/CrudContext";
 import { alertaEliminarExito } from "../../helpers/alertMessage";
-import ModalRegistrarContrato from "./ModalRegistrarContrato";
 import Swal from "sweetalert2";
+import ModalContratoAsociacion from "./ModalContratoAsociacion";
+import ModalRegistrarContrato from "./ModalRegistrarContrato";
 
 const ModalHistorialContratoAsociacion = ({selected}) => {
   const {
-    setHistorialContrato,
-    setRegistrarContrato,
     setDataToEdit,
-    registrarContrato,
+    setHistorialContratoAsociacion,
     registrarContratoAsociacion,setRegistrarContratoAsociacion
 
   } = useContext(PersonalContext);
@@ -29,13 +28,14 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
   };
 
   const handleEdit = (e) => {
-    setDataToEdit(e);
-    setRegistrarContrato(true);
+
+    const prueba = Object.assign({},...e.contrato)
+    setDataToEdit(prueba);
+    setRegistrarContratoAsociacion(true);
     setId(e.contratoId);
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     alertaEliminarExito("contrato").then((res) => {
       if (res.isConfirmed) {
         deleteData(id.contratoId, route);
@@ -51,7 +51,7 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
   };
 
   const closeModal = () => {
-    setHistorialContrato(false);
+    setHistorialContratoAsociacion(false);
   };
 
   useEffect(() => {
@@ -67,17 +67,17 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
     {
       id: "Tipo de Contrato",
       name: "Tipo de Contrato",
-      selector: (row) => row?.tipo_contrato,
+      selector: (row) => row?.contrato?.map(item => item.tipo_contrato),
     },
     {
       id: "Fecha de inicio",
       name: "Fecha de inicio",
-      selector: (row) => row?.fecha_inicio,
+      selector: (row) => row?.contrato?.map(item => item.fecha_inicio.split("T")[0]),
     },
     {
       id: "Fecha de fin",
       name: "Fecha de fin",
-      selector: (row) => row?.fecha_fin,
+      selector: (row) => row?.contrato?.map(item => item.fecha_fin.split("T")[0]),
     },
     {
       id: "Estado",
@@ -86,7 +86,7 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
     {
       id: "Nota",
       name: "Nota",
-      selector: (row) => row?.nota_contrato,
+      selector: (row) => row?.contrato?.map(item => item.nota_contrato),
     },
     {
       id: "Acciones",
@@ -105,16 +105,16 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
       <div className="overlay"></div>
       <div className="modal-container">
         <section className="modal-header">
-          Historial de contratos
+          Historial de contratos 
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="buscador">
-          <Buscador abrirModal={setRegistrarContrato} />
+          <Buscador abrirModal={setRegistrarContratoAsociacion} />
         </section>
         <Tabla columns={historialContrato} table={data1} />
       </div>
-      {registrarContrato && (
-        <ModalRegistrarContrato
+      {registrarContratoAsociacion && (
+        <ModalContratoAsociacion
           actualizarTabla={getContrato}
           selected={id}
           data={selected}

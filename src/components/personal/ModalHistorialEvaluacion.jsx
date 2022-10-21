@@ -22,8 +22,9 @@ const ModalHistorialEvaluacion = ({ selected }) => {
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
 
   const getEvaluacion = async () => {
-    const response = await getDataById(route, selected.contrato_id);
+    const response = await getDataById(route, selected.id);
     setData1(response.data);
+    console.log(selected);
   };
 
   const handleEdit = (e) => {
@@ -58,7 +59,7 @@ const ModalHistorialEvaluacion = ({ selected }) => {
     {
       id: "Id Historial",
       name: "Id Historial",
-      selector: (row) => row.id,
+      selector: (row) => row.evaluacion_id,
       width: "120px",
     },
     {

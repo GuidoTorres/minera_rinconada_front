@@ -122,7 +122,7 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
         highlightOnHover
         expandableRows
         expandableRowsComponent={expandedComponent}
-        expandableRowDisabled={(row) => (row.length === 0 ? true : false)}
+        expandableRowDisabled={(row) => (row.trabajador.length === 0 ? true : false)}
         responsive
         noHeader={true}
         noDataComponent={"No se encontraron resultados."}

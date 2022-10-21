@@ -2,8 +2,6 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import "./tabla.css";
 const Tabla = ({ columns, table }) => {
-
-
   return (
     <div className="table-container">
       <DataTable
@@ -13,8 +11,8 @@ const Tabla = ({ columns, table }) => {
         fixedHeader
         striped
         highlightOnHover
+        responsive
         noDataComponent={"No se encontraron resultados."}
-
       />
     </div>
   );

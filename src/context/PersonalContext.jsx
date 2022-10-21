@@ -8,13 +8,15 @@ export const PersonalProvider = ({ children }) => {
   const [filterText, setFilterText] = useState("");
   const [dataToEdit, setDataToEdit] = useState(null);
 
-  const [registrarPersonal, setRegistrarPersonal] = useState(false);
   const [historialContrato, setHistorialContrato] = useState(false);
   const [registrarContrato, setRegistrarContrato] = useState(false);
+  const [historialContratoAsociacion, setHistorialContratoAsociacion] = useState(false);
   const [historialEvaluacion, setHistorialEvaluacion] = useState(false);
+  const [registrarPersonal, setRegistrarPersonal] = useState(false);
   const [registrarEvaluacion, setRegistrarEvaluacion] = useState(false);
   const [registrarAsociacion, setRegistrarAsociacion] = useState(false);
   const [registrarEmpresa, setRegistrarEmpresa] = useState(false);
+
   const [registrarContratoAsociacion, setRegistrarContratoAsociacion] =
     useState(false);
 
@@ -45,6 +47,7 @@ export const PersonalProvider = ({ children }) => {
         setRegistrarEmpresa,
         registrarContratoAsociacion,
         setRegistrarContratoAsociacion,
+        historialContratoAsociacion, setHistorialContratoAsociacion
       }}
     >
       {children}

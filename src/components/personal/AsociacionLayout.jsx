@@ -21,14 +21,11 @@ const AsociacionLayout = () => {
     setRegistrarAsociacion,
     setDataToEdit,
     filterText,
-    registrarPersonal,
-    setHistorialContrato,
-    historialContrato,
+    historialContratoAsociacion, setHistorialContratoAsociacion
   } = useContext(PersonalContext);
   const { getData, deleteData, data, setData } = useContext(CrudContext);
   const [asociacionId, setAsociacionId] = useState();
   const [id, setId] = useState("");
-
   const [search, setSearch] = useState([]);
 
   const getAsociaciones = async () => {
@@ -57,7 +54,6 @@ const AsociacionLayout = () => {
   };
   useEffect(() => {
     getAsociaciones();
-    console.log(data);
   }, []);
 
   useEffect(() => {
@@ -69,6 +65,7 @@ const AsociacionLayout = () => {
             codigo: item?.codigo,
             id: item?.id,
             nombre: item?.nombre,
+            campamento: item?.campamento,
             trabajador: item && item.trabajador && item.trabajador.filter(
               (prueba) =>
                 prueba?.nombre
@@ -133,7 +130,7 @@ const AsociacionLayout = () => {
   };
 
   const handleContrato = (e) => {
-    setHistorialContrato(true);
+    setHistorialContratoAsociacion(true);
     setId(e);
   };
 
@@ -141,13 +138,13 @@ const AsociacionLayout = () => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row.id,
+      selector: (row) => row?.id,
       sortable: true,
     },
     {
       id: "Asociación",
       name: "Asociación",
-      selector: (row) => row.nombre,
+      selector: (row) => row?.nombre,
       sortable: true,
     },
     {
@@ -155,7 +152,7 @@ const AsociacionLayout = () => {
       name: "Campamento",
       sortable: true,
 
-      //   selector: (row) => (!row.campamento ? "Por asignar" : row.campamento),
+        selector: (row) => row?.campamento ? row.campamento : "Por asignar",
     },
     // {
     //   id: "Dni",
@@ -177,6 +174,7 @@ const AsociacionLayout = () => {
           <AiFillFileExcel onClick={() => changeHandler(e)} />{" "}
         </>
       ),
+      width: "200px"
     },
     {
       id: "Contrato",
@@ -232,7 +230,7 @@ const AsociacionLayout = () => {
         style={{ display: "none" }}
       />
       <Header text={"Asociaciones"} user={"Usuario"} ruta={"/personal"} />
-      <Buscador abrirModal={setRegistrarAsociacion} />
+      <Buscador abrirModal={setHistorialContratoAsociacion} />
 
       <Tabla
         columns={personal}
@@ -243,7 +241,7 @@ const AsociacionLayout = () => {
       {registrarAsociacion && (
         <ModalRegistrarAsociacion actualizarTabla={getAsociaciones} />
       )}
-      {historialContrato && <ModalHistorialContratoAsociacion selected={id}/>}
+      {historialContratoAsociacion && <ModalHistorialContratoAsociacion selected={id}/>}
     </>
   );
 };

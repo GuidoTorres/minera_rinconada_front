@@ -32,6 +32,7 @@ const EmpresaLayout = () => {
   };
 
   const handleEdit = (e) => {
+    console.log(e);
     setDataToEdit(e);
     setRegistrarEmpresa(true);
   };

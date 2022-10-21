@@ -1,19 +1,18 @@
 import React, { useContext, useEffect } from "react";
+import { PersonalContext } from "../../context/PersonalContext";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
-// import { contratoValues } from "../../data/initalValues";
-
 import {
   alertaEditarExito,
   alertaError,
   alertaExito,
 } from "../../helpers/alertMessage";
 import "./styles/modalRegistrarContrato.css";
-
-const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
-  const route = "contrato";
+const ModalContratoAsociacion = ({actualizarTabla,
+  selected,
+  data,}) => {
+  const route = "contrato/asociacion";
   const route1 = "cargo";
   const route2 = "campamento";
   const route3 = "gerencia";
@@ -35,14 +34,17 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     campamento_id: "",
     nota_contrato: "",
     puesto: "",
-    trabajador_id: data?.id,
+    asociacion_id: data.id,
+    evaluacion_id: data.trabajador
+      .map((item) => item.evaluacions.map((dat) => dat.id))
+      .flat(),
   };
 
-  const { setRegistrarContrato, setDataToEdit, dataToEdit } =
+  const { setRegistrarContratoAsociacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
 
   const { createData, updateData, getData } = useContext(CrudContext);
-  const [contrato, setContrato] = useState(contratoValues);
+  const [contratos, setContratos] = useState(contratoValues);
   const [cargo, setCargo] = useState([]);
   const [campamento, setCampamento] = useState([]);
   const [gerencia, setGerencia] = useState([]);
@@ -63,10 +65,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   useEffect(() => {
     console.log(dataToEdit);
     if (dataToEdit) {
-      setContrato(dataToEdit);
+      setContratos(dataToEdit);
     } else {
-      setContrato(contratoValues);
+
+      setContratos(contratoValues);
     }
+
   }, [dataToEdit]);
 
   useEffect(() => {
@@ -74,20 +78,23 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   }, []);
 
   const handleData = (e) => {
+    console.log("handleData");
     const { name, value } = e.target;
-    setContrato((values) => {
-      return { ...values, [name]: value };
+    setContratos((values) => {
+      return {...values,  [name]: value };
     });
+
+    console.log(contratos);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!contrato.fecha_inicio || !contrato.codigo_contrato) {
+    if (!contratos.fecha_inicio || !contratos.codigo_contratos) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(contrato, route);
-      alertaExito("Contrato").then((res) => {
+      createData(contratos, route);
+      alertaExito("Contratos").then((res) => {
         closeModal();
         if (res.isConfirmed) {
           actualizarTabla();
@@ -96,7 +103,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     }
 
     if (dataToEdit) {
-      updateData(contrato, dataToEdit.id, route);
+      updateData(contratos, dataToEdit.id, "contrato");
       alertaEditarExito("Contrato").then((res) => {
         closeModal();
         if (res.isConfirmed) {
@@ -107,16 +114,17 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   };
 
   const closeModal = () => {
-    setRegistrarContrato(false);
+    setRegistrarContratoAsociacion(false);
     setDataToEdit(null);
-    setContrato(contratoValues);
+    setContratos(contratoValues);
   };
+
   return (
     <div className="modal-contrato">
       {/* <div className="overlay"></div> */}
       <div className="modal-container">
         <section className="modal-header">
-          Registrar Contrato
+          {dataToEdit ? "Editar contrato": "Registrar Contrato"}
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="modal-body">
@@ -126,7 +134,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                 <label>Fecha de ingreso</label>
                 <input
                   type="date"
-                  value={contrato?.fecha_inicio?.split("T")[0]}
+                  value={contratos?.fecha_inicio?.split("T")[0]}
                   name="fecha_inicio"
                   onChange={handleData}
                 ></input>
@@ -134,7 +142,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Código contrato</label>
                 <input
-                  value={contrato?.codigo_contrato}
+                  value={contratos?.codigo_contrato}
                   name="codigo_contrato"
                   onChange={handleData}
                 ></input>
@@ -142,7 +150,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Tipo de Contrato</label>
                 <select
-                  value={contrato?.tipo_contrato}
+                  value={contratos?.tipo_contrato}
                   name="tipo_contrato"
                   onChange={handleData}
                 >
@@ -156,12 +164,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                 <div>
                   <label>Puesto o Rol</label>
                   <select
-                    value={contrato?.puesto}
+                    value={contratos?.puesto}
                     name="puesto"
                     onChange={handleData}
                   >
                     <option value="-1">Seleccione</option>
-                    {cargo && cargo.map((item, i) => (
+                    {cargo.map((item, i) => (
                       <option key={i} value={item.id}>
                         {item.nombre}
                       </option>
@@ -174,7 +182,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Cooperativa</label>
                 <input
-                  value={contrato?.cooperativa}
+                  value={contratos?.cooperativa}
                   name="cooperativa"
                   onChange={handleData}
                 ></input>
@@ -182,7 +190,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Recomendado por</label>
                 <input
-                  value={contrato?.recomendado_por}
+                  value={contratos?.recomendado_por}
                   name="recomendado_por"
                   onChange={handleData}
                 ></input>
@@ -190,7 +198,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Condición de cooperativa</label>
                 <input
-                  value={contrato?.condicion_cooperativa}
+                  value={contratos?.condicion_cooperativa}
                   name="condicion_cooperativa"
                   onChange={handleData}
                 ></input>
@@ -198,12 +206,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Campamento</label>
                 <select
-                  value={contrato?.campamento_id}
+                  value={contratos?.campamento_id}
                   name="campamento_id"
                   onChange={handleData}
                 >
                   <option value="-1">Seleccione</option>
-                  {campamento && campamento.map((item, i) => (
+                  {campamento.map((item, i) => (
                     <option key={i} value={item.id}>
                       {item.nombre}
                     </option>
@@ -215,7 +223,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Periodo de trabajo</label>
                 <input
-                  value={contrato?.periodo_trabajo}
+                  value={contratos?.periodo_trabajo}
                   name="periodo_trabajo"
                   onChange={handleData}
                 ></input>
@@ -224,7 +232,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                 <label>Fecha de fin</label>
                 <input
                   type="date"
-                  value={contrato?.fecha_fin?.split("T")[0]}
+                  value={contratos?.fecha_fin?.split("T")[0]}
                   name="fecha_fin"
                   onChange={handleData}
                 ></input>
@@ -232,12 +240,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Gerencia</label>
                 <select
-                  value={contrato?.gerencia}
+                  value={contratos?.gerencia}
                   name="gerencia"
                   onChange={handleData}
                 >
                   <option value="-1">Seleccione</option>
-                  {gerencia && gerencia.map((item, i) => (
+                  {gerencia.map((item, i) => (
                     <option key={i} value={item.id}>
                       {item.nombre}
                     </option>
@@ -247,12 +255,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Área</label>
                 <select
-                  value={contrato?.area}
+                  value={contratos?.area}
                   name="area"
                   onChange={handleData}
                 >
                   <option value="-1">Seleccion</option>
-                  {area && area.map((item, i) => (
+                  {area.map((item, i) => (
                     <option key={i} value={item.id}>
                       {item.nombre}
                     </option>
@@ -265,7 +273,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Jefe directo</label>
                 <input
-                  value={contrato?.jefe_directo}
+                  value={contratos?.jefe_directo}
                   name="jefe_directo"
                   onChange={handleData}
                 ></input>
@@ -273,7 +281,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Base</label>
                 <input
-                  value={contrato?.base}
+                  value={contratos?.base}
                   name="base"
                   onChange={handleData}
                 ></input>
@@ -283,7 +291,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Término de contrato</label>
                 <textarea
-                  value={contrato?.termino_contrato}
+                  value={contratos?.termino_contrato}
                   name="termino_contrato"
                   onChange={handleData}
                 ></textarea>
@@ -291,7 +299,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               <div>
                 <label>Nota de contrato</label>
                 <input
-                  value={contrato?.nota_contrato}
+                  value={contratos?.nota_contrato}
                   name="nota_contrato"
                   onChange={handleData}
                 ></input>
@@ -307,4 +315,4 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   );
 };
 
-export default ModalRegistrarContrato;
+export default ModalContratoAsociacion;

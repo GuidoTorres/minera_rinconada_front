@@ -1,6 +1,6 @@
 import React from "react";
 import { SidebarData } from "../../data/sidebarData";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 
 import "./sidebar.css";
@@ -29,21 +29,22 @@ const Sidebar = () => {
         // style={{
         //   height: resize ? "60px" : "150px",
         //   width: resize ? "60px" : "150px",
-        //   marginLeft: resize ? "0px": "50px" 
+        //   marginLeft: resize ? "0px": "50px"
         // }}
       ></div>
-      <div className="sidebar-areas" 
-      //  style={{ width: resize ? "70px" : "250px" }}
-       >
+      <div
+        className="sidebar-areas"
+        //  style={{ width: resize ? "70px" : "250px" }}
+      >
         <ul>
           {SidebarData.map((item, i) => {
             return (
               <Link className="link" key={i} to={item.path}>
-                <span  
+                <span
                 // style={{ width: resize ? "70px" : "250px" }}
                 >
                   {item.icon}
-                  <li 
+                  <li
                   // style={{ display: resize ? "none" : "block" }}
                   >
                     {item.title}
@@ -54,6 +55,7 @@ const Sidebar = () => {
           })}
         </ul>
       </div>
+      <Outlet/>
     </div>
   );
 };

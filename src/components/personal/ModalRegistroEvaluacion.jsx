@@ -28,7 +28,7 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
     diabetes: "",
     antecedentes: "",
     emo: "",
-    contrato_id: selected.contrato_id,
+    trabajador_id: selected.id,
   };
   const { setRegistrarEvaluacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
@@ -75,7 +75,7 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
     }
 
     if (dataToEdit) {
-      updateData(evaluacion, dataToEdit.id, route);
+      updateData(evaluacion, dataToEdit.evaluacion_id, route);
       alertaEditarExito("Evaluación").then((res) => {
         closeModal();
         if (res.isConfirmed) {
@@ -134,8 +134,6 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                   onChange={handleData}
                 />
               </div>
-            </section>
-            <section>
               <div>
                 <label>Capacitación SSO</label>
                 <input
@@ -144,6 +142,9 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                   onChange={handleData}
                 ></input>
               </div>
+            </section>
+            <section>
+              
               <div>
                 <label htmlFor="">Capacitación GEMA</label>
                 <input
@@ -162,9 +163,6 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                   onChange={handleData}
                 />
               </div>
-            </section>
-
-            <section>
               <div>
                 <label htmlFor="">Presión arterial</label>
                 <input
@@ -183,6 +181,11 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                   onChange={handleData}
                 />
               </div>
+            </section>
+
+            <section>
+
+              
               <div>
                 <label htmlFor="">Saturación de oxígeno</label>
                 <input
@@ -201,8 +204,6 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                   onChange={handleData}
                 />
               </div>
-            </section>
-            <section>
               <div>
                 <label htmlFor="">Pulso(pm)</label>
                 <input
@@ -221,6 +222,21 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                   onChange={handleData}
                 />
               </div>
+            </section>
+            <section>
+              <div>
+              <label htmlFor="">Aprobado</label>
+                <select
+                  value={evaluacion.puesto}
+                  name="puesto"
+                  onChange={handleData}
+                >
+                  <option value="-1">Seleccione</option>
+                  <option value="0">Si</option>
+                  <option value="1">No</option>
+                </select>
+              </div>
+ 
             </section>
             <section>
               <div>

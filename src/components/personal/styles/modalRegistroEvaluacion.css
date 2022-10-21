@@ -54,6 +54,7 @@
 
 
 @media screen and (min-width: 500px) {
+
   .modal-registrar-contrato .modal-body section {
     display: flex;
     flex-direction: row;

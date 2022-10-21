@@ -65,7 +65,6 @@ const PersonalLayout = () => {
     setId(e);
   };
 
-
   useEffect(() => {
     getTrabajadores();
     console.log(data);
@@ -76,14 +75,17 @@ const PersonalLayout = () => {
       data &&
       data.filter(
         (item) =>
-          item. nombre && item.nombre.toLowerCase().includes(filterText.toLowerCase()) ||
-          item?.apellido_paterno && item.apellido_paterno
-            .toLowerCase()
-            .includes(filterText.toLowerCase()) ||
-            item?.apellido_materno && item.apellido_materno
-            .toLowerCase()
-            .includes(filterText.toLowerCase()) ||
-            item?.dni && item.dni.toString().includes(filterText)
+          (item.nombre &&
+            item.nombre.toLowerCase().includes(filterText.toLowerCase())) ||
+          (item?.apellido_paterno &&
+            item.apellido_paterno
+              .toLowerCase()
+              .includes(filterText.toLowerCase())) ||
+          (item?.apellido_materno &&
+            item.apellido_materno
+              .toLowerCase()
+              .includes(filterText.toLowerCase())) ||
+          (item?.dni && item.dni.toString().includes(filterText))
       );
 
     setSearch(filtered);
@@ -93,52 +95,36 @@ const PersonalLayout = () => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row.id,
+      selector: (row) => row?.id,
       width: "60px",
     },
     {
       id: "Trabajador",
       name: "Trabajador",
       selector: (row) =>
-        row.nombre + " " + row.apellido_paterno + " " + row.apellido_materno,
+        row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
       width: "300px",
-      center: true,
       sortable: true,
+      center: true,
     },
     {
       id: "Campamento",
       name: "Campamento",
-      selector: (row) => (row.campamento.length !== 0 ? row.campamento : "Por asignar"),
+      selector: (row) =>
+        row?.campamento.length !== 0 ? row?.campamento : "Por asignar",
       sortable: true,
     },
     {
       id: "Dni",
       name: "Dni",
-      selector: (row) => row.dni,
+      selector: (row) => row?.dni,
       sortable: true,
     },
     {
       id: "telefono",
       name: "Telefono",
-      selector: (row) => row.telefono,
+      selector: (row) => row?.telefono,
       sortable: true,
-    },
-    {
-      id: "Contrato",
-      name: "Contrato",
-      button: true,
-      cell: (e) => (
-        <div
-          style={{
-            width: "40px",
-            display: "flex",
-            justifyContent: "space-around",
-            fontSize: "13px",
-          }}
-        >
-          {e.id} <AiFillEye onClick={() => handleContrato(e)} />
-        </div>
-      ),
     },
     {
       id: "Evaluación",
@@ -147,6 +133,32 @@ const PersonalLayout = () => {
 
       button: true,
       cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
+    },
+    {
+      id: "Contrato",
+      name: "Contrato",
+      button: true,
+      cell: (e) => (
+        <div
+          disabled
+          style={{
+            width: "40px",
+            display: "flex",
+            justifyContent: "space-around",
+            fontSize: "13px",
+            pointerEvents : e.evaluacion_id !== "" ? "auto": "none"
+          }}
+        >
+          {e?.evaluacion_laboral !== "" ? e.evaluacion_laboral : "--"}
+          <AiFillEye
+            onClick={() => {
+              
+                 handleContrato(e)
+                
+            }}
+          />
+        </div>
+      ),
     },
 
     {
