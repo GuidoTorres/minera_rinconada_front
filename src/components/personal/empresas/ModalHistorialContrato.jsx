@@ -1,40 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
-import Tabla from "../tabla/Tabla";
-import Buscador from "./Buscador";
+import Tabla from "../../tabla/Tabla";
+import Buscador from "../Buscador";
 import { AiFillEye, AiFillEdit, AiOutlineClose } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
-import "./styles/modalHistorialContrato.css";
-import { PersonalContext } from "../../context/PersonalContext";
-import { CrudContext } from "../../context/CrudContext";
-import { alertaEliminarExito } from "../../helpers/alertMessage";
-import ModalRegistrarContrato from "./ModalRegistrarContrato";
+import "../styles/modalHistorialContrato.css";
+import { PersonalContext } from "../../../context/PersonalContext";
+import { CrudContext } from "../../../context/CrudContext";
+import { alertaEliminarExito } from "../../../helpers/alertMessage";
+import ModalRegistrarContrato from "../trabajadores/ModalRegistrarContrato";
 import Swal from "sweetalert2";
 
 const ModalHistorialContrato = ({ selected }) => {
-  const route = "contrato";
   const {
     setHistorialContrato,
     setRegistrarContrato,
     setDataToEdit,
     registrarContrato,
-
   } = useContext(PersonalContext);
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
   const [id, setId] = useState("");
 
   const getContrato = async () => {
-    if (selected.codigo) {
-      const route = "asociacion";
-      const response = await getDataById(route, selected.trabajador_id);
-      setData1(response.data);
-    } else {
-      const response = await getDataById(route, selected.id);
-      setData1(response.data);
-    }
+    const route = "empresa";
+    const response = await getDataById(route, selected.id);
+    setData1(response.data);
   };
 
   const handleEdit = (e) => {
-    setDataToEdit(e);
+    setDataToEdit(e.contratos);
     setRegistrarContrato(true);
     setId(e);
   };
@@ -61,28 +54,29 @@ const ModalHistorialContrato = ({ selected }) => {
 
   useEffect(() => {
     getContrato();
+    console.log(data1);
   }, []);
 
   const historialContrato = [
     {
       id: "Id contrato",
       name: "Id contrato",
-      selector: (row) => row.id,
+      selector: (row) => row?.contratos?.map(item => item.id),
     },
     {
       id: "Tipo de Contrato",
       name: "Tipo de Contrato",
-      selector: (row) => row?.tipo_contrato,
+      selector: (row) => row?.contratos?.map(item => item.tipo_contrato),
     },
     {
       id: "Fecha de inicio",
       name: "Fecha de inicio",
-      selector: (row) => row?.fecha_inicio?.split("T")[0],
+      selector: (row) => row?.contratos?.map(item => item.fecha_inicio.split("T")[0]),
     },
     {
       id: "Fecha de fin",
       name: "Fecha de fin",
-      selector: (row) => row?.fecha_fin?.split("T")[0],
+      selector: (row) => row?.contratos?.map(item => item.fecha_fin.split("T")[0]),
     },
     {
       id: "Estado",
@@ -91,7 +85,7 @@ const ModalHistorialContrato = ({ selected }) => {
     {
       id: "Nota",
       name: "Nota",
-      selector: (row) => row?.nota_contrato,
+      selector: (row) => row?.contratos?.map(item => item.nota_contrato),
     },
     {
       id: "Acciones",
@@ -116,7 +110,7 @@ const ModalHistorialContrato = ({ selected }) => {
         <section className="buscador">
           <Buscador abrirModal={setRegistrarContrato} />
         </section>
-        <Tabla columns={historialContrato} table={data1} />
+        <Tabla columns={historialContrato} table={[data1]}/>
       </div>
       {registrarContrato && (
         <ModalRegistrarContrato

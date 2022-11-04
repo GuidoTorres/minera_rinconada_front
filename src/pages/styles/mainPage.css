@@ -5,6 +5,7 @@
 }
 .main-side {
   width: 70px;
+
 }
 
 .main-content {
@@ -12,7 +13,7 @@
 
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1200px) {
   .main-side {
     width: 250px;
   }

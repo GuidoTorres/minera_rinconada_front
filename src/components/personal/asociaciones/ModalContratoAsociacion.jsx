@@ -1,17 +1,15 @@
 import React, { useContext, useEffect } from "react";
-import { PersonalContext } from "../../context/PersonalContext";
+import { PersonalContext } from "../../../context/PersonalContext";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { CrudContext } from "../../context/CrudContext";
+import { CrudContext } from "../../../context/CrudContext";
 import {
   alertaEditarExito,
   alertaError,
   alertaExito,
-} from "../../helpers/alertMessage";
-import "./styles/modalRegistrarContrato.css";
-const ModalContratoAsociacion = ({actualizarTabla,
-  selected,
-  data,}) => {
+} from "../../../helpers/alertMessage";
+import "../styles/modalRegistrarContrato.css";
+const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
   const route = "contrato/asociacion";
   const route1 = "cargo";
   const route2 = "campamento";
@@ -38,7 +36,12 @@ const ModalContratoAsociacion = ({actualizarTabla,
     evaluacion_id: data.trabajador
       .map((item) => item.evaluacions.map((dat) => dat.id))
       .flat(),
+    estado: false,
   };
+
+  console.log(
+    data.trabajador.map((item) => item)
+  );
 
   const { setRegistrarContratoAsociacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
@@ -67,10 +70,8 @@ const ModalContratoAsociacion = ({actualizarTabla,
     if (dataToEdit) {
       setContratos(dataToEdit);
     } else {
-
       setContratos(contratoValues);
     }
-
   }, [dataToEdit]);
 
   useEffect(() => {
@@ -81,7 +82,7 @@ const ModalContratoAsociacion = ({actualizarTabla,
     console.log("handleData");
     const { name, value } = e.target;
     setContratos((values) => {
-      return {...values,  [name]: value };
+      return { ...values, [name]: value };
     });
 
     console.log(contratos);
@@ -90,7 +91,7 @@ const ModalContratoAsociacion = ({actualizarTabla,
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!contratos.fecha_inicio || !contratos.codigo_contratos) {
+    if (!contratos.fecha_inicio || !contratos.fecha_fin) {
       alertaError();
     } else if (dataToEdit === null) {
       createData(contratos, route);
@@ -124,7 +125,7 @@ const ModalContratoAsociacion = ({actualizarTabla,
       {/* <div className="overlay"></div> */}
       <div className="modal-container">
         <section className="modal-header">
-          {dataToEdit ? "Editar contrato": "Registrar Contrato"}
+          {dataToEdit ? "Editar contrato" : "Registrar Contrato"}
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="modal-body">

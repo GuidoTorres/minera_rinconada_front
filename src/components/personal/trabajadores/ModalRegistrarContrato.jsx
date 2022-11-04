@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
 // import { contratoValues } from "../../data/initalValues";
 
 import {
   alertaEditarExito,
   alertaError,
   alertaExito,
-} from "../../helpers/alertMessage";
-import "./styles/modalRegistrarContrato.css";
+} from "../../../helpers/alertMessage";
+import "../styles/modalRegistrarContrato.css";
 
 const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   const route = "contrato";
@@ -36,6 +36,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     nota_contrato: "",
     puesto: "",
     evaluacion_id: data?.evaluacion_id,
+    estado: false,
   };
 
   const { setRegistrarContrato, setDataToEdit, dataToEdit } =
@@ -61,7 +62,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   };
 
   useEffect(() => {
-    console.log(selected);
+    console.log(dataToEdit);
     if (dataToEdit) {
       setContrato(dataToEdit);
     } else {
@@ -161,11 +162,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                     onChange={handleData}
                   >
                     <option value="-1">Seleccione</option>
-                    {cargo && cargo.map((item, i) => (
-                      <option key={i} value={item.id}>
-                        {item.nombre}
-                      </option>
-                    ))}
+                    {cargo &&
+                      cargo.map((item, i) => (
+                        <option key={i} value={item.id}>
+                          {item.nombre}
+                        </option>
+                      ))}
                   </select>
                 </div>
               )}
@@ -203,11 +205,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                   onChange={handleData}
                 >
                   <option value="-1">Seleccione</option>
-                  {campamento && campamento.map((item, i) => (
-                    <option key={i} value={item.id}>
-                      {item.nombre}
-                    </option>
-                  ))}
+                  {campamento &&
+                    campamento.map((item, i) => (
+                      <option key={i} value={item.id}>
+                        {item.nombre}
+                      </option>
+                    ))}
                 </select>
               </div>
             </section>
@@ -237,11 +240,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                   onChange={handleData}
                 >
                   <option value="-1">Seleccione</option>
-                  {gerencia && gerencia.map((item, i) => (
-                    <option key={i} value={item.id}>
-                      {item.nombre}
-                    </option>
-                  ))}
+                  {gerencia &&
+                    gerencia.map((item, i) => (
+                      <option key={i} value={item.id}>
+                        {item.nombre}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div>
@@ -252,11 +256,12 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                   onChange={handleData}
                 >
                   <option value="-1">Seleccion</option>
-                  {area && area.map((item, i) => (
-                    <option key={i} value={item.id}>
-                      {item.nombre}
-                    </option>
-                  ))}
+                  {area &&
+                    area.map((item, i) => (
+                      <option key={i} value={item.id}>
+                        {item.nombre}
+                      </option>
+                    ))}
                 </select>
               </div>
             </section>

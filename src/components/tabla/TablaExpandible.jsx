@@ -1,33 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import "./tabla.css";
-import { AiFillEdit, AiFillEye, AiFillFileExcel } from "react-icons/ai";
+import {
+  AiFillEdit,
+  AiFillEye,
+  AiOutlineCheck,
+  AiOutlineClose,
+} from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
 import { PersonalContext } from "../../context/PersonalContext";
-import ModalRegistroPersonal from "../personal/ModalRegistroPersonal";
+import ModalRegistroPersonal from "../personal/trabajadores/ModalRegistroPersonal";
 import { CrudContext } from "../../context/CrudContext";
 import { alertaEliminarExito } from "../../helpers/alertMessage";
-import ModalHistorialEvaluacion from "../personal/ModalHistorialEvaluacion";
+import ModalHistorialEvaluacion from "../personal/trabajadores/ModalHistorialEvaluacion";
 import Swal from "sweetalert2";
 
-
 const Tabla = ({ columns, table, actualizarTabla }) => {
-  const route= "trabajador"
+  const route = "trabajador";
   const {
     registrarPersonal,
     setRegistrarPersonal,
     setHistorialEvaluacion,
     historialEvaluacion,
-    setDataToEdit
+    setDataToEdit,
   } = useContext(PersonalContext);
-  const {  deleteData, updateData, setData } =
-    useContext(CrudContext);
+  const { deleteData, updateData, setData } = useContext(CrudContext);
   const [id, setId] = useState("");
+
+  console.log(table);
 
   const handleEdit = (e) => {
     setDataToEdit(e);
     setRegistrarPersonal(true);
   };
+
+  // console.log(table && table?.trabajador.map(item => item));
 
   const handleDelete = (e) => {
     alertaEliminarExito("trabajador").then((res) => {
@@ -52,14 +59,14 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row.id,
+      selector: (row) => row?.id,
       width: "60px",
     },
     {
       id: "Trabajador",
       name: "Trabajador",
       selector: (row) =>
-        row.nombre + " " + row.apellido_paterno + " " + row.apellido_materno,
+        row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
       width: "300px",
       center: true,
       sortable: true,
@@ -67,29 +74,45 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
     {
       id: "Campamento",
       name: "Campamento",
-      selector: (row) => (!row.campamento ? "Por asignar" : row.campamento),
+      selector: (row) => (!row?.campamento ? "Por asignar" : row?.campamento),
       sortable: true,
     },
     {
       id: "Dni",
       name: "Dni",
-      selector: (row) => row.dni,
+      selector: (row) => row?.dni,
       sortable: true,
     },
     {
       id: "telefono",
       name: "Telefono",
-      selector: (row) => row.telefono,
+      selector: (row) => row?.telefono,
       sortable: true,
     },
 
     {
       id: "Evaluación",
       name: "Evaluación",
-      selector: (row) => row.id,
+      selector: (row) => row?.id,
 
       button: true,
-      cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
+      cell: (e) => (
+        <>
+          <AiFillEye onClick={() => handleEvaluacion(e)} />
+          
+          {e?.evaluacions.map((item) =>
+            item.aprobado === "si" ? (
+              <AiOutlineCheck
+                style={{ color: "green", fontWeigth: "bold", fontSize: "16px" }}
+              />
+            ) : e.aprobado === "no" ? (
+              <AiOutlineClose
+                style={{ color: "red", fontWeigth: "bold", fontSize: "16px" }}
+              />
+            ) : null
+          )}
+        </>
+      ),
     },
 
     {
@@ -122,14 +145,18 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
         highlightOnHover
         expandableRows
         expandableRowsComponent={expandedComponent}
-        expandableRowDisabled={(row) => (row.trabajador.length === 0 ? true : false)}
+        expandableRowDisabled={(row) =>
+          row?.trabajador?.length === 0 ? true : false
+        }
         responsive
         noHeader={true}
         noDataComponent={"No se encontraron resultados."}
       />
 
-      {registrarPersonal && <ModalRegistroPersonal actualizarTabla={actualizarTabla}/>}
-      {historialEvaluacion && <ModalHistorialEvaluacion  selected={id} />}
+      {registrarPersonal && (
+        <ModalRegistroPersonal actualizarTabla={actualizarTabla} />
+      )}
+      {historialEvaluacion && <ModalHistorialEvaluacion selected={id} />}
     </div>
   );
 };

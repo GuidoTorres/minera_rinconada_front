@@ -12,8 +12,8 @@ export const CrudProvider = ({ children }) => {
   const [modalCampamento, setModalCampamento] = useState(false);
 
   const getData = async (route) => {
-    // const response = await fetch(`http://localhost:3000/api/v1/${route}`);
-    const response = await fetch(`https://rinconada.herokuapp.com/api/v1/${route}`);
+    const response = await fetch(`http://localhost:3000/api/v1/${route}`);
+    // const response = await fetch(`https://rinconada.herokuapp.com/api/v1/${route}`);
     const data = await response.json();
 
     if (data) return data;

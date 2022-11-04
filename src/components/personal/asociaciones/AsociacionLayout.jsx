@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
-import Header from "../header/Header";
-import Tabla from "../tabla/TablaExpandible";
-import Buscador from "./Buscador";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
+import Header from "../../header/Header";
+import Tabla from "../../tabla/TablaExpandible";
+import Buscador from "../Buscador";
 import ModalRegistrarAsociacion from "./ModalRegistrarAsociacion";
 import { AiFillEdit, AiFillEye, AiFillFileExcel } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
-import { alertaEliminarExito } from "../../helpers/alertMessage";
+import { alertaEliminarExito } from "../../../helpers/alertMessage";
 import Swal from "sweetalert2";
-import ModalRegistroPersonal from "./ModalRegistroPersonal";
-import ModalHistorialContrato from "./ModalHistorialContrato";
+import ModalRegistroPersonal from "../trabajadores/ModalRegistroPersonal";
+import ModalHistorialContrato from "../trabajadores/ModalHistorialContrato";
 import ModalHistorialContratoAsociacion from "./ModalHistorialContratoAsociacion";
 
 const AsociacionLayout = () => {
@@ -230,7 +230,7 @@ const AsociacionLayout = () => {
         style={{ display: "none" }}
       />
       <Header text={"Asociaciones"} user={"Usuario"} ruta={"/personal"} />
-      <Buscador abrirModal={setHistorialContratoAsociacion} />
+      <Buscador abrirModal={setRegistrarAsociacion} />
 
       <Tabla
         columns={personal}

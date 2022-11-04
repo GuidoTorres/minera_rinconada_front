@@ -16,6 +16,30 @@
   margin-bottom: 10px;
 }
 
+.aprobado {
+  display: flex;
+  flex-direction: row;
+}
+.aprobado .titulo{
+
+  width: 100px;
+  font-size: bold;
+}
+.aprobado .titulo label{
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.aprobado div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  justify-content: flex-start;
+  width: 100%;
+}
+
 .modal-registrar-contrato .modal-body section {
   display: flex;
   flex-direction: column;
@@ -44,17 +68,14 @@
   width: 50%;
   height: 40px;
 }
-.modal-registrar-contrato .footer{
-
+.modal-registrar-contrato .footer {
   display: flex;
   align-items: flex-end;
   margin-top: 10px;
   margin-bottom: 20px;
 }
 
-
 @media screen and (min-width: 500px) {
-
   .modal-registrar-contrato .modal-body section {
     display: flex;
     flex-direction: row;

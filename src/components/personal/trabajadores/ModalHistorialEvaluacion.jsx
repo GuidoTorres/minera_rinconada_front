@@ -1,16 +1,17 @@
 import React, { useContext, useEffect } from "react";
-import { AiFillEye, AiFillEdit, AiOutlineClose } from "react-icons/ai";
+import { AiFillEdit, AiOutlineClose } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
-import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
-import { alertaEliminarExito } from "../../helpers/alertMessage";
-import Tabla from "../tabla/Tabla";
-import Buscador from "./Buscador";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
+import { alertaEliminarExito } from "../../../helpers/alertMessage";
 import ModalRegistroEvaluacion from "./ModalRegistroEvaluacion";
-import "./styles/modalHistorialEvaluacion.css";
+import Tabla from "../../tabla/Tabla";
+import Buscador from "../Buscador";
 import Swal from "sweetalert2";
 
-const ModalHistorialEvaluacion = ({ selected }) => {
+import "../styles/modalHistorialEvaluacion.css";
+
+const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
   const route = "evaluacion";
   const {
     setHistorialEvaluacion,
@@ -49,7 +50,6 @@ const ModalHistorialEvaluacion = ({ selected }) => {
 
   useEffect(() => {
     getEvaluacion();
-
   }, []);
 
   const closeModal = () => {
@@ -65,8 +65,7 @@ const ModalHistorialEvaluacion = ({ selected }) => {
     {
       id: "Nombre",
       name: "Nombre",
-      selector: (row) =>
-        row?.nombre,
+      selector: (row) => row?.nombre,
       width: "250px",
     },
     {
@@ -111,6 +110,7 @@ const ModalHistorialEvaluacion = ({ selected }) => {
         <ModalRegistroEvaluacion
           actualizarTabla={getEvaluacion}
           selected={selected}
+          actualizarTrabajador = {actualizarTrabajador}
         />
       )}
     </div>

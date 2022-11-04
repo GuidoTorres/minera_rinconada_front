@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
-import { alertaEliminarExito } from "../../helpers/alertMessage";
-import { AiFillEdit, AiFillEye } from "react-icons/ai";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
+import { alertaEliminarExito } from "../../../helpers/alertMessage";
+import {
+  AiFillEdit,
+  AiFillEye,
+  AiOutlineCheck,
+  AiOutlineClose,
+} from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
-import Header from "../header/Header";
-import Tabla from "../tabla/Tabla";
-import Buscador from "./Buscador";
+import Header from "../../header/Header";
+import Tabla from "../../tabla/Tabla";
+import Buscador from "../Buscador";
 import ModalRegistroPersonal from "./ModalRegistroPersonal";
 import ModalHistorialContrato from "./ModalHistorialContrato";
 import ModalRegistrarContrato from "./ModalRegistrarContrato";
@@ -26,7 +31,8 @@ const PersonalLayout = () => {
     setHistorialEvaluacion,
     filterText,
   } = useContext(PersonalContext);
-  const { getData, deleteData, data, setData } = useContext(CrudContext);
+  const { getData, deleteData, data, setData, updateData } =
+    useContext(CrudContext);
   const [id, setId] = useState("");
   const [search, setSearch] = useState([]);
 
@@ -63,6 +69,15 @@ const PersonalLayout = () => {
   const handleContrato = (e) => {
     setHistorialContrato(true);
     setId(e);
+  };
+
+  const deshabilitarTrabajador = (e, data) => {
+    const route = "trabajador";
+    const json = {
+      deshabilitado: e.target.checked,
+    };
+
+    updateData(json, data.id, route);
   };
 
   useEffect(() => {
@@ -111,7 +126,7 @@ const PersonalLayout = () => {
       id: "Campamento",
       name: "Campamento",
       selector: (row) =>
-        row?.campamento.length !== 0 ? row?.campamento : "Por asignar",
+        row?.campamento?.length !== 0 ? row?.campamento : "Por asignar",
       sortable: true,
     },
     {
@@ -132,7 +147,20 @@ const PersonalLayout = () => {
       selector: (row) => row.id,
 
       button: true,
-      cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
+      cell: (e) => (
+        <>
+          <AiFillEye onClick={() => handleEvaluacion(e)} />
+          {e.aprobado === "si" ? (
+            <AiOutlineCheck
+              style={{ color: "green", fontWeigth: "bold", fontSize: "16px" }}
+            />
+          ) : e.aprobado === "no" ? (
+            <AiOutlineClose
+              style={{ color: "red", fontWeigth: "bold", fontSize: "16px" }}
+            />
+          ) : null}
+        </>
+      ),
     },
     {
       id: "Contrato",
@@ -146,7 +174,7 @@ const PersonalLayout = () => {
             display: "flex",
             justifyContent: "space-around",
             fontSize: "13px",
-            pointerEvents: e.evaluacion_id !== "" ? "auto" : "none",
+            pointerEvents: e.aprobado === "si" ? "auto" : "none",
           }}
         >
           {e?.evaluacion_laboral !== "" ? e.evaluacion_laboral : "--"}
@@ -163,7 +191,13 @@ const PersonalLayout = () => {
       id: "Deshabilitar",
       name: "Deshabilitar",
       button: true,
-      cell: (e) => <input type="checkbox" />,
+      cell: (e) => (
+        <input
+          type="checkbox"
+          defaultChecked={e.deshabilitado}
+          onChange={(a) => deshabilitarTrabajador(a, e)}
+        />
+      ),
     },
     {
       id: "Acciones",
@@ -188,7 +222,12 @@ const PersonalLayout = () => {
         <ModalRegistroPersonal actualizarTabla={getTrabajadores} />
       )}
 
-      {historialEvaluacion && <ModalHistorialEvaluacion selected={id} />}
+      {historialEvaluacion && (
+        <ModalHistorialEvaluacion
+          selected={id}
+          actualizarTrabajador={getTrabajadores}
+        />
+      )}
       {historialContrato && <ModalHistorialContrato selected={id} />}
     </>
   );

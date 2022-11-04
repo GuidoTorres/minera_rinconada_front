@@ -2,16 +2,20 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
 import {
   alertaEditarExito,
   alertaError,
   alertaExito,
-} from "../../helpers/alertMessage";
-import "./styles/modalRegistroEvaluacion.css";
+} from "../../../helpers/alertMessage";
+import "../styles/modalRegistroEvaluacion.css";
 
-const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
+const ModalRegistroEvaluacion = ({
+  actualizarTabla,
+  selected,
+  actualizarTrabajador,
+}) => {
   const route = "evaluacion";
   const route1 = "cargo";
   const evaluacionValues = {
@@ -29,6 +33,7 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
     antecedentes: "",
     emo: "",
     trabajador_id: selected.id,
+    aprobado: "",
   };
   const { setRegistrarEvaluacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
@@ -47,8 +52,8 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
     } else {
       setEvaluacion(evaluacionValues);
     }
+    console.log(dataToEdit);
   }, [dataToEdit]);
-
   useEffect(() => {
     getCargo();
   }, []);
@@ -80,6 +85,7 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
         closeModal();
         if (res.isConfirmed) {
           actualizarTabla();
+          actualizarTrabajador();
         }
       });
     }
@@ -100,6 +106,32 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
         </section>
         <section className="modal-body">
           <form onSubmit={handleSubmit}>
+            <div className="aprobado">
+              <div>
+                <div className="titulo">
+                  <label htmlFor=""> Aprobado</label>
+                </div>
+                <div>
+                  <label htmlFor=""> Si</label>
+                  <input
+                    type="radio"
+                    name="aprobado"
+                    value="si"
+                    checked={evaluacion.aprobado === "si"}
+                    onChange={handleData}
+                  />
+
+                  <label htmlFor=""> No</label>
+                  <input
+                    type="radio"
+                    name="aprobado"
+                    value="no"
+                    checked={evaluacion.aprobado !== "si"}
+                    onChange={handleData}
+                  />
+                </div>
+              </div>
+            </div>
             <section>
               <div>
                 <label>Fecha de evaluación</label>
@@ -144,7 +176,6 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
               </div>
             </section>
             <section>
-              
               <div>
                 <label htmlFor="">Capacitación GEMA</label>
                 <input
@@ -184,8 +215,6 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
             </section>
 
             <section>
-
-              
               <div>
                 <label htmlFor="">Saturación de oxígeno</label>
                 <input
@@ -223,21 +252,7 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                 />
               </div>
             </section>
-            <section>
-              <div>
-              <label htmlFor="">Aprobado</label>
-                <select
-                  value={evaluacion.puesto}
-                  name="puesto"
-                  onChange={handleData}
-                >
-                  <option value="-1">Seleccione</option>
-                  <option value="0">Si</option>
-                  <option value="1">No</option>
-                </select>
-              </div>
- 
-            </section>
+
             <section>
               <div>
                 <label htmlFor="">Antecedentes CCM</label>
@@ -262,6 +277,7 @@ const ModalRegistroEvaluacion = ({ actualizarTabla, selected }) => {
                 ></textarea>
               </div>
             </section>
+
             <div className="footer">
               <button>Registrar</button>
             </div>

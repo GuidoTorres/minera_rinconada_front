@@ -1,23 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
-import { asociacionValues, trabajadorValues } from "../../data/initalValues";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
+import { asociacionValues, trabajadorValues } from "../../../data/initalValues";
 import {
   alertaEditarExito,
   alertaError,
   alertaExito,
-} from "../../helpers/alertMessage";
+} from "../../../helpers/alertMessage";
+import useForm from "../../../hooks/useForm";
 
-import "./styles/modalRegistroPersonal.css";
+import "../styles/modalRegistroPersonal.css";
 
 const ModalRegistroPersonal = ({ actualizarTabla }) => {
   const route = "trabajador";
   const { dataToEdit, setRegistrarPersonal, setDataToEdit } =
     useContext(PersonalContext);
-  const { getData, createData, updateData, setData3, data3 } = useContext(CrudContext);
+  const { getData, createData, updateData, setData3, data3 } =
+    useContext(CrudContext);
   const [trabajador, setTrabajador] = useState(trabajadorValues);
 
+  const [form, handleChange] = useForm(trabajadorValues);
 
   const getAsociacion = async () => {
     const response = await getData("asociacion");
@@ -25,10 +28,8 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
   };
 
   useEffect(() => {
-
-    getAsociacion()
-
-  },[])
+    getAsociacion();
+  }, []);
 
   useEffect(() => {
     if (dataToEdit) {
@@ -44,15 +45,13 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
     setTrabajador((values) => {
       return { ...values, [name]: value };
     });
-
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(trabajador);
 
-
-    if (!trabajador.dni ) {
+    if (!trabajador.dni) {
       alertaError();
     } else if (dataToEdit === null) {
       createData(trabajador, route);
@@ -214,10 +213,9 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
                     onChange={handleData}
                   >
                     <option value="-1">Seleccione</option>
-                    {data3.map(item => 
-                      
+                    {data3.map((item) => (
                       <option value={item.id}>{item.nombre}</option>
-                      )}
+                    ))}
                   </select>
                 </div>
               )}

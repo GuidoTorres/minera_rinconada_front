@@ -8,10 +8,10 @@ const Tabla = ({ columns, table }) => {
         columns={columns}
         data={table}
         pagination
-        fixedHeader
         striped
         highlightOnHover
         responsive
+        // dense
         noDataComponent={"No se encontraron resultados."}
       />
     </div>

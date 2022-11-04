@@ -14,7 +14,7 @@ export const SidebarData = [
   },
   {
     title: "Planillas",
-    path: "/planillas",
+    path: "/planilla",
     icon: <AiFillSetting />,
   },
   {

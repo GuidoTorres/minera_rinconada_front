@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 import { Link } from "react-router-dom";
-import "../administracion/styles/tipoUsuario.css";
+import "../administracion/styles/tipoUsuario.css"
 
-const TipoUsuario = ({ text, path }) => {
+const TipoUsuario = ({text,path}) => {
   return (
     <Link
       className="rol"
-      to={`/personal/${path}`}
+      to={`/planilla/${path}`}
       onClick={(e) => {
         setRender(text);
       }}
@@ -14,7 +14,7 @@ const TipoUsuario = ({ text, path }) => {
       <span className="rol-circle"></span>
       <label htmlFor="">{text}</label>
     </Link>
-  );
-};
+  )
+}
 
-export default TipoUsuario;
+export default TipoUsuario

@@ -1,0 +1,19 @@
+.modal-validacion .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-validacion .modal-container{
+  
+      width: 60%;
+      height: 70%;
+      overflow-y: scroll;
+
+  }
+  

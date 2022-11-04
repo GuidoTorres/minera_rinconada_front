@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CrudContext } from "../../context/CrudContext";
-import { PersonalContext } from "../../context/PersonalContext";
-import { alertaEliminarExito } from "../../helpers/alertMessage";
-import Header from "../header/Header";
-import Tabla from "../tabla/Tabla";
-import Buscador from "./Buscador";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
+import { alertaEliminarExito } from "../../../helpers/alertMessage";
+import Header from "../../header/Header";
+import Tabla from "../../tabla/Tabla";
+import Buscador from "../Buscador";
 import { AiFillEdit, AiFillEye, AiFillFileExcel } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
 import ModalRegistrarEmpresa from "./ModalRegistrarEmpresa";
+import ModalHistorialEvaluacion from "../trabajadores/ModalHistorialEvaluacion";
 import ModalHistorialContrato from "./ModalHistorialContrato";
-import ModalHistorialEvaluacion from "./ModalHistorialEvaluacion";
 
 const EmpresaLayout = () => {
   const route = "empresa";
@@ -20,7 +20,8 @@ const EmpresaLayout = () => {
     filterText,
     setHistorialContrato,
     historialContrato,
-    setHistorialEvaluacion, historialEvaluacion
+    setHistorialEvaluacion,
+    historialEvaluacion,
   } = useContext(PersonalContext);
   const { getData, deleteData, data, setData } = useContext(CrudContext);
   const [search, setSearch] = useState([]);
@@ -60,10 +61,6 @@ const EmpresaLayout = () => {
     setId(e);
   };
 
-  // const handleEvaluacion = () => {
-  //   setHistorialEvaluacion(true);
-  //   setId();
-  // };
 
   useEffect(() => {
     const filtered = data.filter(
@@ -86,21 +83,7 @@ const EmpresaLayout = () => {
       name: "Empresa",
       selector: (row) => row.razon_social,
     },
-    // {
-    //   id: "Campamento",
-    //   name: "Campamento",
-    // //   selector: (row) => (!row.campamento ? "Por asignar" : row.campamento),
-    // },
-    // {
-    //   id: "Dni",
-    //   name: "Dni",
-    // //   selector: (row) => row.dni,
-    // },
-    // {
-    //   id: "T. de trabajador",
-    //   name: "T. de trabajador",
-    // //   selector: (row) => row.tipo_trabajador,
-    // },
+
     {
       id: "Contrato",
       name: "Contrato",
@@ -111,21 +94,6 @@ const EmpresaLayout = () => {
         </>
       ),
     },
-    // {
-    //   id: "Evaluación",
-    //   name: "Evaluación",
-    //   //   selector: (row) => row.id,
-
-    //   button: true,
-    //   cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
-    // },
-
-    // {
-    //   id: "Deshabilitar",
-    //   name: "Deshabilitar",
-    //   button: true,
-    //   cell: (e) => <input type="checkbox" />,
-    // },
     {
       id: "Acciones",
       name: "Acciones",
@@ -147,7 +115,6 @@ const EmpresaLayout = () => {
 
       {registrarEmpresa && <ModalRegistrarEmpresa />}
       {historialContrato && <ModalHistorialContrato selected={id} />}
-      {historialEvaluacion && <ModalHistorialEvaluacion selected={id}/>}
     </>
   );
 };

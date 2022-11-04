@@ -1,49 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useContext } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { CrudContext } from "../../context/CrudContext";
 import { AiOutlineClose } from "react-icons/ai";
-import { PersonalContext } from "../../context/PersonalContext";
-import {
-  alertaEditarExito,
-  alertaError,
-  alertaExito,
-} from "../../helpers/alertMessage";
+import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
+import { alertaError, alertaExito, alertaEditarExito } from "../../../helpers/alertMessage";
+import "../styles/modalAsociacion.css";
 
-const ModalRegistrarEmpresa = ({ actualizarTabla, selected }) => {
-  const route = "empresa";
-  const empresaValues = {
-    razon_social: "",
-    ruc: "",
+const ModalRegistrarAsociacion = ({ actualizarTabla, selected }) => {
+  const route = "asociacion";
+  const asociacionValues = {
+    nombre: "",
+    codigo: "",
   };
-  const [empresa, setEmpresa] = useState(empresaValues);
-  const { setRegistrarEmpresa, setDataToEdit, dataToEdit } =
+  const [asociacion, setAsociacion] = useState(asociacionValues);
+  const { setRegistrarAsociacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
   const { createData, updateData } = useContext(CrudContext);
 
   useEffect(() => {
     if (dataToEdit) {
-      setEmpresa(dataToEdit);
+      setAsociacion(dataToEdit);
     } else {
-      setEmpresa(empresaValues);
+      setAsociacion(asociacionValues);
     }
   }, [dataToEdit]);
 
   const closeModal = () => {
-    setRegistrarEmpresa(false);
+    setRegistrarAsociacion(false);
     setDataToEdit(null);
-    setEmpresa(empresaValues);
+    setAsociacion(asociacionValues);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!empresa.razon_social || !empresa.ruc) {
+    if (!asociacion.nombre || !asociacion.codigo) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(empresa, route);
-      alertaExito("Empresa").then((res) => {
+      createData(asociacion, route);
+      alertaExito("Asociación").then((res) => {
         closeModal();
         if (res.isConfirmed) {
           actualizarTabla();
@@ -52,8 +47,8 @@ const ModalRegistrarEmpresa = ({ actualizarTabla, selected }) => {
     }
 
     if (dataToEdit) {
-      updateData(empresa, dataToEdit.id, route);
-      alertaEditarExito("Empresa").then((res) => {
+      updateData(asociacion, dataToEdit.id, route);
+      alertaEditarExito("Asociación").then((res) => {
         closeModal();
         if (res.isConfirmed) {
           actualizarTabla();
@@ -62,41 +57,39 @@ const ModalRegistrarEmpresa = ({ actualizarTabla, selected }) => {
     }
   };
 
-  const handleData = (e)=>{
-
+  const handleData = (e) => {
     const { name, value } = e.target;
-    setEmpresa((values) => {
+    setAsociacion((values) => {
       return { ...values, [name]: value };
     });
-  }
+  };
 
   return (
     <div className="modal-asociacion">
       <div className="overlay"></div>
       <div className="modal-container">
         <section className="modal-header">
-          {dataToEdit ? "Editar empresa" : "Registrar empresa"}
+          {dataToEdit ? "Editar asociación" : "Registrar asociación"}
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section>
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
               <div>
-                <label>Razón social</label>
-
+                <label>Nombre Asociación</label>
                 <input
                   type="text"
-                  name="razon_social"
-                  value={empresa?.razon_social}
+                  name="nombre"
+                  value={asociacion?.nombre}
                   onChange={handleData}
                 ></input>
               </div>
               <div>
-                <label>Ruc empresa</label>
+                <label>Código Asociación</label>
                 <input
                   type="text"
-                  name="ruc"
-                  value={empresa?.ruc}
+                  name="codigo"
+                  value={asociacion?.codigo}
                   onChange={handleData}
                 ></input>
               </div>
@@ -111,4 +104,4 @@ const ModalRegistrarEmpresa = ({ actualizarTabla, selected }) => {
   );
 };
 
-export default ModalRegistrarEmpresa;
+export default ModalRegistrarAsociacion;
