@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AiOutlineClose, AiFillEye } from "react-icons/ai";
 import { PlanillaContext } from "../../../context/PlanillaContext";
 
-const ModalPago = () => {
+const ModalPago = ({ data }) => {
   const [inputFields, setInputFields] = useState([
     {
       conductor: "Conductor",
@@ -49,15 +49,15 @@ const ModalPago = () => {
         </section> */}
           <section style={{ paddingLeft: "30px", paddingRight: "30px" }}>
             <div>
-              <label htmlFor="">Nombre:</label>
+              <label htmlFor="">Nombre: {data && data?.nombre}</label>
             </div>
 
             <div style={{ display: "flex", gap: "50px", marginTop: "10px" }}>
               <div>
-                <label htmlFor="">Dni:</label>
+                <label htmlFor="">Dni: {data && data?.dni}</label>
               </div>
               <div>
-                <label htmlFor="">Teléfono:</label>
+                <label htmlFor="">Teléfono: {data && data?.telefono}</label>
               </div>
               <div>
                 <label htmlFor="">Cargo:</label>
@@ -108,7 +108,6 @@ const ModalPago = () => {
                       border: "1px solid black",
                       borderRadius: "6px",
                       padding: "10px 10px 20px 10px",
-
                     }}
                   >
                     <div key={i}>

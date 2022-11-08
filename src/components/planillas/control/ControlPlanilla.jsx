@@ -75,13 +75,13 @@ const ControlPlanilla = () => {
       id: "Dias",
       name: "Dias laborados",
       button: true,
-      selector: (row) => row?.id,
+      selector: (row) => row?.asistencia ? row.asistencia : "--",
     },
 
     {
       id: "teletrans",
       name: "Teletrans",
-      selector: (row) => row?.teletrans,
+      selector: (row) => row?.teletrans?.map(item => item.total),
 
       center: true,
     },
@@ -89,7 +89,7 @@ const ControlPlanilla = () => {
       id: "saldo",
       name: "Saldo",
       button: true,
-      selector: (row) => row?.saldo,
+      selector: (row) => row?.teletrans?.map(item => item.saldo),
 
       center: true,
     },

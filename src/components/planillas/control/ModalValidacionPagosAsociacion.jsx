@@ -1,26 +1,59 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { CrudContext } from "../../../context/CrudContext";
+import { AiOutlineClose, AiFillEye } from "react-icons/ai";
+import Buscador from "../Buscador";
+import Tabla from "../../tabla/Tabla";
+import { PlanillaContext } from "../../../context/PlanillaContext";
+import Fechas from "./Fechas";
 
-const ModalValidacionPagosAsociacion = () => {
+const ModalValidacionPagosAsociacion = ({ data }) => {
+  const { setValidacionPagosAsociacion, setFechas, fechas } = useContext(PlanillaContext);
+  const { getDataById, data3, setData3 } = useContext(CrudContext);
+
+  const getTareoAsociacion = async () => {
+    const route = "planilla/tareo/asociacion";
+    const response = await getDataById(route, 10);
+    setData3(response.data);
+  };
+  useEffect(() => {
+    getTareoAsociacion();
+  }, []);
+
+  const closeModal = () => {
+    setValidacionPagosAsociacion(false);
+  };
+
+  const dateData = (row) => {
+    // setFechas(state => [...state, row])
+    // <Fechas display={false} data={row} />
+    return (
+      <>
+        <label>
+          {row?.trabajador_asistencia?.map((item) => item.asistencia)}
+        </label>
+      </>
+    );
+  };
+
   const planilla = [
     {
       id: "Nro",
       name: "Nro",
       selector: (row) => row?.id,
-      width: "5%",
+      width: "100px",
     },
     {
       id: "tareo",
       name: "Hoja de Tareo Asistencia de operaciones",
       sortable: true,
-      width: "25%",
       center: true,
-      selector: (row) => row?.codigo_contrato,
+      selector: (row) => row?.nombre,
     },
     {
       // en name usar row.fecha para jalar las fechas dinamiacmente
       id: "Asistencia",
-      name: "Fecha de inicio",
-      selector: (row) => row?.fecha_inicio?.split("T")[0],
+      name: <Fechas />,
+      selector: (row) => dateData(row),
       sortable: true,
     },
   ];
@@ -34,35 +67,47 @@ const ModalValidacionPagosAsociacion = () => {
             <AiOutlineClose onClick={closeModal} />
           </section>
           <section className="buscador">
-            <Buscador registrar={false} crear={false} exportar={true} cargar={false}/>
+            <Buscador
+              registrar={false}
+              crear={false}
+              exportar={true}
+              cargar={false}
+            />
           </section>
           <section style={{ paddingLeft: "30px" }}>
             <div>
-              <label htmlFor="">Nombre:</label>
+              <label htmlFor="">
+                Nombre: {data && data?.nombre ? data.nombre : "---"}
+              </label>
             </div>
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
                 marginTop: "5px",
-                justifyContent:"space-between"
               }}
             >
               <div>
-                <label htmlFor="">Dni:</label>
+                <label htmlFor="">
+                  Dni: {data && data?.dni ? data.dni : "---"}
+                </label>
               </div>
-              <div>
-                <label htmlFor="">Teléfono:</label>
+              <div style={{ marginLeft: "50px" }}>
+                <label htmlFor="">
+                  Teléfono: {data && data?.telefono ? data.telefono : "---"}
+                </label>
               </div>
-              <div>
-                <label htmlFor="">Cargo:</label>
+              <div style={{ marginLeft: "50px" }}>
+                <label htmlFor="">
+                  Cargo: {data && data?.cargo ? data.cargo : "---"}
+                </label>
               </div>
             </div>
           </section>
-          <Tabla columns={planilla} />
-          <div style={{ paddingLeft: "30px", marginTop: "5px" }}>
+          <Tabla columns={planilla} table={data3} />
+          {/* <div style={{ paddingLeft: "30px", marginTop: "5px" }}>
             <label htmlFor="">Total de días asistidos:</label>
-          </div>
+          </div> */}
           <section
             style={{
               paddingLeft: "30px",

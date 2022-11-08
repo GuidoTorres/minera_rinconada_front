@@ -6,6 +6,7 @@ import Buscador from "../Buscador";
 import "../style/modalPlanillaControl.css";
 import ModalPago from "./ModalPago";
 import ModalValidacionPagos from "./ModalValidacionPagos";
+import ModalValidacionPagosAsociacion from "./ModalValidacionPagosAsociacion";
 
 const ModalPlanillaControl = ({ selected }) => {
   const {
@@ -14,14 +15,19 @@ const ModalPlanillaControl = ({ selected }) => {
     setValidacionPagos,
     pago,
     setPago,
+    validacionPagosAsociacion, setValidacionPagosAsociacion
   } = useContext(PlanillaContext);
-
   const closeModal = () => {
     setPlanillaControl(false);
   };
 
   const handleValidacion = () => {
-    setValidacionPagos(true);
+    if(selected.codigo){
+      setValidacionPagosAsociacion(true)
+    }else{
+
+      setValidacionPagos(true);
+    }
   };
 
   const handlePagos = () => {
@@ -44,7 +50,7 @@ const ModalPlanillaControl = ({ selected }) => {
     {
       id: "fecha_inicio",
       name: "Fecha de inicio",
-      selector: (row) => row?.fecha_inicio?.split("T")[0],
+      selector: (row) => row?.fecha_inicio?.split(",")[0],
       sortable: true,
     },
 
@@ -52,18 +58,19 @@ const ModalPlanillaControl = ({ selected }) => {
       id: "fecha_pago",
       name: "Fecha de pago",
       sortable: true,
-      selector: (row) => row?.fecha_fin?.split("T")[0],
+      selector: (row) => row?.fecha_fin?.split(",")[0],
     },
     {
       id: "quincena",
       name: "Teletrans por quincena",
-      // selector: (row) => row?.teletrans,
+      selector: (row) => row?.teletrans ? 4 : 0,
     },
     {
       id: "estado",
       name: "Estado",
       button: true,
-      // selector: (row) => row?.fecha_nacimiento,
+      selector: (row) => !row?.contrato?.estado ? "Pendiente" :"Despachado",
+
     },
 
     {
@@ -111,7 +118,8 @@ const ModalPlanillaControl = ({ selected }) => {
       </div>
 
       {validacionPagos && <ModalValidacionPagos data={selected} />}
-      {pago && <ModalPago />}
+      {validacionPagosAsociacion && <ModalValidacionPagosAsociacion data={selected}/>}
+      {pago && <ModalPago data={selected}/>}
     </div>
   );
 };

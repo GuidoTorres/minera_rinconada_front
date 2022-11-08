@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PersonalContext } from "../../context/PersonalContext";
 
-const Buscador = ({abrirModal}) => {
+const Buscador = ({ abrirModal, importar, registrar }) => {
   const { render, setFilterText } = useContext(PersonalContext);
-
   return (
     <div className="buscador-container">
       <span>
@@ -16,9 +15,19 @@ const Buscador = ({abrirModal}) => {
         />
         <AiOutlineSearch className="icon" />
       </span>
-      <button onClick={() => abrirModal(true)}>
-        + {render === "Roles o Puestos" ? "Asignar" : "Registrar"}
-      </button>
+      <div>
+        {importar && (
+          <button style={{ marginRight: "10px" }}>Importar Trabajadores</button>
+        )}
+        {registrar && (
+          <button
+            style={{ marginRight: "10px" }}
+            onClick={() => abrirModal(true)}
+          >
+            + {render === "Roles o Puestos" ? "Asignar" : "Registrar"}
+          </button>
+        )}
+      </div>
     </div>
   );
 };

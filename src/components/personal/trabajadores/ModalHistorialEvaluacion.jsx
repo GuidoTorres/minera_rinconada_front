@@ -36,7 +36,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
   const handleDelete = (id) => {
     alertaEliminarExito("evaluacion").then((res) => {
       if (res.isConfirmed) {
-        deleteData(id, route);
+        deleteData( route, id.evaluacion_id);
 
         Swal.fire(
           "Eliminado!",
@@ -70,7 +70,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
     },
     {
       id: "Fecha de inicio",
-      name: "Fecha de evalación",
+      name: "Fecha de evaluación",
       selector: (row) =>
         row.fecha_evaluacion && row.fecha_evaluacion.split("T")[0],
     },
@@ -87,7 +87,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
       cell: (e) => (
         <>
           <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
         </>
       ),
     },
@@ -101,7 +101,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
             <AiOutlineClose onClick={closeModal} />
           </section>
           <section className="buscador">
-            <Buscador abrirModal={setRegistrarEvaluacion} />
+            <Buscador abrirModal={setRegistrarEvaluacion} registrar={true}/>
           </section>
           <Tabla columns={historialEvaluacion} table={data1} />
         </div>

@@ -12,8 +12,8 @@ export const CrudProvider = ({ children }) => {
   const [modalCampamento, setModalCampamento] = useState(false);
 
   const getData = async (route) => {
-    const response = await fetch(`http://localhost:3000/api/v1/${route}`);
-    // const response = await fetch(`https://rinconada.herokuapp.com/api/v1/${route}`);
+    // const response = await fetch(`http://localhost:3000/api/v1/${route}`);
+    const response = await fetch(`https://rinconada.herokuapp.com/api/v1/${route}`);
     const data = await response.json();
 
     if (data) return data;
@@ -21,6 +21,15 @@ export const CrudProvider = ({ children }) => {
 
   const getDataById = async (route, id) => {
     // const response = await fetch(`http://localhost:3000/api/v1/${route}/${id}`);
+
+    const response = await fetch(`https://rinconada.herokuapp.com/api/v1/${route}/${id}`);
+    const data = await response.json();
+
+    if (data) return data;
+  };
+
+  const getDataById2 = async (route, id, asistencia) => {
+    // const response = await fetch(`http://localhost:3000/api/v1/${route}/${id}/${asistencia}`);
 
     const response = await fetch(`https://rinconada.herokuapp.com/api/v1/${route}/${id}`);
     const data = await response.json();
@@ -53,6 +62,8 @@ export const CrudProvider = ({ children }) => {
     );
     const content = await prueba.json();
     return content;
+
+    // return prueba
   };
 
   const updateData = async (data, id, route) => {
@@ -83,7 +94,7 @@ export const CrudProvider = ({ children }) => {
     return content;
   };
 
-  const deleteData = async (id, route) => {
+  const deleteData = async (route, id) => {
     // const prueba = await fetch(
     //   `http://localhost:3000/api/v1/${route}/${id}`,
     //   {
@@ -94,6 +105,8 @@ export const CrudProvider = ({ children }) => {
     //     },
     //   }
     // );
+
+    // return prueba
     const prueba = await fetch(
       `https://rinconada.herokuapp.com/api/v1/${route}/${id}`,
       {
@@ -124,6 +137,7 @@ export const CrudProvider = ({ children }) => {
     data3,
     setData3,
     getDataById,
+    getDataById2
   };
   return <CrudContext.Provider value={info}>{children}</CrudContext.Provider>;
 };

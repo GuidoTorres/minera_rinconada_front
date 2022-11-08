@@ -13,10 +13,10 @@ const ModalControlAsistencia = ({ campamento }) => {
     setControlAsistencia,
     controlAsistencia,
     campamentoAsistencia,
-    setFechaId
+    setFechaId,
   } = useContext(PlanillaContext);
 
-  const { getDataById, setData1, data1 } = useContext(CrudContext);
+  const { getDataById, setData1, data1, deleteData } = useContext(CrudContext);
 
   const getAsistencia = async () => {
     const route = "asistencia";
@@ -34,7 +34,17 @@ const ModalControlAsistencia = ({ campamento }) => {
 
   const handleEdit = (e) => {
     setControlAsistencia(true);
-    setFechaId(e)
+    setFechaId(e);
+  };
+
+  const handleDelete = (e) => {
+    const route = "asistencia";
+    console.log(e);
+    deleteData(route, e.id).then((res) => {
+      if (res.status === 200) {
+        getAsistencia();
+      }
+    });
   };
 
   const planilla = [
@@ -73,14 +83,20 @@ const ModalControlAsistencia = ({ campamento }) => {
             <AiOutlineClose onClick={closeModal} />
           </section>
           <section className="buscador">
-            <Buscador registrar={false} crear={true} exportar={false} cargar={false}/>
+            <Buscador
+              registrar={false}
+              crear={true}
+              exportar={false}
+              cargar={false}
+              actualizarTabla={getAsistencia}
+            />
           </section>
           <div style={{ overflowY: "hidden" }}>
             <Tabla columns={planilla} table={data1} />
           </div>
         </div>
       </div>
-      {controlAsistencia && <ModalCrearAsistencia data={data1}/>}
+      {controlAsistencia && <ModalCrearAsistencia data={data1} />}
     </div>
   );
 };

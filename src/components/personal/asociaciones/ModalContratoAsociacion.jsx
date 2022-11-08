@@ -32,15 +32,14 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
     campamento_id: "",
     nota_contrato: "",
     puesto: "",
-    asociacion_id: data.id,
-    evaluacion_id: data.trabajador
-      .map((item) => item.evaluacions.map((dat) => dat.id))
+    asociacion_id: data && data?.id,
+    evaluacion_id: data.trabajador.length > 0 && data?.trabajador?.map((item) => item?.evaluacions?.map((dat) => dat?.id))
       .flat(),
     estado: false,
   };
 
   console.log(
-    data.trabajador.map((item) => item)
+    data
   );
 
   const { setRegistrarContratoAsociacion, setDataToEdit, dataToEdit } =
@@ -131,16 +130,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
         <section className="modal-body">
           <form onSubmit={handleSubmit}>
             <section>
-              <div>
-                <label>Fecha de ingreso</label>
-                <input
-                  type="date"
-                  value={contratos?.fecha_inicio?.split("T")[0]}
-                  name="fecha_inicio"
-                  onChange={handleData}
-                ></input>
-              </div>
-              <div>
+            <div>
                 <label>Código contrato</label>
                 <input
                   value={contratos?.codigo_contrato}
@@ -149,83 +139,11 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                 ></input>
               </div>
               <div>
-                <label>Tipo de Contrato</label>
-                <select
-                  value={contratos?.tipo_contrato}
-                  name="tipo_contrato"
-                  onChange={handleData}
-                >
-                  <option value="-1">Seleccione</option>
-                  <option value="Especias">Especias</option>
-                  <option value="Planilla">Planilla</option>
-                </select>
-              </div>
-
-              {data && data.trabajador && data.trabajador.length > 0 ? null : (
-                <div>
-                  <label>Puesto o Rol</label>
-                  <select
-                    value={contratos?.puesto}
-                    name="puesto"
-                    onChange={handleData}
-                  >
-                    <option value="-1">Seleccione</option>
-                    {cargo.map((item, i) => (
-                      <option key={i} value={item.id}>
-                        {item.nombre}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-            </section>
-            <section>
-              <div>
-                <label>Cooperativa</label>
+                <label>Fecha de ingreso</label>
                 <input
-                  value={contratos?.cooperativa}
-                  name="cooperativa"
-                  onChange={handleData}
-                ></input>
-              </div>
-              <div>
-                <label>Recomendado por</label>
-                <input
-                  value={contratos?.recomendado_por}
-                  name="recomendado_por"
-                  onChange={handleData}
-                ></input>
-              </div>
-              <div>
-                <label>Condición de cooperativa</label>
-                <input
-                  value={contratos?.condicion_cooperativa}
-                  name="condicion_cooperativa"
-                  onChange={handleData}
-                ></input>
-              </div>
-              <div>
-                <label>Campamento</label>
-                <select
-                  value={contratos?.campamento_id}
-                  name="campamento_id"
-                  onChange={handleData}
-                >
-                  <option value="-1">Seleccione</option>
-                  {campamento.map((item, i) => (
-                    <option key={i} value={item.id}>
-                      {item.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </section>
-            <section>
-              <div>
-                <label>Periodo de trabajo</label>
-                <input
-                  value={contratos?.periodo_trabajo}
-                  name="periodo_trabajo"
+                  type="date"
+                  value={contratos?.fecha_inicio?.split("T")[0]}
+                  name="fecha_inicio"
                   onChange={handleData}
                 ></input>
               </div>
@@ -239,6 +157,28 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                 ></input>
               </div>
               <div>
+                <label>Periodo de trabajo</label>
+                <input
+                  value={contratos?.periodo_trabajo}
+                  name="periodo_trabajo"
+                  onChange={handleData}
+                ></input>
+              </div>
+            </section>
+            <section>
+            <div>
+                <label>Tipo de Contrato</label>
+                <select
+                  value={contratos?.tipo_contrato}
+                  name="tipo_contrato"
+                  onChange={handleData}
+                >
+                  <option value="-1">Seleccione</option>
+                  <option value="Especias">Especias</option>
+                  <option value="Planilla">Planilla</option>
+                </select>
+              </div>
+            <div>
                 <label>Gerencia</label>
                 <select
                   value={contratos?.gerencia}
@@ -268,6 +208,51 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                   ))}
                 </select>
               </div>
+              <div>
+                <label>Campamento</label>
+                <select
+                  value={contratos?.campamento_id}
+                  name="campamento_id"
+                  onChange={handleData}
+                >
+                  <option value="-1">Seleccione</option>
+                  {campamento.map((item, i) => (
+                    <option key={i} value={item.id}>
+                      {item.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+
+            </section>
+            <section>
+
+            <div>
+                <label>Cooperativa</label>
+                <input
+                  value={contratos?.cooperativa}
+                  name="cooperativa"
+                  onChange={handleData}
+                ></input>
+              </div>
+              <div>
+                <label>Condición de cooperativa</label>
+                <input
+                  value={contratos?.condicion_cooperativa}
+                  name="condicion_cooperativa"
+                  onChange={handleData}
+                ></input>
+              </div>
+              <div>
+                <label>Recomendado por</label>
+                <input
+                  value={contratos?.recomendado_por}
+                  name="recomendado_por"
+                  onChange={handleData}
+                ></input>
+              </div>
+              
             </section>
 
             <section>

@@ -4,7 +4,14 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { CrudContext } from "../../context/CrudContext";
 import { PlanillaContext } from "../../context/PlanillaContext";
 
-const Buscador = ({ abrirModal, registrar, crear, exportar, cargar }) => {
+const Buscador = ({
+  abrirModal,
+  registrar,
+  crear,
+  exportar,
+  cargar,
+  actualizarTabla,
+}) => {
   const { createData } = useContext(CrudContext);
   const { campamentoAsistencia } = useContext(PlanillaContext);
 
@@ -21,7 +28,11 @@ const Buscador = ({ abrirModal, registrar, crear, exportar, cargar }) => {
       campamento_id: campamentoAsistencia.id,
     };
 
-    createData(asistencia, route);
+    createData(asistencia, route).then((res) => {
+      if (res.status === 200) {
+        actualizarTabla();
+      }
+    });
   };
 
   return (

@@ -27,7 +27,6 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
   const { deleteData, updateData, setData } = useContext(CrudContext);
   const [id, setId] = useState("");
 
-  console.log(table);
 
   const handleEdit = (e) => {
     setDataToEdit(e);
@@ -39,7 +38,7 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
   const handleDelete = (e) => {
     alertaEliminarExito("trabajador").then((res) => {
       if (res.isConfirmed) {
-        deleteData(e, route);
+        deleteData( route, e);
 
         Swal.fire(
           "Eliminado!",

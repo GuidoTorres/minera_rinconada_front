@@ -39,19 +39,21 @@ const EmpresaLayout = () => {
   };
 
   const handleDelete = (e) => {
+    console.log(e);
     alertaEliminarExito("empresa").then((res) => {
       if (res.isConfirmed) {
-        deleteData(e, route);
+        deleteData(route, e);
 
         Swal.fire(
           "Eliminado!",
-          "La asociación se eliminó correctamente.",
+          "Se eliminó correctamente la empresa.",
           "success"
         );
       }
       getEmpresa();
     });
   };
+    
   useEffect(() => {
     getEmpresa();
   }, []);

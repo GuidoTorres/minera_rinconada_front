@@ -109,7 +109,7 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="buscador">
-          <Buscador abrirModal={setRegistrarContratoAsociacion} />
+          <Buscador abrirModal={setRegistrarContratoAsociacion}  registrar={true}/>
         </section>
         <Tabla columns={historialContrato} table={data1} />
       </div>

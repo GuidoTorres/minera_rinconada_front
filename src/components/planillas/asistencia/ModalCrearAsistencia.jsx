@@ -9,11 +9,15 @@ import { CrudContext } from "../../../context/CrudContext";
 const ModalCrearAsistencia = ({ data }) => {
   const { setControlAsistencia, campamentoAsistencia, fechaId } =
     useContext(PlanillaContext);
-  const { getDataById, data2, setData2, createData } = useContext(CrudContext);
+  const { getDataById2, data2, setData2, createData } = useContext(CrudContext);
 
   const getTrabajadorAsistencia = async () => {
     const route = "asistencia/trabajador";
-    const response = await getDataById(route, campamentoAsistencia.id);
+    const response = await getDataById2(
+      route,
+      campamentoAsistencia.id,
+      fechaId.id
+    );
     setData2(response.data);
   };
   useEffect(() => {
@@ -31,7 +35,6 @@ const ModalCrearAsistencia = ({ data }) => {
       trabajador_id: e.id,
       asistencia: event.target.value,
     };
-    console.log(fechaId);
     const response = await createData(info, route);
   };
 
@@ -39,7 +42,7 @@ const ModalCrearAsistencia = ({ data }) => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row?.id,
+      selector: (row) => row?.id ,
     },
     {
       id: "dni",
@@ -64,16 +67,20 @@ const ModalCrearAsistencia = ({ data }) => {
       name: "Asistencia",
       button: true,
       center: true,
-      cell: (e) => (
-        <select name="select" onChange={(event) => handleAsistencia(event, e)}>
-          <option value="-1">Seleccione</option>
-          <option value="Asistio">Asistio</option>
-          <option value="Falto">Falto</option>
-          <option value="Permiso">Permiso</option>
-          <option value="Dia Libre">Dia Libre</option>
-          <option value="Comisión">Comisión</option>
-        </select>
-      ),
+      cell: (e) =>
+        // e.trabajador_asistencia.asistencia
+          <select
+            defaultValue={e?.trabajador_asistencia?.map(item => {return item.asistencia})}
+            onChange={(event) => handleAsistencia(event, e)}
+          >
+            <option value="-1">Seleccione</option>
+            <option value="Asistio">Asistio</option>
+            <option value="Falto">Falto</option>
+            <option value="Permiso">Permiso</option>
+            <option value="Dia Libre">Dia Libre</option>
+            <option value="Comisión">Comisión</option>
+          </select>
+        ,
     },
 
     {

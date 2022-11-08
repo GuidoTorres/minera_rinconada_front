@@ -47,9 +47,10 @@ const PersonalLayout = () => {
   };
 
   const handleDelete = (e) => {
+    console.log(e);
     alertaEliminarExito("trabajador").then((res) => {
       if (res.isConfirmed) {
-        deleteData(e, route);
+        deleteData(route, e);
 
         Swal.fire(
           "Eliminado!",
@@ -126,7 +127,7 @@ const PersonalLayout = () => {
       id: "Campamento",
       name: "Campamento",
       selector: (row) =>
-        row?.campamento?.length !== 0 ? row?.campamento : "Por asignar",
+        row?.campamento?.length !== 0 ? row?.campamento?.map(item => item.nombre) : "Por asignar",
       sortable: true,
     },
     {
@@ -174,10 +175,9 @@ const PersonalLayout = () => {
             display: "flex",
             justifyContent: "space-around",
             fontSize: "13px",
-            pointerEvents: e.aprobado === "si" ? "auto" : "none",
           }}
         >
-          {e?.evaluacion_laboral !== "" ? e.evaluacion_laboral : "--"}
+          {e?.nota !== "" ? e.nota : "--"}
           <AiFillEye
             onClick={() => {
               handleContrato(e);
@@ -215,7 +215,7 @@ const PersonalLayout = () => {
   return (
     <>
       <Header text={"Trabajador"} user={"Usuario"} ruta={"/personal"} />
-      <Buscador abrirModal={setRegistrarPersonal} />
+      <Buscador abrirModal={setRegistrarPersonal} importar={true} registrar={true}/>
       <Tabla columns={personal} table={search} />
 
       {registrarPersonal && (

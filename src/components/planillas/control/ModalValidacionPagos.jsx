@@ -12,7 +12,7 @@ const ModalValidacionPagos = ({ data }) => {
 
   const getTareo = async () => {
     const route = "planilla/tareo";
-    const response = await getDataById(route, 385);
+    const response = await getDataById(route, data.id);
     setData2(response.data);
   };
   useEffect(() => {
@@ -68,19 +68,19 @@ const ModalValidacionPagos = ({ data }) => {
           <section style={{ paddingLeft: "30px", paddingRight: "30px" }}>
             <div>
               <label htmlFor="">
-                Nombre: {data && [data].map((item) => item.nombre)}
+                Nombre: {data && [data].map((item) => item.nombre ? item.nombre: "----")}
               </label>
             </div>
 
             <div style={{ display: "flex", gap: "50px", marginTop: "10px" }}>
               <div>
                 <label htmlFor="">
-                  Dni: {data && [data].map((item) => item.dni)}
+                  Dni: {data && [data].map((item) => item.dni ? item.dni: "----")}
                 </label>
               </div>
               <div>
                 <label htmlFor="">
-                  Teléfono: {data && [data].map((item) => item.telefono)}
+                  Teléfono: {data && [data].map((item) => item.telefono ? item.telefono: "----")}
                 </label>
               </div>
               <div>

@@ -30,7 +30,7 @@ const ModalHistorialContrato = ({ selected }) => {
     const response = await getDataById(route, selected.id);
     setData1(response.data);
   };
-  console.log(selected);
+  console.log(selected.aprobado);
   const handleEdit = (e) => {
     setDataToEdit(e);
     setRegistrarContrato(true);
@@ -41,7 +41,7 @@ const ModalHistorialContrato = ({ selected }) => {
     console.log(id);
     alertaEliminarExito("contrato").then((res) => {
       if (res.isConfirmed) {
-        deleteData(id.contratoId, route);
+        deleteData(route, id.id);
 
         Swal.fire(
           "Eliminado!",
@@ -113,7 +113,10 @@ const ModalHistorialContrato = ({ selected }) => {
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="buscador">
-          <Buscador abrirModal={setRegistrarContrato} />
+          <Buscador
+            abrirModal={setRegistrarContrato}
+            registrar={selected?.aprobado === "si" ? true : false}
+          />
         </section>
         <Tabla columns={historialContrato} table={data1} />
       </div>

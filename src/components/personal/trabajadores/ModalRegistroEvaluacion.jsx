@@ -157,7 +157,7 @@ const ModalRegistroEvaluacion = ({
                   ))}
                 </select>
               </div>
-              <div>
+              {/* <div>
                 <label htmlFor="">Codigo de contrato</label>
                 <input
                   type="text"
@@ -165,30 +165,31 @@ const ModalRegistroEvaluacion = ({
                   name="contrato_id"
                   onChange={handleData}
                 />
-              </div>
+              </div> */}
               <div>
                 <label>Capacitación SSO</label>
                 <input
                   value={evaluacion.capacitacion_sso}
                   name="capacitacion_sso"
                   onChange={handleData}
+                  type="number"
                 ></input>
               </div>
-            </section>
-            <section>
               <div>
                 <label htmlFor="">Capacitación GEMA</label>
                 <input
-                  type="text"
+                  type="number"
                   value={evaluacion.capacitacion_gema}
                   name="capacitacion_gema"
                   onChange={handleData}
                 />
               </div>
+            </section>
+            <section>
               <div>
                 <label htmlFor="">Evaluación laboral</label>
                 <input
-                  type="text"
+                  type="number"
                   value={evaluacion.evaluacion_laboral}
                   name="evaluacion_laboral"
                   onChange={handleData}
@@ -197,7 +198,7 @@ const ModalRegistroEvaluacion = ({
               <div>
                 <label htmlFor="">Presión arterial</label>
                 <input
-                  type="text"
+                  type="number"
                   value={evaluacion.presion_arterial}
                   name="presion_arterial"
                   onChange={handleData}
@@ -206,9 +207,18 @@ const ModalRegistroEvaluacion = ({
               <div>
                 <label htmlFor="">Temperatura</label>
                 <input
-                  type="text"
+                  type="number"
                   value={evaluacion.temperatura}
                   name="temperatura"
+                  onChange={handleData}
+                />
+              </div>
+              <div>
+                <label htmlFor="">Saturación de oxígeno</label>
+                <input
+                  type="number"
+                  value={evaluacion.saturacion}
+                  name="saturacion"
                   onChange={handleData}
                 />
               </div>
@@ -216,18 +226,9 @@ const ModalRegistroEvaluacion = ({
 
             <section>
               <div>
-                <label htmlFor="">Saturación de oxígeno</label>
-                <input
-                  type="text"
-                  value={evaluacion.saturacion}
-                  name="saturacion"
-                  onChange={handleData}
-                />
-              </div>
-              <div>
                 <label htmlFor="">IMC</label>
                 <input
-                  type="text"
+                  type="number"
                   value={evaluacion.imc}
                   name="imc"
                   onChange={handleData}
@@ -236,7 +237,7 @@ const ModalRegistroEvaluacion = ({
               <div>
                 <label htmlFor="">Pulso(pm)</label>
                 <input
-                  type="text"
+                  type="number"
                   value={evaluacion.pulso}
                   name="pulso"
                   onChange={handleData}
