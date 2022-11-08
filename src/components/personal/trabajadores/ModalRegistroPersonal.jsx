@@ -115,7 +115,7 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
                 <input
                   type="date"
                   name="fecha_nacimiento"
-                  value={trabajador?.fecha_nacimiento.split("T")[0]}
+                  value={trabajador?.fecha_nacimiento?.split("T")[0]}
                   onChange={handleData}
                 ></input>
               </div>
