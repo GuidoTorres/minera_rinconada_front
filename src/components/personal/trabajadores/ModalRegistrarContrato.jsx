@@ -337,7 +337,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
               </section>
             </fieldset>
 
-            <fieldset>
+            {/* <fieldset>
               <legend>Recomendado</legend>
               <section>
                 <div>
@@ -383,7 +383,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                   </select>
                 </div>
               </section>
-            </fieldset>
+            </fieldset> */}
 
             <fieldset>
               <legend>Termino de contrato</legend>

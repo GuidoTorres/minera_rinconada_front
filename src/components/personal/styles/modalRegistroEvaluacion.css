@@ -13,7 +13,6 @@
 .modal-registrar-contrato .modal-container {
   width: 92%;
   height: 80% !important;
-  margin-bottom: 10px;
   overflow-y: auto;
 }
 .aprobado_rrhh {
@@ -29,9 +28,7 @@
 
 .aprobado {
   display: flex;
-  flex-direction: row;
-  height: 30px;
-  
+  flex-direction: column;
 }
 .aprobado .titulo {
   width: 100px;
@@ -53,16 +50,36 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .modal-registrar-contrato .modal-body fieldset {
   margin-top: 10px;
   padding: 5px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.modal-registrar-contrato .modal-body .cabecera {
+  margin-top: 10px;
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.modal-registrar-contrato .modal-body .cabecera div {
+  width: 49%;
+}
+.modal-registrar-contrato .modal-body .cooperativa {
+  width: 100%;
+}
+.modal-registrar-contrato .modal-body .cooperativa div {
+  width: 32%;
 }
 
-.modal-registrar-contrato .modal-body fieldset:nth-child(2) section div {
+.modal-registrar-contrato .modal-body fieldset:nth-child(4) section div {
   width: 30%;
 }
 
@@ -155,8 +172,8 @@
   }
   .modal-registrar-contrato .modal-container {
     width: 900px;
-    height: 550px !important;
-    margin-top: -100px;
+    height: 750px !important;
+    margin-top: 10px;
   }
   .modal-registrar-contrato .modal-body section {
     flex-direction: row;

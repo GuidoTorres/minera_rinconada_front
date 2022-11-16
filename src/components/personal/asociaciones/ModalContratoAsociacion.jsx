@@ -293,7 +293,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
               </section>
             </fieldset>
 
-            {data.tipo !== "Canteadores" ? (
+            {/* {data.tipo !== "Canteadores" ? (
               <fieldset>
                 <legend>Recomendado</legend>
                 <section>
@@ -343,7 +343,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
               </fieldset>
             ) : (
               ""
-            )}
+            )} */}
 
             <fieldset>
               <legend>Termino de contrato</legend>

@@ -34,16 +34,24 @@ const ModalRegistroEvaluacion = ({
     emo: "",
     trabajador_id: selected.id,
     aprobado: "",
+    recomendado_por: "",
+    cooperativa: "",
+    condicion_cooperativa: "",
   };
   const { setRegistrarEvaluacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
   const { createData, updateData, getData } = useContext(CrudContext);
   const [evaluacion, setEvaluacion] = useState(evaluacionValues);
   const [cargo, setCargo] = useState([]);
+  const [socio, setSocio] = useState([]);
 
   const getCargo = async () => {
+    const route2 = "socio";
     const response = await getData(route1);
+    const response2 = await getData(route2);
+
     setCargo(response.data);
+    setSocio(response2.data);
   };
 
   useEffect(() => {
@@ -63,6 +71,13 @@ const ModalRegistroEvaluacion = ({
     setEvaluacion((values) => {
       return { ...values, [name]: value };
     });
+
+    if (name === "recomendado_por") {
+      const prueba = socio.filter((item) => item.nombre === value);
+      const cooperativa = prueba.map(
+        (item) => (evaluacion.cooperativa = item.cooperativa)
+      );
+    }
   };
 
   const handleSubmit = (e) => {
@@ -114,14 +129,14 @@ const ModalRegistroEvaluacion = ({
     <div className="modal-registrar-contrato">
       <div className="modal-container">
         <section className="modal-header">
-        {dataToEdit ? "Editar evaluación": "Registrar evaluación"}
+          {dataToEdit ? "Editar evaluación" : "Registrar evaluación"}
 
           <AiOutlineClose onClick={closeModal} />
         </section>
         <div className="aprobado_rrhh">
           <div>
             <div className="titulo">
-              <label htmlFor=""> Autoriza fizcalizador: </label>
+              <label htmlFor=""> Autoriza fiscalizador: </label>
             </div>
             <div>
               <label htmlFor=""> Si</label>
@@ -145,35 +160,84 @@ const ModalRegistroEvaluacion = ({
           </div>
         </div>
         <form className="modal-body" onSubmit={handleSubmit}>
-          <fieldset>
-            <legend>Control</legend>
-
+          <fieldset className="cabecera">
+            <legend></legend>
+            <div>
+              <label>Fecha de evaluación</label>
+              <input
+                type="date"
+                value={evaluacion.fecha_evaluacion.split("T")[0]}
+                name="fecha_evaluacion"
+                onChange={handleData}
+              />
+            </div>
+            <div>
+              <label htmlFor="">Cargo al que postula</label>
+              <select
+                value={evaluacion.puesto}
+                name="puesto"
+                onChange={handleData}
+              >
+                <option value="-1">Seleccione</option>
+                {cargo.map((item, i) => (
+                  <option key={i} value={item.id}>
+                    {item.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </fieldset>
+          <fieldset className="cooperativa">
+            <legend>Cooperativa</legend>
             <section>
               <div>
-                <label>Fecha de evaluación</label>
-                <input
-                  type="date"
-                  value={evaluacion.fecha_evaluacion.split("T")[0]}
-                  name="fecha_evaluacion"
-                  onChange={handleData}
-                />
-              </div>
-              <div>
-                <label htmlFor="">Puesto o Rol</label>
+                <label>Recomendado por</label>
                 <select
-                  value={evaluacion.puesto}
-                  name="puesto"
+                  value={evaluacion?.recomendado_por}
+                  name="recomendado_por"
                   onChange={handleData}
                 >
                   <option value="-1">Seleccione</option>
-                  {cargo.map((item, i) => (
-                    <option key={i} value={item.id}>
+                  {socio.map((item, i) => (
+                    <option key={i} value={item.nombre}>
                       {item.nombre}
                     </option>
                   ))}
                 </select>
               </div>
+              <div>
+                <label>Cooperativa</label>
+                <input
+                  disabled
+                  type="text"
+                  name="cooperativa"
+                  value={evaluacion?.cooperativa}
+                />
+              </div>
 
+              <div>
+                <label>Condición cooperativa</label>
+                <select
+                  value={evaluacion?.condicion_cooperativa}
+                  name="condicion_cooperativa"
+                  onChange={handleData}
+                >
+                  <option value="-1">Seleccione</option>
+                  <option value="Hijo">Hijo</option>
+                  <option value="Sobrino">Sobrino</option>
+                  <option value="Primo">Primo</option>
+                  <option value="Tio">Tio</option>
+                  <option value="Tio">Compadre</option>
+                  <option value="Tio">Compañero</option>
+                  <option value="Tio">Amigo</option>
+                </select>
+              </div>
+            </section>
+          </fieldset>
+          <fieldset>
+            <legend>Control</legend>
+
+            <section>
               <div>
                 <label htmlFor="">Evaluación laboral</label>
                 <input
@@ -208,6 +272,10 @@ const ModalRegistroEvaluacion = ({
                     onChange={handleData}
                   />
                 </div>
+              </div>
+              <div>
+                <label htmlFor="">Observaciones</label>
+                <textarea></textarea>
               </div>
             </div>
           </fieldset>
@@ -295,6 +363,10 @@ const ModalRegistroEvaluacion = ({
                   />
                 </div>
               </div>
+              <div>
+                <label htmlFor="">Observaciones</label>
+                <textarea></textarea>
+              </div>
             </div>
           </fieldset>
           <fieldset>
@@ -336,6 +408,10 @@ const ModalRegistroEvaluacion = ({
                   />
                 </div>
               </div>
+              <div>
+                <label htmlFor="">Observaciones</label>
+                <textarea></textarea>
+              </div>
             </div>
           </fieldset>
           <fieldset>
@@ -351,7 +427,7 @@ const ModalRegistroEvaluacion = ({
                   onChange={handleData}
                 />
               </div>
-              <div>
+              {/* <div>
                 <label htmlFor="">Antecedentes CCM</label>
                 <textarea
                   id=""
@@ -361,18 +437,7 @@ const ModalRegistroEvaluacion = ({
                   name="antecedentes"
                   onChange={handleData}
                 ></textarea>
-              </div>
-              <div>
-                <label htmlFor="">Cargar EMO</label>
-                <textarea
-                  id=""
-                  cols="30"
-                  rows="10"
-                  value={evaluacion.emo}
-                  name="emo"
-                  onChange={handleData}
-                ></textarea>
-              </div>
+              </div> */}
             </section>
             <div className="aprobado">
               <div>
@@ -399,12 +464,15 @@ const ModalRegistroEvaluacion = ({
                   />
                 </div>
               </div>
+              <div>
+                <label htmlFor="">Observaciones</label>
+                <textarea></textarea>
+              </div>
             </div>
           </fieldset>
 
           <div className="footer">
-          {dataToEdit ? <button>Editar</button> : <button>Registar</button>}
-
+            {dataToEdit ? <button>Editar</button> : <button>Registar</button>}
           </div>
         </form>
       </div>

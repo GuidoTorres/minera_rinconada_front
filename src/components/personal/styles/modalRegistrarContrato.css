@@ -10,7 +10,6 @@
   z-index: 3;
 }
 
-
 .modal-contrato .modal-container {
   width: 92%;
   height: 800px;
@@ -25,7 +24,6 @@
 .modal-contrato .modal-body fieldset {
   padding: 5px;
 }
-
 
 .modal-contrato .modal-body section div {
   width: 100%;
@@ -49,16 +47,14 @@
   width: 50%;
   height: 40px;
 }
-.modal-contrato .modal-body .footer{
-
- width: 100%;
- display: flex;
- align-items: flex-end;
+.modal-contrato .modal-body .footer {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
 }
-.modal-contrato .modal-body button{
-
-  width: 30% ;
- }
+.modal-contrato .modal-body button {
+  width: 30%;
+}
 
 @media screen and (min-width: 500px) {
   .modal-contrato .modal-body section {
@@ -81,7 +77,6 @@
     flex-wrap: wrap;
     gap: 5px;
     margin-top: 10px;
-
   }
   .modal-contrato .modal-body section div label {
     width: 100%;
@@ -102,7 +97,7 @@
 @media screen and (min-width: 1000px) {
   .modal-contrato .modal-container {
     width: 900px;
-    height: 520px;
+    height: 450px;
   }
   .modal-contrato .modal-body section {
     flex-direction: row;
