@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { CrudContext } from "../../context/CrudContext";
 import { PlanillaContext } from "../../context/PlanillaContext";
+import { alertaErrorCrear, alertaExito } from "../../helpers/alertMessage";
 
 const Buscador = ({
   abrirModal,
@@ -30,7 +31,11 @@ const Buscador = ({
 
     createData(asistencia, route).then((res) => {
       if (res.status === 200) {
-        actualizarTabla();
+        alertaExito(res.msg, res.status).then((res) => {
+          if (res.isConfirmed) {
+            actualizarTabla();
+          }
+        });
       }
     });
   };
@@ -82,9 +87,7 @@ const Buscador = ({
             ""
           )}
           {cargar !== false ? (
-            <button onClick={crearAsistencia} style={{ width: "100px" }}>
-              Cargar
-            </button>
+            <button style={{ width: "100px" }}>Cargar</button>
           ) : (
             ""
           )}

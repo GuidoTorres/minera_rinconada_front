@@ -19,7 +19,7 @@ const ListaAsistencia = () => {
   const { getData, setData, data, deleteData } = useContext(CrudContext);
 
   const getAsistencia = async () => {
-    const route = "asistencia/trabajador";
+    const route = "asistencia";
     const response = await getData(route);
     setData(response.data);
   };
@@ -35,7 +35,7 @@ const ListaAsistencia = () => {
 
   const handleDelete = (e) => {
     const route = "asistencia";
-    deleteData(route, e.id).then((res) => {
+    deleteData(route, e).then((res) => {
       if (res.status === 200) {
         getAsistencia();
       }
@@ -46,59 +46,25 @@ const ListaAsistencia = () => {
     {
       id: "Nro",
       name: "Nro",
-      width: "80px",
       selector: (row, index) => index + 1,
     },
     {
-      id: "dni",
-      name: "Dni",
+      id: "fecha",
+      name: "Fecha",
       sortable: true,
-      width: "20%",
 
-      selector: (row) => row?.dni,
+      selector: (row) => row?.fecha,
     },
-
     {
-      id: "nombre",
-      name: "Nombre",
-      sortable: true,
-      width: "30%",
-
-      selector: (row) =>
-        row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
-    },
-
-    {
-      id: "asistencia",
-      name: "Asistencia",
-      sortable: true,
-      width: "20%",
-
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
       cell: (e) => (
         <>
-          <select
-            // defaultValue={e?.trabajador_asistencia?.map(item => {return item.asistencia})}
-            onChange={(event) => handleAsistencia(event, e)}
-          >
-            <option value="-1">Seleccione</option>
-            <option value="Asistio">Asistio</option>
-            <option value="Falto">Falto</option>
-            <option value="Permiso">Permiso</option>
-            <option value="Dia Libre">Dia Libre</option>
-            <option value="Comisión">Comisión</option>
-          </select>
+          <AiFillEdit onClick={() => handleEdit(e)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
         </>
       ),
-    },
-
-    {
-      id: "tipo",
-      name: "Tipo de trabajador",
-      button: true,
-      width: "20%",
-
-      selector: (row) =>
-        row?.asociacion_id === null ? "Normal" : "Asociación",
     },
   ];
 
@@ -107,9 +73,9 @@ const ListaAsistencia = () => {
       <Header text={"Asistencia"} user={"Usuario"} ruta={"/planilla"} />
       <Buscador
         registrar={false}
-        crear={false}
+        crear={true}
         exportar={false}
-        cargar={true}
+        cargar={false}
         actualizarTabla={getAsistencia}
       />
       <Tabla columns={planilla} table={data} />

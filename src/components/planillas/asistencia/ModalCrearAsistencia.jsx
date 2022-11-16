@@ -10,15 +10,11 @@ import { CrudContext } from "../../../context/CrudContext";
 const ModalCrearAsistencia = ({ data }) => {
   const { setControlAsistencia, campamentoAsistencia, fechaId } =
     useContext(PlanillaContext);
-  const { getDataById2, data2, setData2, createData } = useContext(CrudContext);
+  const { getData, data2, setData2, createData } = useContext(CrudContext);
 
   const getTrabajadorAsistencia = async () => {
     const route = "asistencia/trabajador";
-    const response = await getDataById2(
-      route,
-      campamentoAsistencia.id,
-      fechaId.id
-    );
+    const response = await getData(route);
     setData2(response.data);
   };
   useEffect(() => {
@@ -43,22 +39,24 @@ const ModalCrearAsistencia = ({ data }) => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row?.id ,
+      width: "80px",
+      selector: (row, index) => index + 1,
     },
     {
       id: "dni",
       name: "Dni",
       sortable: true,
-      width: "25%",
-      center: true,
+      width: "20%",
+
       selector: (row) => row?.dni,
     },
+
     {
-      id: "trabajador",
-      name: "Nombre del trabajador",
+      id: "nombre",
+      name: "Nombre",
       sortable: true,
-      width: "25%",
-      center: true,
+      width: "30%",
+
       selector: (row) =>
         row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
     },
@@ -66,12 +64,13 @@ const ModalCrearAsistencia = ({ data }) => {
     {
       id: "asistencia",
       name: "Asistencia",
-      button: true,
-      center: true,
-      cell: (e) =>
-        // e.trabajador_asistencia.asistencia
+      sortable: true,
+      width: "20%",
+
+      cell: (e) => (
+        <>
           <select
-            defaultValue={e?.trabajador_asistencia?.map(item => {return item.asistencia})}
+            // defaultValue={e?.trabajador_asistencia?.map(item => {return item.asistencia})}
             onChange={(event) => handleAsistencia(event, e)}
           >
             <option value="-1">Seleccione</option>
@@ -81,17 +80,18 @@ const ModalCrearAsistencia = ({ data }) => {
             <option value="Dia Libre">Dia Libre</option>
             <option value="Comisión">Comisión</option>
           </select>
-        ,
+        </>
+      ),
     },
 
     {
-      id: "tipo_trabajador",
+      id: "tipo",
       name: "Tipo de trabajador",
-      sortable: true,
-      width: "25%",
-      center: true,
+      button: true,
+      width: "20%",
+
       selector: (row) =>
-        row?.asociacion_id === null ? "Normal" : "Asociacion",
+        row?.asociacion_id === null ? "Normal" : "Asociación",
     },
   ];
   return (
@@ -106,7 +106,7 @@ const ModalCrearAsistencia = ({ data }) => {
             <Buscador
               registrar={false}
               crear={false}
-              exportar={true}
+              exportar={false}
               cargar={true}
             />
           </section>

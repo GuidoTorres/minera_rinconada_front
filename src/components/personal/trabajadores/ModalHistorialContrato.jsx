@@ -10,7 +10,6 @@ import { alertaEliminarExito } from "../../../helpers/alertMessage";
 import ModalRegistrarContrato from "./ModalRegistrarContrato";
 import Swal from "sweetalert2";
 
-
 const ModalHistorialContrato = ({ selected }) => {
   const route = "contrato";
   const {
@@ -22,11 +21,13 @@ const ModalHistorialContrato = ({ selected }) => {
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
   const [id, setId] = useState("");
 
-
   const getContrato = async () => {
     const route = "contrato";
     const response = await getDataById(route, selected.id);
-    setData1(response.data);
+    
+    const prueba = response.data.filter(item => item !== null)
+    setData1(prueba);
+    
   };
   console.log(selected.aprobado);
   const handleEdit = (e) => {
@@ -36,21 +37,17 @@ const ModalHistorialContrato = ({ selected }) => {
   };
 
   const handleDelete = (id) => {
-    alertaEliminarExito("contrato").then((res) => {
-      if (res.isConfirmed) {
-        deleteData(route, id.id);
-
-        Swal.fire(
-          "Eliminado!",
-          "El contrato se eliminó correctamente.",
-          "success"
-        );
+    deleteData(route, id.id).then((res) => {
+      if (res.status === 200) {
+        alertaEliminar(res.msg, res.status).then((res) => {
+          closeModal()
+          if (res.isConfirmed) {
+            actualizarTabla();
+          }
+        });
       }
-      getContrato();
     });
   };
-
-
 
   const closeModal = () => {
     setHistorialContrato(false);
@@ -64,7 +61,7 @@ const ModalHistorialContrato = ({ selected }) => {
     {
       id: "Id contrato",
       name: "Id contrato",
-      selector: (row) => row.id,
+      selector: (row) => row?.id,
     },
     {
       id: "Tipo de Contrato",
@@ -112,10 +109,7 @@ const ModalHistorialContrato = ({ selected }) => {
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="buscador">
-          <Buscador
-            abrirModal={setRegistrarContrato}
-            registrar={true}
-          />
+          <Buscador abrirModal={setRegistrarContrato} registrar={true} />
         </section>
         <Tabla columns={historialContrato} table={data1} />
       </div>

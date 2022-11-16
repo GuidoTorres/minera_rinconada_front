@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { CrudContext } from "../../../context/CrudContext";
 import { PersonalContext } from "../../../context/PersonalContext";
-import { alertaEliminarExito } from "../../../helpers/alertMessage";
+import {
+  alertaEliminar,
+  alertaEliminarExito,
+} from "../../../helpers/alertMessage";
 import {
   AiFillEdit,
   AiFillEye,
@@ -49,19 +52,13 @@ const PersonalLayout = () => {
   };
 
   const handleDelete = (e) => {
-    console.log(e);
-    alertaEliminarExito("trabajador").then((res) => {
-      if (res.isConfirmed) {
-        deleteData(route, e)
-          .then((res) => res.json())
-          .then((res) => {
-            Swal.fire({
-              icon: res.status === 200 ? "success" : "error",
-              // title: "Error...",
-              text: `${res.msg}`,
-            });
-          });
-        getTrabajadores();
+    deleteData(route, e).then((res) => {
+      if (res.status === 200) {
+        alertaEliminar(res.msg, res.status).then((res) => {
+          if (res.isConfirmed) {
+            getTrabajadores();
+          }
+        });
       }
     });
   };
@@ -142,8 +139,8 @@ const PersonalLayout = () => {
       id: "Campamento",
       name: "Campamento",
       selector: (row) =>
-        row?.campamento?.length !== 0
-          ? row?.campamento?.map((item) => item.nombre)
+         row && row?.campamento?.length !== 0
+          ? row?.campamento?.map((item) => item?.nombre)
           : "Por asignar",
       sortable: true,
     },

@@ -7,6 +7,7 @@ import { PersonalContext } from "../../../context/PersonalContext";
 import {
   alertaEditarExito,
   alertaError,
+  alertaErrorCrear,
   alertaExito,
 } from "../../../helpers/alertMessage";
 import "../styles/modalRegistroEvaluacion.css";
@@ -85,37 +86,29 @@ const ModalRegistroEvaluacion = ({
     if (!evaluacion.fecha_evaluacion) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(evaluacion, route)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
-          } else {
-            alertaErrorCrear(res.msg).then((res) => {
-              closeModal();
-            });
-          }
-        });
+      createData(evaluacion, route).then((res) => {
+        if (res.status) {
+          alertaExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              actualizarTabla();
+            }
+          });
+        }
+      });
     }
 
     if (dataToEdit) {
-      updateData(evaluacion, dataToEdit.evaluacion_id, route)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaEditarExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
-          }
-        });
+      updateData(evaluacion, dataToEdit.evaluacion_id, route).then((res) => {
+        if (res.status === 200) {
+          alertaEditarExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              actualizarTabla();
+            }
+          });
+        }
+      });
     }
   };
 

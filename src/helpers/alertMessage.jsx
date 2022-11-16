@@ -21,6 +21,14 @@ const alertaExito = (text, status) => {
     text: `${text}`,
   });
 };
+
+const alertaEliminar = (text, status) => {
+  return Swal.fire({
+    icon: status === 200 ? "success" : "error",
+    // title: "Error...",
+    text: `${text}`,
+  });
+};
 const alertaEditarExito = (text, status) => {
   return Swal.fire({
     icon: status === 200 ? "success" : "error",
@@ -42,4 +50,4 @@ const alertaEliminarExito = (text) => {
   });
 };
 
-export { alertaError, alertaExito, alertaEliminarExito, alertaEditarExito, alertaErrorCrear };
+export {alertaEliminar, alertaError, alertaExito, alertaEliminarExito, alertaEditarExito, alertaErrorCrear };

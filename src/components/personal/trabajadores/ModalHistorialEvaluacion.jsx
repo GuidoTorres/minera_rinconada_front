@@ -34,17 +34,15 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
   };
 
   const handleDelete = (id) => {
-    alertaEliminarExito("evaluacion").then((res) => {
-      if (res.isConfirmed) {
-        deleteData( route, id.evaluacion_id);
-
-        Swal.fire(
-          "Eliminado!",
-          "La evaluación se eliminó correctamente.",
-          "success"
-        );
+    deleteData(route, id.evaluacion_id).then((res) => {
+      if (res.status === 200) {
+        alertaEliminar(res.msg, res.status).then((res) => {
+          closeModal()
+          if (res.isConfirmed) {
+            actualizarTabla();
+          }
+        });
       }
-      getEvaluacion();
     });
   };
 
@@ -101,7 +99,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
             <AiOutlineClose onClick={closeModal} />
           </section>
           <section className="buscador">
-            <Buscador abrirModal={setRegistrarEvaluacion} registrar={true}/>
+            <Buscador abrirModal={setRegistrarEvaluacion} registrar={true} />
           </section>
           <Tabla columns={historialEvaluacion} table={data1} />
         </div>
@@ -110,7 +108,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
         <ModalRegistroEvaluacion
           actualizarTabla={getEvaluacion}
           selected={selected}
-          actualizarTrabajador = {actualizarTrabajador}
+          actualizarTrabajador={actualizarTrabajador}
         />
       )}
     </div>

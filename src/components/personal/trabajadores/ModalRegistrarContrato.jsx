@@ -127,37 +127,33 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     if (!contrato.fecha_inicio || !contrato.codigo_contrato) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(contrato, route)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
-          } else {
-            alertaErrorCrear(res.msg).then((res) => {
-              closeModal();
-            });
-          }
-        });
+      createData(contrato, route).then((res) => {
+        if (res.status === 200) {
+          alertaExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              actualizarTabla();
+            }
+          });
+        } else {
+          alertaErrorCrear(res.msg).then((res) => {
+            closeModal();
+          });
+        }
+      });
     }
 
     if (dataToEdit) {
-      updateData(contrato, selected.id, route)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaEditarExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
-          }
-        });
+      updateData(contrato, selected.id, route).then((res) => {
+        if (res.status === 200) {
+          alertaEditarExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              actualizarTabla();
+            }
+          });
+        }
+      });
     }
   };
 
