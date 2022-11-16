@@ -76,7 +76,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
         daysAdded++;
       }
     }
-    // let fecha = momentDate._d?.toISOString().split("T")[0];
+    let fecha = momentDate._d?.toISOString().split("T")[0];
 
     setContrato((prevState) => {
       return { ...prevState, fecha_fin: fecha };
