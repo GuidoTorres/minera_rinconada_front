@@ -5,6 +5,7 @@ import { AiOutlineClose, AiFillEye } from "react-icons/ai";
 
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import { CrudContext } from "../../../context/CrudContext";
+// import "../style/modalValidacionCrearAsistencia"
 
 const ModalCrearAsistencia = ({ data }) => {
   const { setControlAsistencia, campamentoAsistencia, fechaId } =

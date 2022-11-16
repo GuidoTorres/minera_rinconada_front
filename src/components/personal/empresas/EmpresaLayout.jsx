@@ -78,7 +78,7 @@ const EmpresaLayout = () => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row.id,
+      selector: (row, index) => index +1,
     },
     {
       id: "Empresa",
@@ -112,7 +112,7 @@ const EmpresaLayout = () => {
   return (
     <>
       <Header text={"Empresas"} user={"Usuario"} ruta={"/personal"} />
-      <Buscador abrirModal={setRegistrarEmpresa} />
+      <Buscador abrirModal={setRegistrarEmpresa} registrar={true}/>
       <Tabla columns={empresa} table={search} />
 
       {registrarEmpresa && <ModalRegistrarEmpresa />}

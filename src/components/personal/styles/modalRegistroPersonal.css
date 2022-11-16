@@ -18,116 +18,92 @@
   background: rgba(0, 0, 0, 0.6);
   z-index: 1;
 }
-
 .modal-trabajador .modal-container {
   width: 90%;
-  height: auto;
+  height: 90%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 5%;
 }
 
-.modal-trabajador .modal-header {
-  padding: 20px 30px 0px 30px;
-  font-size: 18px;
-  font-weight: 700;
+.drag {
+  border: 1px solid grey;
+  height: 150px;
+  width: 100%;
+  padding: 5px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.modal-trabajador .modal-body {
-  padding: 0px 20px 0px 20px;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.modal-trabajador .modal-body section {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.modal-trabajador .modal-body section div {
-  display: flex;
   justify-content: center;
-  flex-direction: column;
-  margin-top: 4px;
+}
+.drag img {
+  width: 150px;
+  height: 150px;
+}
+
+.modal-trabajador .modal-container .modal-body {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 10px;
+}
+
+.modal-trabajador .modal-container .modal-body .data {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 10px;
+}
+
+.modal-trabajador .footer {
   width: 100%;
-}
 
-.modal-trabajador .modal-body section div input {
-  height: 30px;
-  margin-top: 2px;
 }
-
-.modal-trabajador .modal-body section div select {
-  height: 30px;
-  margin-top: 2px;
-}
-
-.modal-trabajador .modal-body section div button {
-  height: 30px;
-  width: 50px;
-}
-
-.modal-trabajador .modal-body section .asociacion div {
+.modal-trabajador .footer button {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.modal-trabajador .modal-body section .asociacion div input {
-  width: 80%;
-}
-.modal-trabajador .modal-body section .asociacion div button {
-  height: 32px;
-  margin-top: 1px;
-  margin-left: 5px;
-  width: 18%;
+
 }
 
-.footer {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.footer button {
-  width: 100px;
-  margin-right: 8px;
-}
+@media screen and (min-width: 600px) {
 
-@media screen and (min-width: 500px) {
-  .modal-trabajador .modal-body section {
-    flex-direction: row;
-  }
 
-  .modal-trabajador .modal-body section div {
-    width: 48%;
-  }
-}
-@media screen and (min-width: 700px) {
   .modal-trabajador .modal-container {
-    width: 600px;
-    height: auto;
+    width: 90%;
+    height: 75%;
+    overflow-x: scroll;
+    margin-top: 5%;
   }
 
-  .modal-trabajador .modal-body section {
-    flex-direction: row;
+  .modal-trabajador .modal-container .modal-body .data {
+    grid-template-columns: auto auto;
   }
-
-  .modal-trabajador .modal-body section div {
-    width: 48%;
+  .modal-trabajador .footer {
+    width: 100%;
+    align-items: flex-end;  
+  
   }
 }
 
 @media screen and (min-width: 1000px) {
-  .modal-trabajador .modal-container {
-    width: 800px;
-    height: auto;
+
+  
+  .drag {
+    height: 240px;
+    width: 100%;
+  }
+  .drag img {
+    width: 150px;
+    height: 250px;
   }
 
-  .modal-trabajador .modal-body section div {
-    width: 23%;
+  .modal-trabajador .modal-container {
+    width: 750px;
+    height: 400px;
+    overflow-x: scroll;
+  }
+
+  .modal-trabajador .modal-container .modal-body {
+    grid-template-columns: auto auto;
+  }
+
+  .modal-trabajador .modal-container .modal-body .data {
+    grid-template-columns: auto auto auto;
   }
 }

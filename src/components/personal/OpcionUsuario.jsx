@@ -6,9 +6,10 @@ const OpcionUsuario = () => {
   return (
     <div className='opciones-usuario'>
     
-      <TipoUsuario text={"Trabajador"} path={"trabajador"} />
-      <TipoUsuario text={"Asociación"} path={"asociacion"} />
-      <TipoUsuario text={"Empresa"} path={"empresa"} />
+      <TipoUsuario text={"Trabajadores"} path={"trabajador"} />
+      <TipoUsuario text={"Grupales"} path={"asociacion"} />
+      <TipoUsuario text={"Empresas"} path={"empresa"} />
+      <TipoUsuario text={"Socios"} path={"socio"} />
     </div>
   );
 };

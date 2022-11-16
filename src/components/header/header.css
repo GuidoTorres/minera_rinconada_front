@@ -22,7 +22,7 @@
 .header-role label {
   display: none;
 }
-.header-user{
+.header-user {
   display: flex;
   align-items: center;
 }
@@ -37,13 +37,11 @@
   font-weight: 600;
 }
 
-.header-user div{
-
+.header-user div {
   background-color: black;
   border-radius: 50%;
   height: 25px;
   width: 25px;
-
 }
 .header-role span {
   border-radius: 50%;

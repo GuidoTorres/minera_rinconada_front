@@ -9,7 +9,6 @@ const useForm = (config) => {
     });
   };
 
-  console.log(form);
 
   return [form, handleChange];
 };

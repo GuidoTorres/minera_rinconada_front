@@ -27,7 +27,6 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
   const { deleteData, updateData, setData } = useContext(CrudContext);
   const [id, setId] = useState("");
 
-
   const handleEdit = (e) => {
     setDataToEdit(e);
     setRegistrarPersonal(true);
@@ -38,7 +37,7 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
   const handleDelete = (e) => {
     alertaEliminarExito("trabajador").then((res) => {
       if (res.isConfirmed) {
-        deleteData( route, e);
+        deleteData(route, e);
 
         Swal.fire(
           "Eliminado!",
@@ -56,10 +55,19 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
 
   const personal = [
     {
-      id: "Nro",
-      name: "Nro",
-      selector: (row) => row?.id,
-      width: "60px",
+      id: "codigo",
+      name: "Código",
+      selector: (row, index) => row.codigo_trabajador,
+    },
+    {
+      id: "foto",
+      name: "Foto",
+      selector: (row) => (
+        <div style={{ padding: "3px" }}>
+          <img src={row?.foto} style={{ height: "60px", width: "80px" }}></img>
+        </div>
+      ),
+      width: "100px",
     },
     {
       id: "Trabajador",
@@ -98,7 +106,7 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
       cell: (e) => (
         <>
           <AiFillEye onClick={() => handleEvaluacion(e)} />
-          
+
           {e?.evaluacions.map((item) =>
             item.aprobado === "si" ? (
               <AiOutlineCheck

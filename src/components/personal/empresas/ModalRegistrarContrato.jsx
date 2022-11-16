@@ -1,34 +1,50 @@
 import React, { useContext, useEffect } from "react";
-import { PersonalContext } from "../../../context/PersonalContext";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
+// import { contratoValues } from "../../data/initalValues";
+
 import {
   alertaEditarExito,
   alertaError,
   alertaExito,
 } from "../../../helpers/alertMessage";
-import moment from "moment";
-
 import "../styles/modalRegistrarContrato.css";
-import { valuesContrato } from "../../../data/initalValues";
-import { addDays } from "../../../helpers/calcularFechaFin";
-const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
-  const route = "contrato/asociacion";
+import moment from "moment";
+const ModalRegistrarContrato = ({actualizarTabla, selected, data}) => {
+  const route = "contrato";
   const route1 = "cargo";
   const route2 = "campamento";
   const route3 = "gerencia";
   const route4 = "area";
   const route5 = "socio";
+  const contratoValues = {
+    fecha_inicio: "",
+    codigo_contrato: "",
+    tipo_contrato: "",
+    recomendado_por: "",
+    cooperativa: "",
+    condicion_cooperativa: "",
+    periodo_trabajo: "",
+    fecha_fin: "",
+    gerencia: "",
+    area: "",
+    jefe_directo: "",
+    base: "",
+    termino_contrato: "",
+    campamento_id: "",
+    nota_contrato: "",
+    puesto: "",
+    evaluacion_id: data?.evaluacion_id,
+    estado: false,
+  };
 
-  //valores iniciales de contrato
-  const contratoValues = valuesContrato(data);
-
-  const { setRegistrarContratoAsociacion, setDataToEdit, dataToEdit } =
+  const { setRegistrarContrato, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
 
   const { createData, updateData, getData } = useContext(CrudContext);
-  const [contratos, setContratos] = useState(contratoValues);
+  const [contrato, setContrato] = useState(contratoValues);
   const [cargo, setCargo] = useState([]);
   const [campamento, setCampamento] = useState([]);
   const [gerencia, setGerencia] = useState([]);
@@ -48,20 +64,32 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
     setArea(response4.data);
     setSocio(response5.data);
   };
+
+
+  useEffect(() => {
+    console.log(dataToEdit);
+    if (dataToEdit) {
+      setContrato(dataToEdit);
+    } else {
+      setContrato(contratoValues);
+    }
+  }, [dataToEdit]);
+
   useEffect(() => {
     getAll();
   }, []);
 
+
   const handleData = (e) => {
     const { name, value } = e.target;
-    setContratos((values) => {
+    setContrato((values) => {
       return { ...values, [name]: value };
     });
 
     if (name === "recomendado_por") {
       const prueba = socio.filter((item) => item.nombre === value);
       const cooperativa = prueba.map(
-        (item) => (contratos.cooperativa = item.cooperativa)
+        (item) => (contrato.cooperativa = item.cooperativa)
       );
     }
   };
@@ -69,10 +97,10 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!contratos.fecha_inicio || !contratos.fecha_fin) {
+    if (!contrato.fecha_inicio || !contrato.codigo_contrato) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(contratos, route)
+      createData(contrato, route)
         .then((res) => res.json())
         .then((res) => {
           if (res.status === 200) {
@@ -91,7 +119,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
     }
 
     if (dataToEdit) {
-      updateData(contratos, dataToEdit.id, "contrato")
+      updateData(contrato, selected.id, route)
         .then((res) => res.json())
         .then((res) => {
           if (res.status === 200) {
@@ -107,41 +135,16 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
   };
 
   const closeModal = () => {
-    setRegistrarContratoAsociacion(false);
+    setRegistrarContrato(false);
     setDataToEdit(null);
-    setContratos(contratoValues);
+    setContrato(contratoValues);
   };
-
-  useEffect(() => {
-    if (dataToEdit) {
-      setContratos(dataToEdit);
-    } else {
-      setContratos(contratoValues);
-    }
-  }, [dataToEdit]);
-
-  useEffect(() => {
-    if (contratos.fecha_inicio !== "" && contratos.periodo_trabajo !== "") {
-      let inicial = 14;
-      let fechaInicio = contratos.fecha_inicio;
-      let total = inicial * parseInt(contratos.periodo_trabajo);
-      const date = addDays(fechaInicio, total);
-      setContratos((prevState) => {
-        return { ...prevState, fecha_fin: date };
-      });
-    } else {
-      setContratos((prevState) => {
-        return { ...prevState, fecha_fin: "" };
-      });
-    }
-  }, [contratos.fecha_inicio, contratos.periodo_trabajo]);
-
   return (
     <div className="modal-contrato">
       {/* <div className="overlay"></div> */}
       <div className="modal-container">
         <section className="modal-header">
-          {dataToEdit ? "Editar contrato" : "Registrar Contrato"}
+          {dataToEdit ? "Editar contrato" : "Registrar contrato"}
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="modal-body">
@@ -152,7 +155,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                 <div>
                   <label>Código contrato</label>
                   <input
-                    value={contratos?.codigo_contrato}
+                    value={contrato?.codigo_contrato}
                     name="codigo_contrato"
                     onChange={handleData}
                   ></input>
@@ -161,7 +164,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                   <label>Fecha de ingreso</label>
                   <input
                     type="date"
-                    value={contratos?.fecha_inicio?.split("T")[0]}
+                    value={contrato?.fecha_inicio?.split("T")[0]}
                     name="fecha_inicio"
                     onChange={handleData}
                   ></input>
@@ -170,16 +173,16 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                   <label>Fecha de fin</label>
                   <input
                     type="date"
-                    value={contratos?.fecha_fin?.split("T")[0]}
+                    value={contrato?.fecha_fin}
                     name="fecha_fin"
                     onChange={handleData}
+                    className="fecha_fin"
                   ></input>
                 </div>
                 <div>
-                  <label>Periodo de trabajo(quincena)</label>
+                  <label>Periodo de trabajo (quincena)</label>
                   <input
-                    type="number"
-                    value={contratos?.periodo_trabajo}
+                    value={contrato?.periodo_trabajo}
                     name="periodo_trabajo"
                     onChange={handleData}
                   ></input>
@@ -189,94 +192,109 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                 <div>
                   <label>Tipo de Contrato</label>
                   <select
-                    value={contratos?.tipo_contrato}
+                    value={contrato?.tipo_contrato}
                     name="tipo_contrato"
                     onChange={handleData}
                   >
                     <option value="-1">Seleccione</option>
-                    <option value="Especias">Especias</option>
+                    <option value="Especias">Especies</option>
                     <option value="Planilla">Planilla</option>
                   </select>
                 </div>
                 <div>
                   <label>Gerencia</label>
                   <select
-                    value={contratos?.gerencia}
+                    value={contrato?.gerencia}
                     name="gerencia"
                     onChange={handleData}
                   >
                     <option value="-1">Seleccione</option>
-                    {gerencia.map((item, i) => (
-                      <option key={i} value={item.id}>
-                        {item.nombre}
-                      </option>
-                    ))}
+                    {gerencia &&
+                      gerencia.map((item, i) => (
+                        <option key={i} value={item.id}>
+                          {item.nombre}
+                        </option>
+                      ))}
                   </select>
                 </div>
                 <div>
                   <label>Área</label>
                   <select
-                    value={contratos?.area}
+                    value={contrato?.area}
                     name="area"
                     onChange={handleData}
                   >
                     <option value="-1">Seleccion</option>
-                    {area.map((item, i) => (
-                      <option key={i} value={item.id}>
-                        {item.nombre}
-                      </option>
-                    ))}
+                    {area &&
+                      area.map((item, i) => (
+                        <option key={i} value={item.id}>
+                          {item.nombre}
+                        </option>
+                      ))}
                   </select>
                 </div>
+                {data &&
+                data.trabajador &&
+                data.trabajador.length > 0 ? null : (
+                  <div>
+                    <label>Puesto o Rol</label>
+                    <select
+                      value={contrato?.puesto}
+                      name="puesto"
+                      onChange={handleData}
+                    >
+                      <option value="-1">Seleccione</option>
+                      {cargo &&
+                        cargo.map((item, i) => (
+                          <option key={i} value={item.id}>
+                            {item.nombre}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                )}
+              </section>
+              <section>
                 <div>
                   <label>Campamento</label>
                   <select
-                    value={contratos?.campamento_id}
+                    value={contrato?.campamento_id}
                     name="campamento_id"
                     onChange={handleData}
                   >
                     <option value="-1">Seleccione</option>
-                    {campamento.map((item, i) => (
-                      <option key={i} value={item.id}>
-                        {item.nombre}
-                      </option>
-                    ))}
+                    {campamento &&
+                      campamento.map((item, i) => (
+                        <option key={i} value={item.id}>
+                          {item.nombre}
+                        </option>
+                      ))}
                   </select>
                 </div>
-              </section>
-              <section>
-                <div>
-                  <label>Jefe directo</label>
-                  <select
-                    value={contratos?.jefe_directo}
-                    name="jefe_directo"
-                    onChange={handleData}
-                  >
-                    <option value="-1">Seleccione</option>
-                    {cargo.map((item, i) => (
-                      <option key={i} value={item.id}>
-                        {item.nombre}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label>Base</label>
-                  <select
-                    value={contratos?.base}
-                    name="base"
-                    onChange={handleData}
-                  >
-                    <option value="-1">Seleccione</option>
-                    <option value="1">Lunar de Oro</option>
-                    <option value="2">Rinconada</option>
-                  </select>
-                </div>
+                {data &&
+                data.trabajador &&
+                data.trabajador.length > 0 ? null : (
+                  <div>
+                    <label>Jefe Directo</label>
+                    <select
+                      value={contrato?.jefe_directo}
+                      name="jefe_directo"
+                      onChange={handleData}
+                    >
+                      <option value="-1">Seleccione</option>
+                      {cargo &&
+                        cargo.map((item, i) => (
+                          <option key={i} value={item.nombre}>
+                            {item.nombre}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                )}
                 <div>
                   <label>Volquete</label>
                   <input
-                    type="number"
-                    value={contratos?.volquete}
+                    value={contrato?.volquete}
                     name="volquete"
                     onChange={handleData}
                   ></input>
@@ -284,8 +302,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                 <div>
                   <label>Teletrans</label>
                   <input
-                    type="number"
-                    value={contratos?.teletran}
+                    value={contrato?.teletran}
                     name="teletran"
                     onChange={handleData}
                   ></input>
@@ -293,65 +310,61 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
               </section>
             </fieldset>
 
-            {data.tipo !== "Canteadores" ? (
-              <fieldset>
-                <legend>Recomendado</legend>
-                <section>
-                  <div>
-                    <label>Recomendado por</label>
-                    <select
-                      value={contratos?.recomendado_por}
-                      name="recomendado_por"
-                      onChange={handleData}
-                    >
-                      <option value="-1">Seleccione</option>
-                      {socio.map((item, i) => (
-                        <option key={i} value={item.nombre}>
-                          {item.nombre}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label>Cooperativa</label>
-                    <input
-                      disabled
-                      type="text"
-                      name="cooperativa"
-                      value={contratos?.cooperativa}
-                    />
-                  </div>
+            <fieldset>
+              <legend>Recomendado</legend>
+              <section>
+                <div>
+                  <label>Recomendado por</label>
+                  <select
+                    value={contrato?.recomendado_por}
+                    name="recomendado_por"
+                    onChange={handleData}
+                  >
+                    <option value="-1">Seleccione</option>
+                    {socio.map((item, i) => (
+                      <option key={i} value={item.nombre}>
+                        {item.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label>Cooperativa</label>
+                  <input
+                    disabled
+                    type="text"
+                    name="cooperativa"
+                    value={contrato?.cooperativa}
+                  />
+                </div>
 
-                  <div>
-                    <label>Condición de cooperativa</label>
-                    <select
-                      value={contratos?.condicion_cooperativa}
-                      name="condicion_cooperativa"
-                      onChange={handleData}
-                    >
-                      <option value="-1">Seleccione</option>
-                      <option value="Hijo">Hijo</option>
-                      <option value="Sobrino">Sobrino</option>
-                      <option value="Primo">Primo</option>
-                      <option value="Tio">Tio</option>
-                      <option value="Tio">Compadre</option>
-                      <option value="Tio">Compañero</option>
-                      <option value="Tio">Amigo</option>
-                    </select>
-                  </div>
-                </section>
-              </fieldset>
-            ) : (
-              ""
-            )}
+                <div>
+                  <label>Condición cooperativa</label>
+                  <select
+                    value={contrato?.condicion_cooperativa}
+                    name="condicion_cooperativa"
+                    onChange={handleData}
+                  >
+                    <option value="-1">Seleccione</option>
+                    <option value="Hijo">Hijo</option>
+                    <option value="Sobrino">Sobrino</option>
+                    <option value="Primo">Primo</option>
+                    <option value="Tio">Tio</option>
+                    <option value="Tio">Compadre</option>
+                    <option value="Tio">Compañero</option>
+                    <option value="Tio">Amigo</option>
+                  </select>
+                </div>
+              </section>
+            </fieldset>
 
             <fieldset>
               <legend>Termino de contrato</legend>
               <section>
                 <div>
-                  <label>Estado</label>
+                  <label>Termino finalización</label>
                   <select
-                    value={contratos?.suspendido}
+                    value={contrato?.suspendido}
                     name="suspendido"
                     onChange={handleData}
                   >
@@ -360,10 +373,11 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                     <option value={true}>Suspendido</option>
                   </select>
                 </div>
+
                 <div>
                   <label>Término de contrato</label>
                   <textarea
-                    value={contratos?.termino_contrato}
+                    value={contrato?.termino_contrato}
                     name="termino_contrato"
                     onChange={handleData}
                   ></textarea>
@@ -371,7 +385,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                 <div>
                   <label>Nota de contrato</label>
                   <input
-                    value={contratos?.nota_contrato}
+                    value={contrato?.nota_contrato}
                     name="nota_contrato"
                     onChange={handleData}
                   ></input>
@@ -380,11 +394,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
             </fieldset>
 
             <div className="footer">
-              {dataToEdit ? (
-                <button>Editar</button>
-              ) : (
-                <button>Registrar</button>
-              )}
+              {dataToEdit ? <button>Editar</button> : <button>Registar</button>}
             </div>
           </form>
         </section>
@@ -393,4 +403,4 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
   );
 };
 
-export default ModalContratoAsociacion;
+export default ModalRegistrarContrato;

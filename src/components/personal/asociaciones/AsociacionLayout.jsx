@@ -21,7 +21,8 @@ const AsociacionLayout = () => {
     setRegistrarAsociacion,
     setDataToEdit,
     filterText,
-    historialContratoAsociacion, setHistorialContratoAsociacion
+    historialContratoAsociacion,
+    setHistorialContratoAsociacion,
   } = useContext(PersonalContext);
   const { getData, deleteData, data, setData } = useContext(CrudContext);
   const [asociacionId, setAsociacionId] = useState();
@@ -41,13 +42,15 @@ const AsociacionLayout = () => {
   const handleDelete = (e) => {
     alertaEliminarExito("asociación").then((res) => {
       if (res.isConfirmed) {
-        deleteData(e, route);
-
-        Swal.fire(
-          "Eliminado!",
-          "La asociación se eliminó correctamente.",
-          "success"
-        );
+        deleteData(route, e)
+          .then((res) => res.json())
+          .then((res) => {
+            Swal.fire({
+              icon: res.status === 200 ? "success" : "error",
+              // title: "Error...",
+              text: `${res.msg}`,
+            });
+          });
       }
       getAsociaciones();
     });
@@ -66,18 +69,22 @@ const AsociacionLayout = () => {
             id: item?.id,
             nombre: item?.nombre,
             campamento: item?.campamento,
-            trabajador: item && item.trabajador && item.trabajador.filter(
-              (prueba) =>
-                prueba?.nombre
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()) ||
-                prueba?.apellido_paterno
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase()) ||
-                prueba?.apellido_materno
-                  .toLowerCase()
-                  .includes(filterText.toLowerCase())
-            ),
+            tipo: item?.tipo,
+            trabajador:
+              item &&
+              item.trabajador &&
+              item.trabajador.filter(
+                (prueba) =>
+                  prueba?.nombre
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()) ||
+                  prueba?.apellido_paterno
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()) ||
+                  prueba?.apellido_materno
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase())
+              ),
           },
         ])
         .flat();
@@ -105,16 +112,13 @@ const AsociacionLayout = () => {
     let formData = new FormData();
     formData.append("myFile", e.target.files[0]);
 
-    fetch(
-      `https://rinconada.herokuapp.com/api/v1/asociacion/upload/${asociacionId}`,
-      {
-        method: "post",
-        body: formData,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    )
+    fetch(`https://rinconada.herokuapp.com/api/v1/${asociacionId}`, {
+      method: "post",
+      body: formData,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res.status == 200) {
@@ -138,7 +142,7 @@ const AsociacionLayout = () => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row?.id,
+      selector: (row, index) => index + 1,
       sortable: true,
     },
     {
@@ -148,22 +152,18 @@ const AsociacionLayout = () => {
       sortable: true,
     },
     {
+      id: "tipo",
+      name: "Tipo de Asociación",
+      selector: (row) => row?.tipo,
+      sortable: true,
+    },
+    {
       id: "Campamento",
       name: "Campamento",
       sortable: true,
 
-        selector: (row) => row?.campamento ? row.campamento : "Por asignar",
+      selector: (row) => (row?.campamento ? row.campamento : "Por asignar"),
     },
-    // {
-    //   id: "Dni",
-    //   name: "Dni",
-    // //   selector: (row) => row.dni,
-    // },
-    // {
-    //   id: "T. de trabajador",
-    //   name: "T. de trabajador",
-    // //   selector: (row) => row.tipo_trabajador,
-    // },
     {
       id: "Asignar Trabajadores",
       name: "Asignar Trabajadores",
@@ -174,7 +174,7 @@ const AsociacionLayout = () => {
           <AiFillFileExcel onClick={() => changeHandler(e)} />{" "}
         </>
       ),
-      width: "200px"
+      width: "200px",
     },
     {
       id: "Contrato",
@@ -193,21 +193,6 @@ const AsociacionLayout = () => {
         </div>
       ),
     },
-    // {
-    //   id: "Evaluación",
-    //   name: "Evaluación",
-    // //   selector: (row) => row.id,
-
-    //   button: true,
-    //   //   cell: (e) => <AiFillEye onClick={() => handleEvaluacion(e)} />,
-    // },
-
-    // {
-    //   id: "Deshabilitar",
-    //   name: "Deshabilitar",
-    //   button: true,
-    //   cell: (e) => <input type="checkbox" />,
-    // },
     {
       id: "Acciones",
       name: "Acciones",
@@ -230,7 +215,7 @@ const AsociacionLayout = () => {
         style={{ display: "none" }}
       />
       <Header text={"Asociaciones"} user={"Usuario"} ruta={"/personal"} />
-      <Buscador abrirModal={setRegistrarAsociacion} />
+      <Buscador abrirModal={setRegistrarAsociacion} registrar={true} />
 
       <Tabla
         columns={personal}
@@ -241,7 +226,9 @@ const AsociacionLayout = () => {
       {registrarAsociacion && (
         <ModalRegistrarAsociacion actualizarTabla={getAsociaciones} />
       )}
-      {historialContratoAsociacion && <ModalHistorialContratoAsociacion selected={id}/>}
+      {historialContratoAsociacion && (
+        <ModalHistorialContratoAsociacion selected={id} />
+      )}
     </>
   );
 };

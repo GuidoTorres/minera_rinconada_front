@@ -1,30 +1,30 @@
-import { AiFillSetting } from "react-icons/ai";
+import { AiOutlineDollarCircle,AiOutlineFileText, AiFillSetting, AiOutlineUser, AiOutlineSetting, AiOutlineSolution } from "react-icons/ai";
 
 export const SidebarData = [
   {
     title: "Administración",
     path: "/administracion",
-    icon: <AiFillSetting />,
+    icon: <AiOutlineSetting />,
   },
   {
     title: "Personal",
     path: "/personal",
-    icon: <AiFillSetting />,
+    icon: <AiOutlineUser />,
     // main: () => <Personal/>
   },
   {
     title: "Planillas",
     path: "/planilla",
-    icon: <AiFillSetting />,
+    icon: <AiOutlineSolution />,
   },
   {
     title: "Logística",
     path: "/logistica",
-    icon: <AiFillSetting />,
+    icon: <AiOutlineFileText />,
   },
   {
     title: "Finanzas",
     path: "/finanzas",
-    icon: <AiFillSetting />,
+    icon: <AiOutlineDollarCircle />,
   },
 ];

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { CrudContext } from "../../../context/CrudContext";
 import { PersonalContext } from "../../../context/PersonalContext";
 import { alertaEliminarExito } from "../../../helpers/alertMessage";
@@ -18,6 +18,7 @@ import ModalRegistrarContrato from "./ModalRegistrarContrato";
 import ModalHistorialEvaluacion from "./ModalHistorialEvaluacion";
 import ModalRegistroEvaluacion from "./ModalRegistroEvaluacion";
 import Swal from "sweetalert2";
+import "../styles/personalLayout.css";
 
 const PersonalLayout = () => {
   const route = "trabajador";
@@ -35,6 +36,7 @@ const PersonalLayout = () => {
     useContext(CrudContext);
   const [id, setId] = useState("");
   const [search, setSearch] = useState([]);
+  const inputFileRef = useRef(null);
 
   const getTrabajadores = async () => {
     const response = await getData(route);
@@ -50,15 +52,17 @@ const PersonalLayout = () => {
     console.log(e);
     alertaEliminarExito("trabajador").then((res) => {
       if (res.isConfirmed) {
-        deleteData(route, e);
-
-        Swal.fire(
-          "Eliminado!",
-          "El trabajador se eliminó correctamente.",
-          "success"
-        );
+        deleteData(route, e)
+          .then((res) => res.json())
+          .then((res) => {
+            Swal.fire({
+              icon: res.status === 200 ? "success" : "error",
+              // title: "Error...",
+              text: `${res.msg}`,
+            });
+          });
+        getTrabajadores();
       }
-      getTrabajadores();
     });
   };
 
@@ -91,6 +95,10 @@ const PersonalLayout = () => {
       data &&
       data.filter(
         (item) =>
+          (item.codigo_trabajador &&
+            item.codigo_trabajador
+              .toLowerCase()
+              .includes(filterText.toLowerCase())) ||
           (item.nombre &&
             item.nombre.toLowerCase().includes(filterText.toLowerCase())) ||
           (item?.apellido_paterno &&
@@ -109,10 +117,18 @@ const PersonalLayout = () => {
 
   const personal = [
     {
-      id: "Nro",
-      name: "Nro",
-      selector: (row) => row?.id,
-      width: "60px",
+      id: "codigo",
+      name: "Codigo",
+      selector: (row) => row?.codigo_trabajador,
+    },
+    {
+      id: "foto",
+      name: "Foto",
+      selector: (row) => (
+        <div style={{ padding: "3px" }}>
+          <img src={row?.foto} style={{ height: "60px" }}></img>
+        </div>
+      ),
     },
     {
       id: "Trabajador",
@@ -121,13 +137,14 @@ const PersonalLayout = () => {
         row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
       width: "300px",
       sortable: true,
-      center: true,
     },
     {
       id: "Campamento",
       name: "Campamento",
       selector: (row) =>
-        row?.campamento?.length !== 0 ? row?.campamento?.map(item => item.nombre) : "Por asignar",
+        row?.campamento?.length !== 0
+          ? row?.campamento?.map((item) => item.nombre)
+          : "Por asignar",
       sortable: true,
     },
     {
@@ -214,8 +231,13 @@ const PersonalLayout = () => {
 
   return (
     <>
-      <Header text={"Trabajador"} user={"Usuario"} ruta={"/personal"} />
-      <Buscador abrirModal={setRegistrarPersonal} importar={true} registrar={true}/>
+      <Header text={"Trabajadores"} user={"Usuario"} ruta={"/personal"} />
+
+      <Buscador
+        abrirModal={setRegistrarPersonal}
+        importar={true}
+        registrar={true}
+      />
       <Tabla columns={personal} table={search} />
 
       {registrarPersonal && (

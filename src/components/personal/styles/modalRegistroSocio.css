@@ -1,4 +1,4 @@
-.modal-asociacion {
+.modal-socio {
     position: absolute;
     top: 0;
     left: 0;
@@ -10,8 +10,8 @@
     z-index: 3;
   }
 
-  .modal-asociacion .modal-container {
+  .modal-socio .modal-container {
 
-    height: 280px;
+    height: 330px;
     margin-bottom: 10px;
   }

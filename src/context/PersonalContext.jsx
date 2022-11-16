@@ -10,11 +10,13 @@ export const PersonalProvider = ({ children }) => {
 
   const [historialContrato, setHistorialContrato] = useState(false);
   const [registrarContrato, setRegistrarContrato] = useState(false);
-  const [historialContratoAsociacion, setHistorialContratoAsociacion] = useState(false);
+  const [historialContratoAsociacion, setHistorialContratoAsociacion] =
+    useState(false);
   const [historialEvaluacion, setHistorialEvaluacion] = useState(false);
   const [registrarPersonal, setRegistrarPersonal] = useState(false);
   const [registrarEvaluacion, setRegistrarEvaluacion] = useState(false);
   const [registrarAsociacion, setRegistrarAsociacion] = useState(false);
+  const [registrarSocio, setRegistrarSocio] = useState(false);
   const [registrarEmpresa, setRegistrarEmpresa] = useState(false);
 
   const [registrarContratoAsociacion, setRegistrarContratoAsociacion] =
@@ -47,7 +49,10 @@ export const PersonalProvider = ({ children }) => {
         setRegistrarEmpresa,
         registrarContratoAsociacion,
         setRegistrarContratoAsociacion,
-        historialContratoAsociacion, setHistorialContratoAsociacion
+        historialContratoAsociacion,
+        setHistorialContratoAsociacion,
+        registrarSocio,
+        setRegistrarSocio,
       }}
     >
       {children}

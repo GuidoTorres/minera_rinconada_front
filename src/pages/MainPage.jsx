@@ -24,6 +24,8 @@ import IndexLayout from "../components/planillas/IndexLayout";
 import ControlPlanilla from "../components/planillas/control/ControlPlanilla";
 import { PlanillaProvider } from "../context/PlanillaContext";
 import ListaAsistencia from "../components/planillas/asistencia/ListaAsistencia";
+import Header from "../components/header/Header";
+import SocioLayout from "../components/personal/socios/SocioLayout";
 
 const MainPage = () => {
   return (
@@ -33,7 +35,6 @@ const MainPage = () => {
           <section className="main-side">
             <Sidebar />
           </section>
-
           <section className="main-content">
             <AdminProvider>
               <CrudProvider>
@@ -56,6 +57,8 @@ const MainPage = () => {
                     <Route path="trabajador" element={<PersonalLayout />} />
                     <Route path="asociacion" element={<AsociacionLayout />} />
                     <Route path="empresa" element={<EmpresaLayout />} />
+                    <Route path="socio" element={<SocioLayout />} />
+
                   </Route>
                 </Routes>
               </CrudProvider>
@@ -66,12 +69,13 @@ const MainPage = () => {
                 <Routes>
                   <Route path="planilla">
                     <Route index element={<IndexLayout />} />
-                    <Route path="asistencia" element={<ListaAsistencia />}  />
+                    <Route path="asistencia" element={<ListaAsistencia />} />
                     <Route path="control" element={<ControlPlanilla />} />
                   </Route>
                 </Routes>
               </CrudProvider>
             </PlanillaProvider>
+
           </section>
         </div>
       </>

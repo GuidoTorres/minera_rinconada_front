@@ -28,7 +28,7 @@ export const trabajadorValues = {
   estado_civil: "",
   genero: "",
   direccion: "",
-  asociacion_id: null
+  asociacion_id: null,
 };
 
 export const evaluacionValues = {
@@ -48,34 +48,39 @@ export const evaluacionValues = {
   diabetes: "",
   antecedentes: "",
   emo: "",
-  trabajador_id:""
+  trabajador_id: "",
 };
 
-export const contratoValues = {
-  fecha_inicio: "",
-  codigo_contrato: "",
-  tipo_contrato: "",
-  recomendado_por: "",
-  cooperativa: "",
-  condicion_cooperativa: "",
-  periodo_trabajo: "",
-  fecha_fin: "",
-  gerencia: "",
-  area: "",
-  jefe_directo: "",
-  base: "",
-  termino_contrato: "",
-  campamento_id: "",
-  nota_contrato: "",
-  puesto: "",
-  trabajador_id: ""
+export const valuesContrato = (data) => {
+  let contratoValues;
+  return (contratoValues = {
+    fecha_inicio: "",
+    codigo_contrato: "",
+    tipo_contrato: "",
+    recomendado_por: "",
+    cooperativa: "",
+    condicion_cooperativa: "",
+    periodo_trabajo: "",
+    fecha_fin: "",
+    gerencia: "",
+    area: "",
+    jefe_directo: "",
+    base: "",
+    termino_contrato: "",
+    campamento_id: "",
+    nota_contrato: "",
+    puesto: "",
+    asociacion_id: data && data?.id,
+    evaluacion_id:
+      data.trabajador.length > 0 &&
+      data?.trabajador
+        ?.map((item) => item?.evaluacions?.map((dat) => dat?.id))
+        .flat(),
+    estado: false,
+  });
 };
 
 export const asociacionValues = {
-
-  nombre:"", 
-  codigo: ""
-
-}
-
-
+  nombre: "",
+  codigo: "",
+};

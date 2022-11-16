@@ -25,7 +25,7 @@ const Buscador = ({
 
     const asistencia = {
       fecha: fecha,
-      campamento_id: campamentoAsistencia.id,
+      // campamento_id: campamentoAsistencia.id,
     };
 
     createData(asistencia, route).then((res) => {

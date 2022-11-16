@@ -7,8 +7,8 @@ import "../styles/modalHistorialContrato.css";
 import { PersonalContext } from "../../../context/PersonalContext";
 import { CrudContext } from "../../../context/CrudContext";
 import { alertaEliminarExito } from "../../../helpers/alertMessage";
-import ModalRegistrarContrato from "../trabajadores/ModalRegistrarContrato";
 import Swal from "sweetalert2";
+import ModalRegistrarContrato from "./ModalRegistrarContrato";
 
 const ModalHistorialContrato = ({ selected }) => {
   const {

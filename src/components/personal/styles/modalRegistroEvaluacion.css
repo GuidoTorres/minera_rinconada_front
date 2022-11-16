@@ -12,23 +12,33 @@
 
 .modal-registrar-contrato .modal-container {
   width: 92%;
-  height: auto;
+  height: 80% !important;
   margin-bottom: 10px;
+  overflow-y: auto;
+}
+.aprobado_rrhh {
+  padding-left: 20px;
+}
+.aprobado_rrhh div {
+  display: flex;
+  gap: 2px;
+}
+.aprobado_rrhh div:nth-child(2) {
+  margin-left: 10px;
 }
 
 .aprobado {
   display: flex;
   flex-direction: row;
+  height: 30px;
+  
 }
-.aprobado .titulo{
-
+.aprobado .titulo {
   width: 100px;
-  font-size: bold;
 }
-.aprobado .titulo label{
-
+.aprobado .titulo label {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 550;
 }
 
 .aprobado div {
@@ -39,11 +49,30 @@
   justify-content: flex-start;
   width: 100%;
 }
-
-.modal-registrar-contrato .modal-body section {
+.modal-registrar-contrato .modal-body {
   display: flex;
-  flex-direction: column;
-  /* margin-top: 10px; */
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.modal-registrar-contrato .modal-body fieldset {
+  margin-top: 10px;
+  padding: 5px;
+  width: 100%;
+}
+
+.modal-registrar-contrato .modal-body fieldset:nth-child(2) section div {
+  width: 30%;
+}
+
+.modal-registrar-contrato .modal-body fieldset section {
+  display: flex;
+}
+.modal-registrar-contrato .modal-body fieldset section div {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-registrar-contrato .modal-body section div {
@@ -73,6 +102,11 @@
   align-items: flex-end;
   margin-top: 10px;
   margin-bottom: 20px;
+  width: 100%;
+}
+
+.modal-registrar-contrato .footer button {
+  width: 200px;
 }
 
 @media screen and (min-width: 500px) {
@@ -113,9 +147,15 @@
 }
 
 @media screen and (min-width: 1000px) {
+  .modal-registrar-contrato .modal-body fieldset {
+    width: 50%;
+  }
+  .modal-registrar-contrato .modal-body fieldset section div {
+    width: 49%;
+  }
   .modal-registrar-contrato .modal-container {
     width: 900px;
-    height: 450px;
+    height: 550px !important;
     margin-top: -100px;
   }
   .modal-registrar-contrato .modal-body section {

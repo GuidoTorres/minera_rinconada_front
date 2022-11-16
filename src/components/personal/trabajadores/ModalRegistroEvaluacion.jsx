@@ -70,24 +70,37 @@ const ModalRegistroEvaluacion = ({
     if (!evaluacion.fecha_evaluacion) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(evaluacion, route);
-      alertaExito("Evaluación").then((res) => {
-        closeModal();
-        if (res.isConfirmed) {
-          actualizarTabla();
-        }
-      });
+      createData(evaluacion, route)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 200) {
+            alertaExito(res.msg, res.status).then((res) => {
+              closeModal();
+              if (res.isConfirmed) {
+                actualizarTabla();
+              }
+            });
+          } else {
+            alertaErrorCrear(res.msg).then((res) => {
+              closeModal();
+            });
+          }
+        });
     }
 
     if (dataToEdit) {
-      updateData(evaluacion, dataToEdit.evaluacion_id, route);
-      alertaEditarExito("Evaluación").then((res) => {
-        closeModal();
-        if (res.isConfirmed) {
-          actualizarTabla();
-          actualizarTrabajador();
-        }
-      });
+      updateData(evaluacion, dataToEdit.evaluacion_id, route)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 200) {
+            alertaEditarExito(res.msg, res.status).then((res) => {
+              closeModal();
+              if (res.isConfirmed) {
+                actualizarTabla();
+              }
+            });
+          }
+        });
     }
   };
 
@@ -101,37 +114,40 @@ const ModalRegistroEvaluacion = ({
     <div className="modal-registrar-contrato">
       <div className="modal-container">
         <section className="modal-header">
-          Registrar evaluación
+        {dataToEdit ? "Editar evaluación": "Registrar evaluación"}
+
           <AiOutlineClose onClick={closeModal} />
         </section>
-        <section className="modal-body">
-          <form onSubmit={handleSubmit}>
-            <div className="aprobado">
-              <div>
-                <div className="titulo">
-                  <label htmlFor=""> Aprobado</label>
-                </div>
-                <div>
-                  <label htmlFor=""> Si</label>
-                  <input
-                    type="radio"
-                    name="aprobado"
-                    value="si"
-                    checked={evaluacion.aprobado === "si"}
-                    onChange={handleData}
-                  />
-
-                  <label htmlFor=""> No</label>
-                  <input
-                    type="radio"
-                    name="aprobado"
-                    value="no"
-                    checked={evaluacion.aprobado !== "si"}
-                    onChange={handleData}
-                  />
-                </div>
-              </div>
+        <div className="aprobado_rrhh">
+          <div>
+            <div className="titulo">
+              <label htmlFor=""> Autoriza fizcalizador: </label>
             </div>
+            <div>
+              <label htmlFor=""> Si</label>
+              <input
+                type="radio"
+                name="aprobado"
+                value="si"
+                checked={evaluacion?.aprobado === "si"}
+                onChange={handleData}
+              />
+
+              <label htmlFor=""> No</label>
+              <input
+                type="radio"
+                name="aprobado"
+                value="no"
+                checked={evaluacion?.aprobado !== "si"}
+                onChange={handleData}
+              />
+            </div>
+          </div>
+        </div>
+        <form className="modal-body" onSubmit={handleSubmit}>
+          <fieldset>
+            <legend>Control</legend>
+
             <section>
               <div>
                 <label>Fecha de evaluación</label>
@@ -157,35 +173,7 @@ const ModalRegistroEvaluacion = ({
                   ))}
                 </select>
               </div>
-              {/* <div>
-                <label htmlFor="">Codigo de contrato</label>
-                <input
-                  type="text"
-                  value={evaluacion.contrato_id}
-                  name="contrato_id"
-                  onChange={handleData}
-                />
-              </div> */}
-              <div>
-                <label>Capacitación SSO</label>
-                <input
-                  value={evaluacion.capacitacion_sso}
-                  name="capacitacion_sso"
-                  onChange={handleData}
-                  type="number"
-                ></input>
-              </div>
-              <div>
-                <label htmlFor="">Capacitación GEMA</label>
-                <input
-                  type="number"
-                  value={evaluacion.capacitacion_gema}
-                  name="capacitacion_gema"
-                  onChange={handleData}
-                />
-              </div>
-            </section>
-            <section>
+
               <div>
                 <label htmlFor="">Evaluación laboral</label>
                 <input
@@ -195,6 +183,38 @@ const ModalRegistroEvaluacion = ({
                   onChange={handleData}
                 />
               </div>
+            </section>
+            <div className="aprobado">
+              <div>
+                <div className="titulo">
+                  <label htmlFor=""> Autoriza</label>
+                </div>
+                <div>
+                  <label htmlFor=""> Si</label>
+                  <input
+                    type="radio"
+                    name="control"
+                    value="si"
+                    checked={evaluacion.control === "si"}
+                    onChange={handleData}
+                  />
+
+                  <label htmlFor=""> No</label>
+                  <input
+                    type="radio"
+                    name="control"
+                    value="no"
+                    checked={evaluacion.control !== "si"}
+                    onChange={handleData}
+                  />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Topico</legend>
+
+            <section>
               <div>
                 <label htmlFor="">Presión arterial</label>
                 <input
@@ -222,9 +242,6 @@ const ModalRegistroEvaluacion = ({
                   onChange={handleData}
                 />
               </div>
-            </section>
-
-            <section>
               <div>
                 <label htmlFor="">IMC</label>
                 <input
@@ -253,8 +270,87 @@ const ModalRegistroEvaluacion = ({
                 />
               </div>
             </section>
+            <div className="aprobado">
+              <div>
+                <div className="titulo">
+                  <label htmlFor=""> Autoriza</label>
+                </div>
+                <div>
+                  <label htmlFor=""> Si</label>
+                  <input
+                    type="radio"
+                    name="topico"
+                    value="si"
+                    checked={evaluacion.topico === "si"}
+                    onChange={handleData}
+                  />
+
+                  <label htmlFor=""> No</label>
+                  <input
+                    type="radio"
+                    name="topico"
+                    value="no"
+                    checked={evaluacion.topico !== "si"}
+                    onChange={handleData}
+                  />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Seguridad</legend>
 
             <section>
+              <div>
+                <label>Capacitación SSO</label>
+                <input
+                  value={evaluacion.capacitacion_sso}
+                  name="capacitacion_sso"
+                  onChange={handleData}
+                  type="number"
+                ></input>
+              </div>
+            </section>
+            <div className="aprobado">
+              <div>
+                <div className="titulo">
+                  <label htmlFor=""> Autoriza</label>
+                </div>
+                <div>
+                  <label htmlFor=""> Si</label>
+                  <input
+                    type="radio"
+                    name="seguridad"
+                    value="si"
+                    checked={evaluacion.seguridad === "si"}
+                    onChange={handleData}
+                  />
+
+                  <label htmlFor=""> No</label>
+                  <input
+                    type="radio"
+                    name="seguridad"
+                    value="no"
+                    checked={evaluacion.seguridad !== "si"}
+                    onChange={handleData}
+                  />
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Medio Ambiente</legend>
+
+            <section>
+              <div>
+                <label htmlFor="">Capacitación GEMA</label>
+                <input
+                  type="number"
+                  value={evaluacion.capacitacion_gema}
+                  name="capacitacion_gema"
+                  onChange={handleData}
+                />
+              </div>
               <div>
                 <label htmlFor="">Antecedentes CCM</label>
                 <textarea
@@ -278,12 +374,39 @@ const ModalRegistroEvaluacion = ({
                 ></textarea>
               </div>
             </section>
+            <div className="aprobado">
+              <div>
+                <div className="titulo">
+                  <label htmlFor=""> Autoriza</label>
+                </div>
+                <div>
+                  <label htmlFor=""> Si</label>
+                  <input
+                    type="radio"
+                    name="medio_ambiente"
+                    value="si"
+                    checked={evaluacion.medio_ambiente === "si"}
+                    onChange={handleData}
+                  />
 
-            <div className="footer">
-              <button>Registrar</button>
+                  <label htmlFor=""> No</label>
+                  <input
+                    type="radio"
+                    name="medio_ambiente"
+                    value="no"
+                    checked={evaluacion.medio_ambiente !== "si"}
+                    onChange={handleData}
+                  />
+                </div>
+              </div>
             </div>
-          </form>
-        </section>
+          </fieldset>
+
+          <div className="footer">
+          {dataToEdit ? <button>Editar</button> : <button>Registar</button>}
+
+          </div>
+        </form>
       </div>
     </div>
   );

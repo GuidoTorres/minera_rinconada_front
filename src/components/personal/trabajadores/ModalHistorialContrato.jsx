@@ -10,6 +10,7 @@ import { alertaEliminarExito } from "../../../helpers/alertMessage";
 import ModalRegistrarContrato from "./ModalRegistrarContrato";
 import Swal from "sweetalert2";
 
+
 const ModalHistorialContrato = ({ selected }) => {
   const route = "contrato";
   const {
@@ -21,9 +22,6 @@ const ModalHistorialContrato = ({ selected }) => {
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
   const [id, setId] = useState("");
 
-  console.log("====================================");
-  console.log(selected);
-  console.log("====================================");
 
   const getContrato = async () => {
     const route = "contrato";
@@ -38,7 +36,6 @@ const ModalHistorialContrato = ({ selected }) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     alertaEliminarExito("contrato").then((res) => {
       if (res.isConfirmed) {
         deleteData(route, id.id);
@@ -52,6 +49,8 @@ const ModalHistorialContrato = ({ selected }) => {
       getContrato();
     });
   };
+
+
 
   const closeModal = () => {
     setHistorialContrato(false);
@@ -115,7 +114,7 @@ const ModalHistorialContrato = ({ selected }) => {
         <section className="buscador">
           <Buscador
             abrirModal={setRegistrarContrato}
-            registrar={selected?.aprobado === "si" ? true : false}
+            registrar={true}
           />
         </section>
         <Tabla columns={historialContrato} table={data1} />

@@ -6,6 +6,7 @@
   align-items: center;
   width: 70px;
   border-right: 1px solid black;
+  
 }
 
 .icon-container {
@@ -74,7 +75,7 @@
   background-color: black;
   color: white;
 }
-
+/* 
 @media screen and (min-width: 1200px) {
   .sidebar-container {
     width: 250px;
@@ -122,4 +123,5 @@
     font-size: 18px;
     display: block;
   }
-}
+} */
+

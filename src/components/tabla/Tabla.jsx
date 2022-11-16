@@ -11,7 +11,6 @@ const Tabla = ({ columns, table }) => {
         striped
         highlightOnHover
         responsive
-        // dense
         noDataComponent={"No se encontraron resultados."}
       />
     </div>

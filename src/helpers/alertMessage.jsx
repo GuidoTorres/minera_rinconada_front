@@ -7,18 +7,25 @@ const alertaError = () => {
     text: "Campos incompletos!",
   });
 };
-const alertaExito = (text) => {
+const alertaErrorCrear = (text) => {
   return Swal.fire({
-    icon: "success",
+    icon: "error",
     // title: "Error...",
-    text: `${text} creado con éxito!`,
+    text: text,
   });
 };
-const alertaEditarExito = (text) => {
+const alertaExito = (text, status) => {
   return Swal.fire({
-    icon: "success",
+    icon: status === 200 ? "success" : "error",
     // title: "Error...",
-    text: `${text} editado con éxito!`,
+    text: `${text}`,
+  });
+};
+const alertaEditarExito = (text, status) => {
+  return Swal.fire({
+    icon: status === 200 ? "success" : "error",
+    // title: "Error...",
+    text: `${text}`,
   });
 };
 
@@ -26,13 +33,13 @@ const alertaEliminarExito = (text) => {
   return Swal.fire({
     title: `¿Estás seguro de eliminar este ${text}?`,
     text: "No podras deshacerlo",
-    icon: 'warning',
+    icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    cancelButtonText: 'Cancelar',
-    confirmButtonText: 'Eliminar'
-  })
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "Cancelar",
+    confirmButtonText: "Eliminar",
+  });
 };
 
-export { alertaError, alertaExito , alertaEliminarExito, alertaEditarExito};
+export { alertaError, alertaExito, alertaEliminarExito, alertaEditarExito, alertaErrorCrear };

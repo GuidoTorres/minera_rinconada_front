@@ -34,9 +34,11 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
   };
 
   const handleDelete = (id) => {
+    let route = "contrato"
+    console.log(id);
     alertaEliminarExito("contrato").then((res) => {
       if (res.isConfirmed) {
-        deleteData(id.contratoId, route);
+        deleteData(route,id.id);
 
         Swal.fire(
           "Eliminado!",
@@ -111,7 +113,10 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
         <section className="buscador">
           <Buscador abrirModal={setRegistrarContratoAsociacion}  registrar={true}/>
         </section>
+        <section className="tabla">
+
         <Tabla columns={historialContrato} table={data1} />
+        </section>
       </div>
       {registrarContratoAsociacion && (
         <ModalContratoAsociacion
