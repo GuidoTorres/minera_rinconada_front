@@ -48,7 +48,7 @@ const Buscador = ({
   const excelFile = (e) => {
     let formData = new FormData();
     formData.append("myFile", e.target.files[0]);
-    fetch(`http://localhost:3000/api/v1/asistencia/excel`, {
+    fetch(`https://rinconada.herokuapp.com/api/v1/asistencia/excel`, {
       method: "post",
       body: formData,
       headers: {
