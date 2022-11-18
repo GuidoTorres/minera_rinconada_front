@@ -1,10 +1,30 @@
 import React, { useContext, useRef } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PersonalContext } from "../../context/PersonalContext";
 
-const Buscador = ({ abrirModal, importar, registrar }) => {
+const Buscador = ({ abrirModal, importar, registrar, data, registrar2 }) => {
   const { render, setFilterText } = useContext(PersonalContext);
+  const [finalizado, setFinalizado] = useState();
   const inputFileRef = useRef(null);
+
+  useEffect(() => {
+    checkIsEnd();
+  }, []);
+
+  console.log(data);
+
+  const checkIsEnd = () => {
+    let estado = [];
+    estado = data?.estado?.includes(false);
+
+    if (estado) {
+      setFinalizado(false);
+    } else {
+      setFinalizado(true);
+    }
+  };
 
   const changeHandler = (e) => {
     inputFileRef.current.click();
@@ -55,6 +75,16 @@ const Buscador = ({ abrirModal, importar, registrar }) => {
           <button style={{ marginRight: "10px" }} onClick={changeHandler}>
             Importar Trabajadores
           </button>
+        )}
+        {finalizado && registrar2 ? (
+          <button
+            style={{ marginRight: "10px" }}
+            onClick={() => abrirModal(true)}
+          >
+            + {render === "Roles o Puestos" ? "Asignar" : "Registrar"}
+          </button>
+        ) : (
+          ""
         )}
         {registrar && (
           <button

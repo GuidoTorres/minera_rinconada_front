@@ -33,11 +33,24 @@ const ModalRegistroEvaluacion = ({
     diabetes: "",
     antecedentes: "",
     emo: "",
-    trabajador_id: selected.id,
+    trabajador_id: selected.dni,
     aprobado: "",
     recomendado_por: "",
     cooperativa: "",
     condicion_cooperativa: "",
+    fiscalizador: "",
+    fiscalizador_aprobado: "",
+    topico_observacion: "",
+    control_observacion: "",
+    seguridad_observacion: "",
+    medio_ambiente_observacion: "",
+    recursos_humanos: "",
+    recursos_humanos_observacion: "",
+    medio_ambiente: "",
+    control: "",
+    topico: "",
+    seguridad: "",
+    medio_ambiente: "",
   };
   const { setRegistrarEvaluacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
@@ -45,7 +58,7 @@ const ModalRegistroEvaluacion = ({
   const [evaluacion, setEvaluacion] = useState(evaluacionValues);
   const [cargo, setCargo] = useState([]);
   const [socio, setSocio] = useState([]);
-
+  console.log(selected);
   const getCargo = async () => {
     const route2 = "socio";
     const response = await getData(route1);
@@ -54,7 +67,7 @@ const ModalRegistroEvaluacion = ({
     setCargo(response.data);
     setSocio(response2.data);
   };
-
+  console.log(selected);
   useEffect(() => {
     if (dataToEdit) {
       setEvaluacion(dataToEdit);
@@ -126,37 +139,12 @@ const ModalRegistroEvaluacion = ({
 
           <AiOutlineClose onClick={closeModal} />
         </section>
-        <div className="aprobado_rrhh">
-          <div>
-            <div className="titulo">
-              <label htmlFor=""> Autoriza fiscalizador: </label>
-            </div>
-            <div>
-              <label htmlFor=""> Si</label>
-              <input
-                type="radio"
-                name="aprobado"
-                value="si"
-                checked={evaluacion?.aprobado === "si"}
-                onChange={handleData}
-              />
 
-              <label htmlFor=""> No</label>
-              <input
-                type="radio"
-                name="aprobado"
-                value="no"
-                checked={evaluacion?.aprobado !== "si"}
-                onChange={handleData}
-              />
-            </div>
-          </div>
-        </div>
         <form className="modal-body" onSubmit={handleSubmit}>
           <fieldset className="cabecera">
             <legend></legend>
             <div>
-              <label>Fecha de evaluación</label>
+              <label> Fecha de evaluación</label>
               <input
                 type="date"
                 value={evaluacion.fecha_evaluacion.split("T")[0]}
@@ -181,7 +169,9 @@ const ModalRegistroEvaluacion = ({
             </div>
           </fieldset>
           <fieldset className="cooperativa">
-            <legend>Cooperativa</legend>
+            <legend>
+              <strong>Cooperativa</strong>
+            </legend>
             <section>
               <div>
                 <label>Recomendado por</label>
@@ -227,20 +217,70 @@ const ModalRegistroEvaluacion = ({
               </div>
             </section>
           </fieldset>
-          <fieldset>
-            <legend>Control</legend>
-
-            <section>
-              <div>
-                <label htmlFor="">Evaluación laboral</label>
-                <input
-                  type="number"
-                  value={evaluacion.evaluacion_laboral}
-                  name="evaluacion_laboral"
+          <fieldset className="fiscalizador">
+            <legend>
+              <strong>Fiscalizador</strong>
+            </legend>
+            <div className="container">
+              <div className="titulo">
+                <label htmlFor=""> Fiscalizador a cargo </label>
+                <select
+                  value={evaluacion?.fiscalizador}
+                  name="fiscalizador"
                   onChange={handleData}
-                />
+                >
+                  <option value="-1">Seleccione</option>
+                  {socio.map((item, i) => (
+                    <option key={i} value={item.nombre}>
+                      {item.nombre}
+                    </option>
+                  ))}
+                </select>
               </div>
-            </section>
+
+              <div className="aprobado">
+                <div>
+                  <div className="titulo">
+                    <label htmlFor=""> Autoriza</label>
+                  </div>
+                  <div>
+                    <label htmlFor=""> Si</label>
+                    <input
+                      type="radio"
+                      name="fiscalizador_aprobado"
+                      value="si"
+                      checked={evaluacion?.fiscalizador_aprobado === "si"}
+                      onChange={handleData}
+                    />
+
+                    <label htmlFor=""> No</label>
+                    <input
+                      type="radio"
+                      name="fiscalizador_aprobado"
+                      value="no"
+                      checked={evaluacion?.fiscalizador_aprobado !== "si"}
+                      onChange={handleData}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset className="control">
+            <legend>
+              <strong>Control</strong>
+            </legend>
+
+            <div>
+              <label htmlFor="">
+                Estado: Normal
+                {/* {selected?.contrato?.map((item) =>
+                  item?.estado !== false ? "Suspendido" : "Normal"
+                )} */}
+              </label>
+              <label htmlFor="">Evaluación laboral: {selected?.nota}</label>
+            </div>
+
             <div className="aprobado">
               <div>
                 <div className="titulo">
@@ -268,12 +308,18 @@ const ModalRegistroEvaluacion = ({
               </div>
               <div>
                 <label htmlFor="">Observaciones</label>
-                <textarea></textarea>
+                <textarea
+                  name="control_observacion"
+                  value={evaluacion?.control_observacion}
+                  onChange={handleData}
+                ></textarea>
               </div>
             </div>
           </fieldset>
           <fieldset>
-            <legend>Topico</legend>
+            <legend>
+              <strong>Topico</strong>
+            </legend>
 
             <section>
               <div>
@@ -358,18 +404,24 @@ const ModalRegistroEvaluacion = ({
               </div>
               <div>
                 <label htmlFor="">Observaciones</label>
-                <textarea></textarea>
+                <textarea
+                  name="topico_observacion"
+                  value={evaluacion?.topico_observacion}
+                  onChange={handleData}
+                ></textarea>
               </div>
             </div>
           </fieldset>
           <fieldset>
-            <legend>Seguridad</legend>
+            <legend>
+              <strong>Seguridad</strong>
+            </legend>
 
             <section>
               <div>
                 <label>Capacitación SSO</label>
                 <input
-                  value={evaluacion.capacitacion_sso}
+                  value={evaluacion?.capacitacion_sso}
                   name="capacitacion_sso"
                   onChange={handleData}
                   type="number"
@@ -387,7 +439,7 @@ const ModalRegistroEvaluacion = ({
                     type="radio"
                     name="seguridad"
                     value="si"
-                    checked={evaluacion.seguridad === "si"}
+                    checked={evaluacion?.seguridad === "si"}
                     onChange={handleData}
                   />
 
@@ -396,41 +448,36 @@ const ModalRegistroEvaluacion = ({
                     type="radio"
                     name="seguridad"
                     value="no"
-                    checked={evaluacion.seguridad !== "si"}
+                    checked={evaluacion?.seguridad !== "si"}
                     onChange={handleData}
                   />
                 </div>
               </div>
               <div>
                 <label htmlFor="">Observaciones</label>
-                <textarea></textarea>
+                <textarea
+                  name="seguridad_observacion"
+                  value={evaluacion?.seguridad_observacion}
+                  onChange={handleData}
+                ></textarea>
               </div>
             </div>
           </fieldset>
           <fieldset>
-            <legend>Medio Ambiente</legend>
+            <legend>
+              <strong>Medio Ambiente</strong>
+            </legend>
 
             <section>
               <div>
                 <label htmlFor="">Capacitación GEMA</label>
                 <input
                   type="number"
-                  value={evaluacion.capacitacion_gema}
+                  value={evaluacion?.capacitacion_gema}
                   name="capacitacion_gema"
                   onChange={handleData}
                 />
               </div>
-              {/* <div>
-                <label htmlFor="">Antecedentes CCM</label>
-                <textarea
-                  id=""
-                  cols="30"
-                  rows="10"
-                  value={evaluacion.antecedentes}
-                  name="antecedentes"
-                  onChange={handleData}
-                ></textarea>
-              </div> */}
             </section>
             <div className="aprobado">
               <div>
@@ -443,7 +490,7 @@ const ModalRegistroEvaluacion = ({
                     type="radio"
                     name="medio_ambiente"
                     value="si"
-                    checked={evaluacion.medio_ambiente === "si"}
+                    checked={evaluacion?.medio_ambiente === "si"}
                     onChange={handleData}
                   />
 
@@ -452,14 +499,57 @@ const ModalRegistroEvaluacion = ({
                     type="radio"
                     name="medio_ambiente"
                     value="no"
-                    checked={evaluacion.medio_ambiente !== "si"}
+                    checked={evaluacion?.medio_ambiente !== "si"}
                     onChange={handleData}
                   />
                 </div>
               </div>
               <div>
                 <label htmlFor="">Observaciones</label>
-                <textarea></textarea>
+                <textarea
+                  name="medio_ambiente_observacion"
+                  value={evaluacion?.medio_ambiente_observacion}
+                  onChange={handleData}
+                ></textarea>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>
+              <strong>Recursos Humanos</strong>
+            </legend>
+            <div className="aprobado">
+              <div>
+                <div className="titulo">
+                  <label htmlFor=""> Autoriza</label>
+                </div>
+                <div>
+                  <label htmlFor=""> Si</label>
+                  <input
+                    type="radio"
+                    name="recursos_humanos"
+                    value="si"
+                    checked={evaluacion?.recursos_humanos === "si"}
+                    onChange={handleData}
+                  />
+
+                  <label htmlFor=""> No</label>
+                  <input
+                    type="radio"
+                    name="recursos_humanos"
+                    value="no"
+                    checked={evaluacion?.recursos_humanos !== "si"}
+                    onChange={handleData}
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="">Observaciones</label>
+                <textarea
+                  name="recursos_humanos_observacion"
+                  value={evaluacion?.recursos_humanos_observacion}
+                  onChange={handleData}
+                ></textarea>
               </div>
             </div>
           </fieldset>

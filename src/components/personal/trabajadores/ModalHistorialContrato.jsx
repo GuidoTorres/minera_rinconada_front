@@ -23,13 +23,11 @@ const ModalHistorialContrato = ({ selected }) => {
 
   const getContrato = async () => {
     const route = "contrato";
-    const response = await getDataById(route, selected.id);
-    
-    const prueba = response.data.filter(item => item !== null)
+    const response = await getDataById(route, selected.dni);
+
+    const prueba = response.data.filter((item) => item !== null);
     setData1(prueba);
-    
   };
-  console.log(selected.aprobado);
   const handleEdit = (e) => {
     setDataToEdit(e);
     setRegistrarContrato(true);
@@ -40,7 +38,7 @@ const ModalHistorialContrato = ({ selected }) => {
     deleteData(route, id.id).then((res) => {
       if (res.status === 200) {
         alertaEliminar(res.msg, res.status).then((res) => {
-          closeModal()
+          closeModal();
           if (res.isConfirmed) {
             actualizarTabla();
           }
@@ -52,7 +50,7 @@ const ModalHistorialContrato = ({ selected }) => {
   const closeModal = () => {
     setHistorialContrato(false);
   };
-
+  console.log(selected);
   useEffect(() => {
     getContrato();
   }, []);
@@ -109,7 +107,7 @@ const ModalHistorialContrato = ({ selected }) => {
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="buscador">
-          <Buscador abrirModal={setRegistrarContrato} registrar={true} />
+          <Buscador abrirModal={setRegistrarContrato} registrar2={true} data={selected}/>
         </section>
         <Tabla columns={historialContrato} table={data1} />
       </div>

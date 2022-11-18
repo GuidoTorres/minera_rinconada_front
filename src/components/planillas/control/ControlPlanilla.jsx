@@ -28,14 +28,13 @@ const ControlPlanilla = () => {
     setPlanillaControl(true);
     setTableData(e);
     setUserdata(e);
-    console.log(e);
   };
 
   const planilla = [
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row?.id,
+      selector: (row, index) => index + 1,
     },
     {
       id: "nombres",
@@ -45,13 +44,13 @@ const ControlPlanilla = () => {
       sortable: true,
       center: true,
     },
-    {
-      id: "dni",
-      name: "Dni",
-      selector: (row) => (row?.dni ? row.dni : "---"),
-      sortable: true,
-      center: true,
-    },
+    // {
+    //   id: "dni",
+    //   name: "Dni",
+    //   selector: (row) => (row?.dni ? row.dni : "---"),
+    //   sortable: true,
+    //   center: true,
+    // },
 
     {
       id: "celular",
@@ -75,13 +74,20 @@ const ControlPlanilla = () => {
       id: "Dias",
       name: "Dias laborados",
       button: true,
-      selector: (row) => row?.asistencia ? row.asistencia : "--",
+      selector: (row) => (row?.asistencia ? row.asistencia : "--"),
+    },
+    {
+      id: "volquete",
+      name: "Volquete",
+      selector: (row) => row?.total?.split(",")[0],
+
+      center: true,
     },
 
     {
       id: "teletrans",
       name: "Teletrans",
-      selector: (row) => row?.teletrans?.map(item => item.total),
+      selector: (row) => row?.total?.split(",")[0],
 
       center: true,
     },
@@ -89,7 +95,7 @@ const ControlPlanilla = () => {
       id: "saldo",
       name: "Saldo",
       button: true,
-      selector: (row) => row?.teletrans?.map(item => item.saldo),
+      selector: (row) => row?.saldo?.split(",")[0],
 
       center: true,
     },
@@ -124,7 +130,12 @@ const ControlPlanilla = () => {
         cargar={false}
       />
       <Tabla columns={planilla} table={data} />
-      {planillaControl && <ModalPlanillaControl selected={tableData} />}
+      {planillaControl && (
+        <ModalPlanillaControl
+          selected={tableData}
+          actualizarTabla={getTrabajadores}
+        />
+      )}
     </div>
   );
 };

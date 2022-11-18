@@ -71,7 +71,7 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
     if (!trabajador.dni) {
       alertaError();
     } else if (dataToEdit === null) {
-      fetch(`https://rinconada.herokuapp.com/api/v1/trabajador`, {
+      fetch(`http://localhost:3000/api/v1/trabajador`, {
         method: "POST",
         body: formData,
       })
@@ -93,7 +93,7 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
     }
 
     if (dataToEdit) {
-      fetch(`https://rinconada.herokuapp.com/api/v1/trabajador/${dataToEdit.id}`, {
+      fetch(`http://localhost:3000/api/v1/trabajador/${dataToEdit.dni}`, {
         method: "PUT",
         body: formData,
       })

@@ -14,6 +14,7 @@ import "../styles/modalRegistrarContrato.css";
 import moment from "moment";
 
 const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
+  
   const route = "contrato";
   const route1 = "cargo";
   const route2 = "campamento";
@@ -37,10 +38,9 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     campamento_id: "",
     nota_contrato: "",
     puesto: "",
-    evaluacion_id: data?.evaluacion_id,
+    evaluacion_id: data.evaluacion_id,
     estado: false,
   };
-
   const { setRegistrarContrato, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
 
@@ -83,7 +83,6 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     });
   };
   useEffect(() => {
-    console.log(dataToEdit);
     if (dataToEdit) {
       setContrato(dataToEdit);
     } else {
@@ -332,55 +331,6 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                 </div>
               </section>
             </fieldset>
-
-            {/* <fieldset>
-              <legend>Recomendado</legend>
-              <section>
-                <div>
-                  <label>Recomendado por</label>
-                  <select
-                    value={contrato?.recomendado_por}
-                    name="recomendado_por"
-                    onChange={handleData}
-                  >
-                    <option value="-1">Seleccione</option>
-                    {socio.map((item, i) => (
-                      <option key={i} value={item.nombre}>
-                        {item.nombre}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label>Cooperativa</label>
-                  <input
-                    disabled
-                    type="text"
-                    name="cooperativa"
-                    value={contrato?.cooperativa}
-                  />
-                </div>
-
-                <div>
-                  <label>Condición cooperativa</label>
-                  <select
-                    value={contrato?.condicion_cooperativa}
-                    name="condicion_cooperativa"
-                    onChange={handleData}
-                  >
-                    <option value="-1">Seleccione</option>
-                    <option value="Hijo">Hijo</option>
-                    <option value="Sobrino">Sobrino</option>
-                    <option value="Primo">Primo</option>
-                    <option value="Tio">Tio</option>
-                    <option value="Tio">Compadre</option>
-                    <option value="Tio">Compañero</option>
-                    <option value="Tio">Amigo</option>
-                  </select>
-                </div>
-              </section>
-            </fieldset> */}
-
             <fieldset>
               <legend>Termino de contrato</legend>
               <section>

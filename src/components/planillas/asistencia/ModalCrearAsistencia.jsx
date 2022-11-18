@@ -5,16 +5,16 @@ import { AiOutlineClose, AiFillEye } from "react-icons/ai";
 
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import { CrudContext } from "../../../context/CrudContext";
-// import "../style/modalValidacionCrearAsistencia"
+import "../style/modalCrearAsistencia.css"
 
 const ModalCrearAsistencia = ({ data }) => {
   const { setControlAsistencia, campamentoAsistencia, fechaId } =
     useContext(PlanillaContext);
-  const { getData, data2, setData2, createData } = useContext(CrudContext);
+  const { getDataById, data2, setData2, createData } = useContext(CrudContext);
 
   const getTrabajadorAsistencia = async () => {
     const route = "asistencia/trabajador";
-    const response = await getData(route);
+    const response = await getDataById(route, fechaId.id);
     setData2(response.data);
   };
   useEffect(() => {
@@ -23,16 +23,21 @@ const ModalCrearAsistencia = ({ data }) => {
 
   const closeModal = () => {
     setControlAsistencia(false);
+    setData2([])
   };
 
   const handleAsistencia = async (event, e) => {
     const route = "asistencia/trabajador";
     const info = {
       asistencia_id: fechaId.id,
-      trabajador_id: e.id,
+      trabajador_id: e.dni,
       asistencia: event.target.value,
     };
-    const response = await createData(info, route);
+    const response = await createData(info, route).then((res) => {
+      if (res.status === 200) {
+        getTrabajadorAsistencia();
+      }
+    });
   };
 
   const planilla = [
@@ -70,7 +75,9 @@ const ModalCrearAsistencia = ({ data }) => {
       cell: (e) => (
         <>
           <select
-            // defaultValue={e?.trabajador_asistencia?.map(item => {return item.asistencia})}
+            defaultValue={e?.trabajador_asistencia?.map((item) => {
+              return item.asistencia;
+            })}
             onChange={(event) => handleAsistencia(event, e)}
           >
             <option value="-1">Seleccione</option>
@@ -95,7 +102,7 @@ const ModalCrearAsistencia = ({ data }) => {
     },
   ];
   return (
-    <div className="modal-planilla">
+    <div className="modal-asistencia">
       <div className="overlay">
         <div className="modal-container">
           <section className="modal-header">
@@ -108,6 +115,7 @@ const ModalCrearAsistencia = ({ data }) => {
               crear={false}
               exportar={false}
               cargar={true}
+              actualizarTabla={getTrabajadorAsistencia}
             />
           </section>
           <Tabla columns={planilla} table={data2} />

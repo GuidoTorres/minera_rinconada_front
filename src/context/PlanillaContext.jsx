@@ -7,13 +7,15 @@ export const PlanillaProvider = ({ children }) => {
   const [asistencia, setAsistencia] = useState(false);
   const [controlAsistencia, setControlAsistencia] = useState(false);
   const [campamentoAsistencia, setCampamentoAsistencia] = useState();
-  const [validacionPagos, setValidacionPagos] = useState(false)
-  const [validacionPagosAsociacion, setValidacionPagosAsociacion] = useState(false)
+  const [validacionPagos, setValidacionPagos] = useState(false);
+  const [validacionPagosAsociacion, setValidacionPagosAsociacion] =
+    useState(false);
 
-  const [fechaId, setFechaId]= useState()
-  const [userData, setUserdata] = useState([])
-  const [pago, setPago] = useState(false)
-  const [fechas, setFechas] = useState([])
+  const [fechaId, setFechaId] = useState();
+  const [userData, setUserdata] = useState([]);
+  const [pago, setPago] = useState(false);
+  const [fechas, setFechas] = useState([]);
+  const [verificacion, setVerificacion] = useState(false);
 
   const data = {
     planillaControl,
@@ -24,8 +26,20 @@ export const PlanillaProvider = ({ children }) => {
     setControlAsistencia,
     campamentoAsistencia,
     setCampamentoAsistencia,
-    validacionPagos, setValidacionPagos,fechaId, setFechaId,
-    userData, setUserdata,pago, setPago,validacionPagosAsociacion, setValidacionPagosAsociacion,fechas, setFechas
+    validacionPagos,
+    setValidacionPagos,
+    fechaId,
+    setFechaId,
+    verificacion,
+    setVerificacion,
+    userData,
+    setUserdata,
+    pago,
+    setPago,
+    validacionPagosAsociacion,
+    setValidacionPagosAsociacion,
+    fechas,
+    setFechas,
   };
 
   return (

@@ -1,23 +1,30 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose, AiFillEye } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import Tabla from "../../tabla/Tabla";
 import Buscador from "../Buscador";
 import "../style/modalValidacionPagos.css";
+import ModalVerificacion from "./ModalVerificacion";
 
 const ModalValidacionPagos = ({ data }) => {
-  const { setValidacionPagos } = useContext(PlanillaContext);
+  const { setValidacionPagos, verificacion, setVerificacion } = useContext(PlanillaContext);
   const { getDataById, data2, setData2 } = useContext(CrudContext);
+  const [text, setText] = useState()
 
   const getTareo = async () => {
     const route = "planilla/tareo";
-    const response = await getDataById(route, data.id);
+    const response = await getDataById(route, data.dni);
     setData2(response.data);
   };
   useEffect(() => {
     getTareo();
   }, []);
+
+  const modalVerificacion = (data) => {
+    setVerificacion(true)
+    setText(data)
+  }
 
   const closeModal = () => {
     setValidacionPagos(false);
@@ -26,11 +33,11 @@ const ModalValidacionPagos = ({ data }) => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row) => row?.id,
+      selector: (row, index) => index+1,
     },
     {
       id: "fecha",
-      name: "Fechas",
+      name: "Fecha",
       sortable: true,
       center: true,
       selector: (row) => row?.asistencium?.fecha,
@@ -50,6 +57,7 @@ const ModalValidacionPagos = ({ data }) => {
     },
   ];
   return (
+    <>
     <div className="modal-validacion">
       <div className="overlay">
         <div className="modal-container">
@@ -120,6 +128,7 @@ const ModalValidacionPagos = ({ data }) => {
                 borderRadius: "6px",
                 border: "1px solid grey",
               }}
+              onClick={() => modalVerificacion("Verificación Gerente de Op.")}
             >
               Verificación Gerente de Op.
             </button>
@@ -129,7 +138,10 @@ const ModalValidacionPagos = ({ data }) => {
                 backgroundColor: "white",
                 borderRadius: "6px",
                 border: "1px solid grey",
+                
               }}
+              onClick={() => modalVerificacion("Verificación Jefe de Operaciones")}
+
             >
               Verificación Jefe de Operaciones
             </button>
@@ -140,13 +152,18 @@ const ModalValidacionPagos = ({ data }) => {
                 borderRadius: "6px",
                 border: "1px solid grey",
               }}
+              onClick={() => modalVerificacion("Validacion de Trabajador")}
+
             >
               Validacion de Trabajador
             </button>
           </section>
         </div>
       </div>
+
     </div>
+      {verificacion && <ModalVerificacion text={text}/>}
+      </>
   );
 };
 

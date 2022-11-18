@@ -66,7 +66,6 @@ const PersonalLayout = () => {
   const handleEvaluacion = (e) => {
     setHistorialEvaluacion(true);
     setId(e);
-    console.log(e);
   };
   const handleContrato = (e) => {
     setHistorialContrato(true);

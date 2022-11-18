@@ -99,7 +99,7 @@ const ModalRegistroSocio = ({ actualizarTabla }) => {
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
               <div>
-                <label>Nombre</label>
+                <label>Apellidos y nombres</label>
                 <input
                   type="text"
                   name="nombre"

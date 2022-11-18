@@ -58,7 +58,7 @@ const SocioLayout = () => {
     },
     {
       id: "nombre",
-      name: "Nombre",
+      name: "Apellidos y nombres",
       selector: (row) => row?.nombre,
       sortable: true,
     },

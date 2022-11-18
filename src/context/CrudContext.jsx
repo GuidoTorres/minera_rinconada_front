@@ -12,107 +12,107 @@ export const CrudProvider = ({ children }) => {
   const [modalCampamento, setModalCampamento] = useState(false);
 
   const getData = async (route) => {
-    // const response = await fetch(`http://localhost:3000/api/v1/${route}`);
-    const response = await fetch(
-      `https://rinconada.herokuapp.com/api/v1/${route}`
-    );
+    const response = await fetch(`http://localhost:3000/api/v1/${route}`);
+    // const response = await fetch(
+    //   `https://rinconada.herokuapp.com/api/v1/${route}`
+    // );
     const data = await response.json();
 
     if (data) return data;
   };
 
   const getDataById = async (route, id) => {
-    // const response = await fetch(`http://localhost:3000/api/v1/${route}/${id}`);
+    const response = await fetch(`http://localhost:3000/api/v1/${route}/${id}`);
 
-    const response = await fetch(
-      `https://rinconada.herokuapp.com/api/v1/${route}/${id}`
-    );
+    // const response = await fetch(
+    //   `https://rinconada.herokuapp.com/api/v1/${route}/${id}`
+    // );
     const data = await response.json();
 
     if (data) return data;
   };
 
   const getDataById2 = async (route, id, asistencia) => {
-    // const response = await fetch(
-    //   `http://localhost:3000/api/v1/${route}/${id}/${asistencia}`
-    // );
-
     const response = await fetch(
-      `https://rinconada.herokuapp.com/api/v1/${route}/${id}/${asistencia}`
+      `http://localhost:3000/api/v1/${route}/${id}/${asistencia}`
     );
+
+    // const response = await fetch(
+    //   `https://rinconada.herokuapp.com/api/v1/${route}/${id}/${asistencia}`
+    // );
     const data = await response.json();
 
     if (data) return data;
   };
 
   const createData = async (data, route) => {
-    // const prueba = await fetch(`http://localhost:3000/api/v1/${route}`, {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json, text/plain, */*",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-    const prueba = await fetch(
-      `https://rinconada.herokuapp.com/api/v1/${route}`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const prueba = await fetch(`http://localhost:3000/api/v1/${route}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // const prueba = await fetch(
+    //   `https://rinconada.herokuapp.com/api/v1/${route}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       Accept: "application/json, text/plain, */*",
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    //   }
+    // );
     const content = await prueba.json();
     return content;
   };
 
   const updateData = async (data, id, route) => {
-    // const prueba = await fetch(`http://localhost:3000/api/v1/${route}/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     Accept: "application/json, text/plain, */*",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-    const prueba = await fetch(
-      `https://rinconada.herokuapp.com/api/v1/${route}/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const prueba = await fetch(`http://localhost:3000/api/v1/${route}/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // const prueba = await fetch(
+    //   `https://rinconada.herokuapp.com/api/v1/${route}/${id}`,
+    //   {
+    //     method: "PUT",
+    //     headers: {
+    //       Accept: "application/json, text/plain, */*",
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    //   }
+    // );
     const content = await prueba.json();
 
     return content;
   };
 
   const deleteData = async (route, id) => {
-    // const prueba = await fetch(`http://localhost:3000/api/v1/${route}/${id}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     Accept: "application/json, text/plain, */*",
-    //     "Content-Type": "application/json",
-    //   },
-    // });
+    const prueba = await fetch(`http://localhost:3000/api/v1/${route}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
 
-    const prueba = await fetch(
-      `https://rinconada.herokuapp.com/api/v1/${route}/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // const prueba = await fetch(
+    //   `https://rinconada.herokuapp.com/api/v1/${route}/${id}`,
+    //   {
+    //     method: "DELETE",
+    //     headers: {
+    //       Accept: "application/json, text/plain, */*",
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
     const content = await prueba.json();
     return content;
   };

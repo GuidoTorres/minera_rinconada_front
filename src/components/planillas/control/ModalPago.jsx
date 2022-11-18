@@ -1,58 +1,94 @@
 import React, { useContext, useState } from "react";
 import { AiOutlineClose, AiFillEye } from "react-icons/ai";
+import { CrudContext } from "../../../context/CrudContext";
 import { PlanillaContext } from "../../../context/PlanillaContext";
-
-const ModalPago = ({ data }) => {
-  const [inputFields, setInputFields] = useState([
+import { alertaExito } from "../../../helpers/alertMessage";
+import "../style/modalPagos.css";
+const ModalPago = ({ data, selected, actualizarTabla }) => {
+  const [initialValues, setInitialValues] = useState([
     {
-      conductor: "Conductor",
-      dni: "Dni",
-      telefono: "Teléfono",
-      placa: "Placa",
-      teletrans: "Teletrans",
-      lugar: "Lugar de despacho",
+      conductor: "",
+      dni: "",
+      telefono: "",
+      placa: "",
+      teletrans: "",
+      lugar: "",
+      contrato_id: selected?.id,
     },
   ]);
   const { setPago } = useContext(PlanillaContext);
+  const { createData } = useContext(CrudContext);
+  const [pagar, setPagar] = useState();
+  const [pago2, setPago2] = useState([]);
   const closeModal = () => {
     setPago(false);
   };
+  const handleChange = (e, i) => {
+    let data = [...initialValues];
+    const { name, value } = e.target;
+    data[i][name] = value;
 
-  const addFields = () => {
-    let newField = {
-      conductor: "Conductor",
-      dni: "Dni",
-      telefono: "Teléfono",
-      placa: "Placa",
-      teletrans: "Teletrans",
-      lugar: "Lugar de despacho",
-    };
-
-    setInputFields([...inputFields, newField]);
+    setInitialValues(data);
   };
 
+  const addFields = () => {
+    let object = {
+      conductor: "",
+      dni: "",
+      telefono: "",
+      placa: "",
+      teletrans: "",
+      lugar: "",
+      contrato_id: selected?.id,
+    };
+    setInitialValues([...initialValues, object]);
+  };
+
+  const handleSubmit = async (e) => {
+    const route = "pago";
+    const route2 = "pago/multiple";
+
+    console.log(initialValues);
+    e.preventDefault();
+
+    if (data.asociacion !== null) {
+      const response = createData(initialValues, route2).then((res) => {
+        if (res.status) {
+          alertaExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              actualizarTabla();
+            }
+          });
+        }
+      });
+    } else {
+      const response = createData(initialValues, route).then((res) => {
+        if (res.status) {
+          alertaExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              // actualizarTabla();
+            }
+          });
+        }
+      });
+    }
+  };
   return (
-    <div className="modal-validacion">
+    <div className="modal-pago">
       <div className="overlay">
         <div className="modal-container">
           <section className="modal-header">
             Ficha de envio
             <AiOutlineClose onClick={closeModal} />
           </section>
-          {/* <section className="buscador">
-          <Buscador
-            registrar={false}
-            crear={false}
-            exportar={true}
-            cargar={false}
-          />
-        </section> */}
-          <section style={{ paddingLeft: "30px", paddingRight: "30px" }}>
+          <section className="cabecera">
             <div>
               <label htmlFor="">Nombre: {data && data?.nombre}</label>
             </div>
 
-            <div style={{ display: "flex", gap: "50px", marginTop: "10px" }}>
+            <div>
               <div>
                 <label htmlFor="">Dni: {data && data?.dni}</label>
               </div>
@@ -62,160 +98,89 @@ const ModalPago = ({ data }) => {
               <div>
                 <label htmlFor="">Cargo:</label>
               </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "5px",
-                  gap: "150px",
-                }}
-              ></div>
             </div>
           </section>
-          <section
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingRight: "20px",
-            }}
-          >
-            <button
-              onClick={addFields}
-              style={{
-                border: "1px solid grey",
-                width: "120px",
-                height: "30px",
-                backgroundColor: "white",
-                borderRadius: "6px",
-              }}
-            >
-              Añadir
-            </button>
+          <section className="button-container">
+            {data && data?.asociacion !== null ? (
+              <button
+                onClick={addFields}
+                style={{
+                  border: "1px solid grey",
+                  width: "120px",
+                  height: "30px",
+                  backgroundColor: "white",
+                  borderRadius: "6px",
+                }}
+              >
+                Añadir
+              </button>
+            ) : (
+              ""
+            )}
           </section>
-          <form>
-            {inputFields.map((input, i) => {
+          <form className="form" onSubmit={handleSubmit}>
+            {initialValues.map((input, i) => {
               return (
-                <section
-                  style={{
-                    padding: "10px 20px 20px 20px",
-                    overflowY: "scroll",
-                  }}
-                >
-                  <div
-                    style={{
-                      border: "1px solid black",
-                      borderRadius: "6px",
-                      padding: "10px 10px 20px 10px",
-                    }}
-                  >
-                    <div key={i}>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "20px",
-                        }}
-                      >
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <label htmlFor="">{input.conductor}</label>
-                          <input type="text" style={{ width: "200px" }} />
-                        </div>
+                <section className="body">
+                  <div className="input-container">
+                    <div>
+                      <label htmlFor="">Conductor</label>
+                      <input
+                        name="conductor"
+                        type="text"
+                        onChange={(e) => handleChange(e, i)}
+                      />
+                    </div>
 
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <label htmlFor="">{input.dni}</label>
-                          <input type="text" style={{ width: "200px" }} />
-                        </div>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <label htmlFor="">{input.telefono}</label>
-                          <input type="text" style={{ width: "200px" }} />
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "20px",
-                          marginTop: "10px",
-                        }}
-                      >
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <label htmlFor="">{input.placa}</label>
-                          <input type="text" style={{ width: "200px" }} />
-                        </div>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <label htmlFor="">{input.teletrans}</label>
-                          <input type="text" style={{ width: "200px" }} />
-                        </div>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <label htmlFor="">{input.lugar}</label>
-                          <input type="text" style={{ width: "200px" }} />
-                        </div>
-                      </div>
+                    <div>
+                      <label htmlFor="">Dni</label>
+                      <input
+                        name="dni"
+                        type="text"
+                        onChange={(e) => handleChange(e, i)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="">Teléfono</label>
+                      <input
+                        name="telefono"
+                        type="text"
+                        onChange={(e) => handleChange(e, i)}
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="">Placa</label>
+                      <input
+                        name="placa"
+                        type="text"
+                        onChange={(e) => handleChange(e, i)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="">Teletrans</label>
+                      <input
+                        name="teletrans"
+                        type="text"
+                        onChange={(e) => handleChange(e, i)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="">Lugar de Despacho</label>
+                      <input
+                        name="lugar"
+                        type="text"
+                        onChange={(e) => handleChange(e, i)}
+                      />
                     </div>
                   </div>
                 </section>
               );
             })}
-          </form>
-
-          {/* <section style={{ padding: "10px 20px 20px 20px" }}>
-            <div
-              style={{
-                border: "1px solid black",
-                borderRadius: "6px",
-                padding: "10px 10px 20px 10px",
-              }}
-            >
-              <div style={{ display: "flex", flexDirection: "row", gap:"20px" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label htmlFor="">Conductor</label>
-                  <input type="text" style={{width: "200px"}}/>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label htmlFor="">Dni</label>
-                  <input type="text" style={{width: "200px"}}/>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label htmlFor="">Teléfono</label>
-                  <input type="text" style={{width: "200px"}}/>
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", gap:"20px", marginTop:"10px" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-
-                <label htmlFor="">Placa</label>
-                <input type="text" style={{width: "200px"}}/>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-
-                <label htmlFor="">Teletrans</label>
-                <input type="text" style={{width: "200px"}}/>
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", gap:"20px", marginTop:"10px" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-
-                <label htmlFor="">Lugar de despacho</label>
-                <input type="text" style={{width: "200px"}}/>
-                </div>
-              </div>
+            <div className="footer">
+              <button>Guardar</button>
             </div>
-          </section> */}
+          </form>
         </div>
       </div>
     </div>

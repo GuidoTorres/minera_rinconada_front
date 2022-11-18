@@ -23,9 +23,8 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
 
   const getEvaluacion = async () => {
-    const response = await getDataById(route, selected.id);
+    const response = await getDataById(route, selected.dni);
     setData1(response.data);
-    console.log(selected);
   };
 
   const handleEdit = (e) => {
@@ -52,12 +51,13 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
 
   const closeModal = () => {
     setHistorialEvaluacion(false);
+    actualizarTrabajador()
   };
   const historialEvaluacion = [
     {
       id: "Id Historial",
       name: "Id Historial",
-      selector: (row) => row.evaluacion_id,
+      selector: (row, index) => index+1,
       width: "120px",
     },
     {
@@ -99,7 +99,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
             <AiOutlineClose onClick={closeModal} />
           </section>
           <section className="buscador">
-            <Buscador abrirModal={setRegistrarEvaluacion} registrar={true} />
+            <Buscador abrirModal={setRegistrarEvaluacion} registrar2={true} data={selected}/>
           </section>
           <Tabla columns={historialEvaluacion} table={data1} />
         </div>
@@ -109,6 +109,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
           actualizarTabla={getEvaluacion}
           selected={selected}
           actualizarTrabajador={actualizarTrabajador}
+        
         />
       )}
     </div>
