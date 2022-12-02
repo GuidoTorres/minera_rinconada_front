@@ -9,6 +9,9 @@ import { CrudContext } from "../../../context/CrudContext";
 import { alertaEliminarExito } from "../../../helpers/alertMessage";
 import ModalRegistrarContrato from "./ModalRegistrarContrato";
 import Swal from "sweetalert2";
+import { historialContrato } from "../../../data/dataTable";
+import BuscadorContrato from "../BuscadorContrato";
+import useSearch from "../../../hooks/useSearch";
 
 const ModalHistorialContrato = ({ selected }) => {
   const route = "contrato";
@@ -20,13 +23,13 @@ const ModalHistorialContrato = ({ selected }) => {
   } = useContext(PersonalContext);
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
   const [id, setId] = useState("");
-
+  const {result} = useSearch(data1)
   const getContrato = async () => {
     const route = "contrato";
     const response = await getDataById(route, selected.dni);
 
-    const prueba = response.data.filter((item) => item !== null);
-    setData1(prueba);
+    // const prueba = response.data.filter((item) => item !== null);
+    setData1(response.data);
   };
   const handleEdit = (e) => {
     setDataToEdit(e);
@@ -49,55 +52,13 @@ const ModalHistorialContrato = ({ selected }) => {
 
   const closeModal = () => {
     setHistorialContrato(false);
+    setData1([]);
   };
-  console.log(selected);
   useEffect(() => {
     getContrato();
   }, []);
 
-  const historialContrato = [
-    {
-      id: "Id contrato",
-      name: "Id contrato",
-      selector: (row) => row?.id,
-    },
-    {
-      id: "Tipo de Contrato",
-      name: "Tipo de Contrato",
-      selector: (row) => row?.tipo_contrato,
-    },
-    {
-      id: "Fecha de inicio",
-      name: "Fecha de inicio",
-      selector: (row) => row?.fecha_inicio?.split("T")[0],
-    },
-    {
-      id: "Fecha de fin",
-      name: "Fecha de fin",
-      selector: (row) => row?.fecha_fin?.split("T")[0],
-    },
-    {
-      id: "Estado",
-      name: "Estado",
-      selector: (row) => (row?.estado ? "Finalizado" : "Pendiente"),
-    },
-    {
-      id: "Nota",
-      name: "Nota",
-      selector: (row) => row?.nota_contrato,
-    },
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
-        </>
-      ),
-    },
-  ];
+  const columns = historialContrato(handleEdit, handleDelete);
   return (
     <div className="modal-historial">
       <div className="overlay"></div>
@@ -107,9 +68,14 @@ const ModalHistorialContrato = ({ selected }) => {
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="buscador">
-          <Buscador abrirModal={setRegistrarContrato} registrar2={true} data={selected}/>
+          <BuscadorContrato
+            abrirModal={setRegistrarContrato}
+            registrar={true}
+            tipo={"contrato"}
+            data={selected}
+          />
         </section>
-        <Tabla columns={historialContrato} table={data1} />
+        <Tabla columns={columns} table={result} />
       </div>
       {registrarContrato && (
         <ModalRegistrarContrato

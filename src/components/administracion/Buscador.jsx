@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { AdminContext } from "../../context/AdminContext";
 import { AiOutlineSearch } from "react-icons/ai";
-import "./styles/buscador.css"
+import "./styles/buscador.css";
+import { CrudContext } from "../../context/CrudContext";
 
-const Buscador = ({abrirModal}) => {
-  const { render, setFilterText } = useContext(AdminContext);
+const Buscador = ({ abrirModal }) => {
+  const { render } = useContext(AdminContext);
+  const { setFilterText } = useContext(CrudContext);
 
   return (
     <div className="buscador-container">

@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import ModalRegistroPersonal from "../trabajadores/ModalRegistroPersonal";
 import ModalHistorialContrato from "../trabajadores/ModalHistorialContrato";
 import ModalHistorialContratoAsociacion from "./ModalHistorialContratoAsociacion";
+import { asociacionLayout } from "../../../data/dataTable";
 
 const AsociacionLayout = () => {
   const route = "asociacion";
@@ -38,6 +39,7 @@ const AsociacionLayout = () => {
     setDataToEdit(e);
     setRegistrarAsociacion(true);
   };
+  console.log(data);
 
   const handleDelete = (e) => {
     alertaEliminarExito("asociación").then((res) => {
@@ -112,13 +114,16 @@ const AsociacionLayout = () => {
     let formData = new FormData();
     formData.append("myFile", e.target.files[0]);
 
-    fetch(`https://rinconada.herokuapp.com/api/v1/${asociacionId}`, {
-      method: "post",
-      body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
+    fetch(
+      `${import.meta.env.VITE_APP_BASE}/asociacion/upload/${asociacionId}`,
+      {
+        method: "post",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((res) => {
         if (res.status == 200) {
@@ -138,73 +143,12 @@ const AsociacionLayout = () => {
     setId(e);
   };
 
-  const personal = [
-    {
-      id: "Nro",
-      name: "Nro",
-      selector: (row, index) => index + 1,
-      sortable: true,
-    },
-    {
-      id: "Asociación",
-      name: "Asociación",
-      selector: (row) => row?.nombre,
-      sortable: true,
-    },
-    {
-      id: "tipo",
-      name: "Tipo de Asociación",
-      selector: (row) => row?.tipo,
-      sortable: true,
-    },
-    {
-      id: "Campamento",
-      name: "Campamento",
-      sortable: true,
-
-      selector: (row) => (row?.campamento ? row.campamento : "Por asignar"),
-    },
-    {
-      id: "Asignar Trabajadores",
-      name: "Asignar Trabajadores",
-      button: true,
-      cell: (e) => (
-        <>
-          {" "}
-          <AiFillFileExcel onClick={() => changeHandler(e)} />{" "}
-        </>
-      ),
-      width: "200px",
-    },
-    {
-      id: "Contrato",
-      name: "Contrato",
-      button: true,
-      cell: (e) => (
-        <div
-          style={{
-            width: "40px",
-            display: "flex",
-            justifyContent: "space-around",
-            fontSize: "13px",
-          }}
-        >
-          <AiFillEye onClick={() => handleContrato(e)} />
-        </div>
-      ),
-    },
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
-        </>
-      ),
-    },
-  ];
+  const columns = asociacionLayout(
+    changeHandler,
+    handleContrato,
+    handleEdit,
+    handleDelete
+  );
 
   return (
     <>
@@ -218,7 +162,7 @@ const AsociacionLayout = () => {
       <Buscador abrirModal={setRegistrarAsociacion} registrar={true} />
 
       <Tabla
-        columns={personal}
+        columns={columns}
         table={search}
         actualizarTabla={getAsociaciones}
       />
@@ -227,7 +171,11 @@ const AsociacionLayout = () => {
         <ModalRegistrarAsociacion actualizarTabla={getAsociaciones} />
       )}
       {historialContratoAsociacion && (
-        <ModalHistorialContratoAsociacion selected={id} />
+        <ModalHistorialContratoAsociacion
+          selected={id}
+          evaluaciones={data}
+          actualizarAsociacion={getAsociaciones}
+        />
       )}
     </>
   );

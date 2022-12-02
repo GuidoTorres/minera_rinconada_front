@@ -1,0 +1,73 @@
+.modal-reportes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.modal-reportes .overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+.modal-reportes .modal-container {
+  width: 70%;
+  height: 80%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 5%;
+}
+
+.modal-reportes .modal-container .modal-body {
+  width: 100%;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.modal-reportes .modal-container .modal-body .opciones {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-reportes .modal-container .modal-body .opciones div {
+  width: 20%;
+}
+
+.modal-reportes .modal-container .modal-body .opciones select {
+  width: 100%;
+}
+
+.modal-reportes .modal-container .modal-body .grafico {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.modal-reportes .modal-container .modal-body .grafico .no-data {
+  margin-top: 100px;
+}
+
+.modal-reportes .modal-container .modal-body .opciones .button-container {
+  margin-top: 10px;
+}
+
+.modal-reportes .modal-container .modal-body .opciones .button-container button{
+  width: 120px;
+}

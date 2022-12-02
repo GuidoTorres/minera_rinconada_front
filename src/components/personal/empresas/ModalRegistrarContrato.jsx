@@ -12,34 +12,13 @@ import {
 } from "../../../helpers/alertMessage";
 import "../styles/modalRegistrarContrato.css";
 import moment from "moment";
-const ModalRegistrarContrato = ({actualizarTabla, selected, data}) => {
+const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
   const route = "contrato";
   const route1 = "cargo";
   const route2 = "campamento";
   const route3 = "gerencia";
   const route4 = "area";
   const route5 = "socio";
-  const contratoValues = {
-    fecha_inicio: "",
-    codigo_contrato: "",
-    tipo_contrato: "",
-    recomendado_por: "",
-    cooperativa: "",
-    condicion_cooperativa: "",
-    periodo_trabajo: "",
-    fecha_fin: "",
-    gerencia: "",
-    area: "",
-    jefe_directo: "",
-    base: "",
-    termino_contrato: "",
-    campamento_id: "",
-    nota_contrato: "",
-    puesto: "",
-    evaluacion_id: data?.evaluacion_id,
-    estado: false,
-  };
-
   const { setRegistrarContrato, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
 
@@ -52,19 +31,26 @@ const ModalRegistrarContrato = ({actualizarTabla, selected, data}) => {
   const [socio, setSocio] = useState([]);
 
   const getAll = async () => {
-    const response1 = await getData(route1);
-    const response2 = await getData(route2);
-    const response3 = await getData(route3);
-    const response4 = await getData(route4);
-    const response5 = await getData(route5);
+    const cargoData = await getData(route1);
+    const campamentoData = await getData(route2);
+    const gerenciaData = await getData(route3);
+    const areaData = await getData(route4);
+    const socioData = await getData(route5);
 
-    setCargo(response1.data);
-    setCampamento(response2.data);
-    setGerencia(response3.data);
-    setArea(response4.data);
-    setSocio(response5.data);
+    const all = await Promise.all([
+      cargoData,
+      campamentoData,
+      gerenciaData,
+      areaData,
+      socioData,
+    ]);
+
+    setCargo(all[0].data);
+    setCampamento(all[1].data);
+    setGerencia(all[2].data);
+    setArea(all[3].data);
+    setSocio(all[4].data);
   };
-
 
   useEffect(() => {
     console.log(dataToEdit);
@@ -78,7 +64,6 @@ const ModalRegistrarContrato = ({actualizarTabla, selected, data}) => {
   useEffect(() => {
     getAll();
   }, []);
-
 
   const handleData = (e) => {
     const { name, value } = e.target;

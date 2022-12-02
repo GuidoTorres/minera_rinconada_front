@@ -11,12 +11,16 @@ import Tabla from "../../tabla/Tabla";
 import Buscador from "../Buscador";
 import ModalRegistroSocio from "./ModalRegistroSocio";
 import { alertaEliminarExito } from "../../../helpers/alertMessage";
+import { socioLayout } from "../../../data/dataTable";
+import useSearch from "../../../hooks/useSearch";
 
 const SocioLayout = () => {
   const route = "socio";
   const { setRegistrarSocio, registrarSocio, setDataToEdit } =
     useContext(PersonalContext);
   const { getData, deleteData, data, setData } = useContext(CrudContext);
+
+  const {result} = useSearch(data)
 
   const getSocios = async () => {
     const response = await getData(route);
@@ -49,57 +53,12 @@ const SocioLayout = () => {
     getSocios();
   }, []);
 
-  const personal = [
-    {
-      id: "Nro",
-      name: "Nro",
-      selector: (row, index) => index + 1,
-      sortable: true,
-    },
-    {
-      id: "nombre",
-      name: "Apellidos y nombres",
-      selector: (row) => row?.nombre,
-      sortable: true,
-    },
-    {
-      id: "dni",
-      name: "Dni",
-      selector: (row) => row?.dni,
-      sortable: true,
-    },
-    {
-      id: "telefono",
-      name: "Teléfono",
-      sortable: true,
-
-      selector: (row) => row?.telefono,
-    },
-    {
-      id: "cooperativa",
-      name: "Cooperativa",
-      sortable: true,
-
-      selector: (row) => row?.cooperativa,
-    },
-
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
-        </>
-      ),
-    },
-  ];
+  const columns = socioLayout(handleEdit, handleDelete);
   return (
     <>
       <Header text={"Socios"} user={"Usuario"} ruta={"/personal"} />
       <Buscador abrirModal={setRegistrarSocio} registrar={true} />
-      <Tabla columns={personal} table={data} />
+      <Tabla columns={columns} table={result} />
 
       {registrarSocio && <ModalRegistroSocio actualizarTabla={getSocios} />}
     </>

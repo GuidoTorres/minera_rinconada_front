@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import "./styles/modalRegistroPersonal.css"
+import "./styles/modalRegistroPersonal.css";
 
-const DragAndDrop = ({ setAvatar, avatar, selected,  }) => {
+const DragAndDrop = ({ setAvatar, avatar, selected }) => {
   const onDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -17,16 +17,12 @@ const DragAndDrop = ({ setAvatar, avatar, selected,  }) => {
   });
 
   return (
-    <div
-      {...getRootProps()}
-      className="drag"
-
-    >
+    <div {...getRootProps()} className="drag">
       <input {...getInputProps()} />
       {isDragActive ? (
         <p>Coloca la imagen aqui...</p>
       ) : selected?.foto || avatar?.preview ? (
-        <img  src={avatar?.preview || selected?.foto} alt="" />
+        <img src={avatar?.preview || selected?.foto} alt="" />
       ) : (
         <p>Arrastra la imagen aqui, o has click para seleccionar la imagen.</p>
       )}

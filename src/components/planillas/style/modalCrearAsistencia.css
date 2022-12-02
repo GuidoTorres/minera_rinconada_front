@@ -1,27 +1,50 @@
 .modal-asistencia {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-asistencia .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-asistencia .modal-container {
-    width: 900px;
-    height: 500px;
-    overflow-y: auto;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-asistencia .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-asistencia .modal-container {
+  width: 900px;
+  height: 500px;
+  overflow-y: auto;
+}
+
+.modal-asistencia .hora-ingreso {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 20px;
+  padding-left: 30px;
+  margin-top: -20px;
+}
+
+.modal-asistencia .hora-ingreso label {
+  font-weight: bold;
+}
+
+.modal-asistencia .hora-ingreso input {
+  width: 80px;
+  margin-left: 5px;
+}
+
+.modal-asistencia .buscador {
+  margin-top: 15px;
+}

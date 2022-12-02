@@ -5,12 +5,14 @@ import { AiOutlineClose, AiFillEye } from "react-icons/ai";
 
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import { CrudContext } from "../../../context/CrudContext";
-import "../style/modalCrearAsistencia.css"
+import { crearAsistencia } from "../../../data/dataTable";
 
-const ModalCrearAsistencia = ({ data }) => {
-  const { setControlAsistencia, campamentoAsistencia, fechaId } =
-    useContext(PlanillaContext);
-  const { getDataById, data2, setData2, createData } = useContext(CrudContext);
+import "../style/modalCrearAsistencia.css";
+
+const ModalCrearAsistencia = ({ data, actualizarTabla }) => {
+  const { setControlAsistencia, fechaId } = useContext(PlanillaContext);
+  const { getDataById, data2, setData2, createData, updateData } =
+    useContext(CrudContext);
 
   const getTrabajadorAsistencia = async () => {
     const route = "asistencia/trabajador";
@@ -23,7 +25,7 @@ const ModalCrearAsistencia = ({ data }) => {
 
   const closeModal = () => {
     setControlAsistencia(false);
-    setData2([])
+    setData2([]);
   };
 
   const handleAsistencia = async (event, e) => {
@@ -40,67 +42,19 @@ const ModalCrearAsistencia = ({ data }) => {
     });
   };
 
-  const planilla = [
-    {
-      id: "Nro",
-      name: "Nro",
-      width: "80px",
-      selector: (row, index) => index + 1,
-    },
-    {
-      id: "dni",
-      name: "Dni",
-      sortable: true,
-      width: "20%",
+  const handleIngreso = async (e) => {
+    const route = "asistencia/hora_ingreso";
+    let obj = {
+      hora_ingreso: e.target.value,
+    };
 
-      selector: (row) => row?.dni,
-    },
+    const response = await updateData(obj, data.id, route);
+    if (response.status === 200) {
+      actualizarTabla();
+    }
+  };
 
-    {
-      id: "nombre",
-      name: "Nombre",
-      sortable: true,
-      width: "30%",
-
-      selector: (row) =>
-        row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
-    },
-
-    {
-      id: "asistencia",
-      name: "Asistencia",
-      sortable: true,
-      width: "20%",
-
-      cell: (e) => (
-        <>
-          <select
-            defaultValue={e?.trabajador_asistencia?.map((item) => {
-              return item.asistencia;
-            })}
-            onChange={(event) => handleAsistencia(event, e)}
-          >
-            <option value="-1">Seleccione</option>
-            <option value="Asistio">Asistio</option>
-            <option value="Falto">Falto</option>
-            <option value="Permiso">Permiso</option>
-            <option value="Dia Libre">Dia Libre</option>
-            <option value="Comisión">Comisión</option>
-          </select>
-        </>
-      ),
-    },
-
-    {
-      id: "tipo",
-      name: "Tipo de trabajador",
-      button: true,
-      width: "20%",
-
-      selector: (row) =>
-        row?.asociacion_id === null ? "Normal" : "Asociación",
-    },
-  ];
+  const columns = crearAsistencia(handleAsistencia);
   return (
     <div className="modal-asistencia">
       <div className="overlay">
@@ -109,16 +63,26 @@ const ModalCrearAsistencia = ({ data }) => {
             Lista de Asistencia
             <AiOutlineClose onClick={closeModal} />
           </section>
+          <div className="hora-ingreso">
+            <label htmlFor="">Hora de ingreso:</label>
+            <input
+              type="time"
+              name="hora_ingreso"
+              defaultValue={data?.hora_ingreso || "07:00"}
+              onChange={handleIngreso}
+            />
+          </div>
           <section className="buscador">
             <Buscador
               registrar={false}
               crear={false}
               exportar={false}
               cargar={true}
+              actualizar={actualizarTabla}
               actualizarTabla={getTrabajadorAsistencia}
             />
           </section>
-          <Tabla columns={planilla} table={data2} />
+          <Tabla columns={columns} table={data2} />
         </div>
       </div>
     </div>

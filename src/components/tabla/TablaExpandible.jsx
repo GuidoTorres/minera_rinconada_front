@@ -32,7 +32,12 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
     setRegistrarPersonal(true);
   };
 
-  // console.log(table && table?.trabajador.map(item => item));
+  const paginationComponentOptions = {
+    rowsPerPageText: "Filas por página",
+    rangeSeparatorText: "de",
+    selectAllRowsItem: true,
+    selectAllRowsItemText: "Todos",
+  };
 
   const handleDelete = (e) => {
     alertaEliminarExito("trabajador").then((res) => {
@@ -58,13 +63,17 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
       id: "codigo",
       name: "Código",
       selector: (row, index) => row.codigo_trabajador,
+      sortable: true,
     },
     {
       id: "foto",
       name: "Foto",
       selector: (row) => (
         <div style={{ padding: "3px" }}>
-          <img src={row?.foto} style={{ height: "60px", width: "80px" }}></img>
+          <img
+            src={row?.foto || "https://via.placeholder.com/80"}
+            style={{ height: "60px", width: "80px" }}
+          ></img>
         </div>
       ),
       width: "100px",
@@ -107,17 +116,20 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
         <>
           <AiFillEye onClick={() => handleEvaluacion(e)} />
 
-          {e?.evaluacions.map((item) =>
-            item.aprobado === "si" ? (
+          {e?.evaluacions?.capacitacion_gema === 12 ? (
+            <>
               <AiOutlineCheck
                 style={{ color: "green", fontWeigth: "bold", fontSize: "16px" }}
               />
-            ) : e.aprobado === "no" ? (
-              <AiOutlineClose
-                style={{ color: "red", fontWeigth: "bold", fontSize: "16px" }}
-              />
-            ) : null
+            </>
+          ) : e?.evaluacions?.capacitacion_gema === 12 ? (
+            <AiOutlineClose
+              style={{ color: "red", fontWeigth: "bold", fontSize: "16px" }}
+            />
+          ) : (
+            ""
           )}
+          <label htmlFor="">{e?.trabajador?.evaluacions?.id}</label>
         </>
       ),
     },
@@ -155,6 +167,7 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
         expandableRowDisabled={(row) =>
           row?.trabajador?.length === 0 ? true : false
         }
+        paginationComponentOptions={paginationComponentOptions}
         responsive
         noHeader={true}
         noDataComponent={"No se encontraron resultados."}

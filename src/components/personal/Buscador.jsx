@@ -3,28 +3,19 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { PersonalContext } from "../../context/PersonalContext";
+import Swal from "sweetalert2";
+import { CrudContext } from "../../context/CrudContext";
 
-const Buscador = ({ abrirModal, importar, registrar, data, registrar2 }) => {
+const Buscador = ({
+  abrirModal,
+  importar,
+  actualizarTrabajadores,
+  registrar,
+  tipo,
+}) => {
   const { render, setFilterText } = useContext(PersonalContext);
-  const [finalizado, setFinalizado] = useState();
+  // const {setFilterText} = useContext(CrudContext)
   const inputFileRef = useRef(null);
-
-  useEffect(() => {
-    checkIsEnd();
-  }, []);
-
-  console.log(data);
-
-  const checkIsEnd = () => {
-    let estado = [];
-    estado = data?.estado?.includes(false);
-
-    if (estado) {
-      setFinalizado(false);
-    } else {
-      setFinalizado(true);
-    }
-  };
 
   const changeHandler = (e) => {
     inputFileRef.current.click();
@@ -33,7 +24,7 @@ const Buscador = ({ abrirModal, importar, registrar, data, registrar2 }) => {
     let formData = new FormData();
     formData.append("myFile", e.target.files[0]);
 
-    fetch(`http://localhost:3000/api/v1/trabajador/bulk`, {
+    fetch(`${import.meta.env.VITE_APP_BASE}/trabajador/bulk`, {
       method: "post",
       body: formData,
       headers: {
@@ -48,7 +39,7 @@ const Buscador = ({ abrirModal, importar, registrar, data, registrar2 }) => {
             // title: "Error...",
             text: "Trabajadores registrados con éxito!",
           });
-          getAsociaciones();
+          actualizarTrabajadores();
         }
       });
     inputFileRef.current.value = null;
@@ -76,7 +67,7 @@ const Buscador = ({ abrirModal, importar, registrar, data, registrar2 }) => {
             Importar Trabajadores
           </button>
         )}
-        {finalizado && registrar2 ? (
+        {registrar ? (
           <button
             style={{ marginRight: "10px" }}
             onClick={() => abrirModal(true)}
@@ -85,14 +76,6 @@ const Buscador = ({ abrirModal, importar, registrar, data, registrar2 }) => {
           </button>
         ) : (
           ""
-        )}
-        {registrar && (
-          <button
-            style={{ marginRight: "10px" }}
-            onClick={() => abrirModal(true)}
-          >
-            + {render === "Roles o Puestos" ? "Asignar" : "Registrar"}
-          </button>
         )}
       </div>
     </div>

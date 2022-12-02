@@ -3,7 +3,6 @@ import { PlanillaContext } from "../../../context/PlanillaContext";
 
 const Fechas = ({ data }) => {
   const { fechas } = useContext(PlanillaContext);
-  console.log(fechas);
   return (
     <>
       {fechas?.fechas?.map((item) => (

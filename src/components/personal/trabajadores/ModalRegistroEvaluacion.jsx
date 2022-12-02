@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
 import { PersonalContext } from "../../../context/PersonalContext";
+import { trabajadorEvaluacionValues } from "../../../data/initalValues";
 import {
   alertaEditarExito,
   alertaError,
@@ -19,46 +20,15 @@ const ModalRegistroEvaluacion = ({
 }) => {
   const route = "evaluacion";
   const route1 = "cargo";
-  const evaluacionValues = {
-    fecha_evaluacion: "",
-    puesto: "",
-    capacitacion_sso: "",
-    capacitacion_gema: "",
-    evaluacion_laboral: "",
-    presion_arterial: "",
-    temperatura: "",
-    saturacion: "",
-    imc: "",
-    pulso: "",
-    diabetes: "",
-    antecedentes: "",
-    emo: "",
-    trabajador_id: selected.dni,
-    aprobado: "",
-    recomendado_por: "",
-    cooperativa: "",
-    condicion_cooperativa: "",
-    fiscalizador: "",
-    fiscalizador_aprobado: "",
-    topico_observacion: "",
-    control_observacion: "",
-    seguridad_observacion: "",
-    medio_ambiente_observacion: "",
-    recursos_humanos: "",
-    recursos_humanos_observacion: "",
-    medio_ambiente: "",
-    control: "",
-    topico: "",
-    seguridad: "",
-    medio_ambiente: "",
-  };
+
   const { setRegistrarEvaluacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
+
+  const evaluacionValues = trabajadorEvaluacionValues(selected)
   const { createData, updateData, getData } = useContext(CrudContext);
   const [evaluacion, setEvaluacion] = useState(evaluacionValues);
   const [cargo, setCargo] = useState([]);
   const [socio, setSocio] = useState([]);
-  console.log(selected);
   const getCargo = async () => {
     const route2 = "socio";
     const response = await getData(route1);
@@ -67,14 +37,12 @@ const ModalRegistroEvaluacion = ({
     setCargo(response.data);
     setSocio(response2.data);
   };
-  console.log(selected);
   useEffect(() => {
     if (dataToEdit) {
       setEvaluacion(dataToEdit);
     } else {
       setEvaluacion(evaluacionValues);
     }
-    console.log(dataToEdit);
   }, [dataToEdit]);
   useEffect(() => {
     getCargo();
@@ -103,9 +71,8 @@ const ModalRegistroEvaluacion = ({
         if (res.status) {
           alertaExito(res.msg, res.status).then((res) => {
             closeModal();
-            if (res.isConfirmed) {
-              actualizarTabla();
-            }
+            actualizarTabla();
+            actualizarTrabajador();
           });
         }
       });
@@ -118,6 +85,7 @@ const ModalRegistroEvaluacion = ({
             closeModal();
             if (res.isConfirmed) {
               actualizarTabla();
+              // actualizarTrabajador();
             }
           });
         }
@@ -555,7 +523,7 @@ const ModalRegistroEvaluacion = ({
           </fieldset>
 
           <div className="footer">
-            {dataToEdit ? <button>Editar</button> : <button>Registar</button>}
+            {dataToEdit ? <button>Editar</button> : <button>Registrar</button>}
           </div>
         </form>
       </div>

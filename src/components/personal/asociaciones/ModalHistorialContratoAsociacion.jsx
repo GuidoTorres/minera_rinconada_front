@@ -11,12 +11,12 @@ import Swal from "sweetalert2";
 import ModalContratoAsociacion from "./ModalContratoAsociacion";
 import ModalRegistrarContrato from "../trabajadores/ModalRegistrarContrato";
 
-const ModalHistorialContratoAsociacion = ({selected}) => {
+const ModalHistorialContratoAsociacion = ({ selected, evaluaciones, actualizarAsociacion }) => {
   const {
     setDataToEdit,
     setHistorialContratoAsociacion,
-    registrarContratoAsociacion,setRegistrarContratoAsociacion
-
+    registrarContratoAsociacion,
+    setRegistrarContratoAsociacion,
   } = useContext(PersonalContext);
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
   const [id, setId] = useState("");
@@ -34,11 +34,11 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
   };
 
   const handleDelete = (id) => {
-    let route = "contrato"
+    let route = "contrato";
     console.log(id);
     alertaEliminarExito("contrato").then((res) => {
       if (res.isConfirmed) {
-        deleteData(route,id.id);
+        deleteData(route, id.id);
 
         Swal.fire(
           "Eliminado!",
@@ -62,33 +62,32 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
     {
       id: "Id contrato",
       name: "Id contrato",
-      selector: (row) =>  row?.id ,
+      selector: (row) => row?.id,
     },
     {
       id: "Tipo de Contrato",
       name: "Tipo de Contrato",
-      selector: (row) =>  row?.tipo_contrato,
+      selector: (row) => row?.tipo_contrato,
     },
     {
       id: "Fecha de inicio",
       name: "Fecha de inicio",
-      selector: (row) =>  row?.fecha_inicio?.split("T")[0],
+      selector: (row) => row?.fecha_inicio?.split("T")[0],
     },
     {
       id: "Fecha de fin",
       name: "Fecha de fin",
-      selector: (row) =>  row?.fecha_fin?.split("T")[0],
+      selector: (row) => row?.fecha_fin?.split("T")[0],
     },
     {
       id: "Estado",
       name: "Estado",
-      selector: (row) =>  row?.estado ? "Finalizado": "Pendiente",
-
+      selector: (row) => (row?.estado ? "Finalizado" : "Pendiente"),
     },
     {
       id: "Nota",
       name: "Nota",
-      selector: (row) =>  row?.nota_contrato,
+      selector: (row) => row?.nota_contrato,
     },
     {
       id: "Acciones",
@@ -107,15 +106,17 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
       <div className="overlay"></div>
       <div className="modal-container">
         <section className="modal-header">
-          Historial de contratos 
+          Historial de contratos
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section className="buscador">
-          <Buscador abrirModal={setRegistrarContratoAsociacion}  registrar={true}/>
+          <Buscador
+            abrirModal={setRegistrarContratoAsociacion}
+            registrar={true}
+          />
         </section>
         <section className="tabla">
-
-        <Tabla columns={historialContrato} table={data1} />
+          <Tabla columns={historialContrato} table={data1} />
         </section>
       </div>
       {registrarContratoAsociacion && (
@@ -123,6 +124,8 @@ const ModalHistorialContratoAsociacion = ({selected}) => {
           actualizarTabla={getContrato}
           selected={id}
           data={selected}
+          evaluaciones={evaluaciones}
+          actualizarAsociacion={actualizarAsociacion}
         />
       )}
     </div>

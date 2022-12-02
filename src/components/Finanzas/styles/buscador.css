@@ -1,0 +1,50 @@
+.buscador-finanzas {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px 0px 10px;
+  margin-top: 20px;
+}
+
+.buscador-finanzas div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .buscador-finanzas div span {
+    border: 1px solid grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    height: 25px;
+    width: 250px;
+  }
+
+  .buscador-finanzas div span input {
+    border: none;
+    height: 95%;
+    padding-left: 2px;
+    outline: none;
+    width: 90%;
+
+  }
+
+.buscador-finanzas button {
+  border: 1px solid grey;
+  background-color: white;
+  height: 25px;
+  width: 120px;
+  border-radius: 4px;
+
+}
+.buscador-finanzas button:nth-child(2) {
+    margin-left: 10px;
+  
+  }
+
+.buscador-finanzas button:hover {
+  border: 1px solid grey;
+  background-color: black;
+  color: white;
+}

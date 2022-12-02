@@ -6,7 +6,7 @@ const TipoUsuario = ({ text, path }) => {
   return (
     <Link
       className="rol"
-      to={`/administracion/${path}`}
+      to={`${path}`}
       onClick={(e) => {
         setRender(text);
       }}

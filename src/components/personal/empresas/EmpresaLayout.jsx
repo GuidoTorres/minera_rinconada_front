@@ -29,6 +29,8 @@ const EmpresaLayout = () => {
 
   const getEmpresa = async () => {
     const response = await getData(route);
+
+
     setData(response.data);
   };
 

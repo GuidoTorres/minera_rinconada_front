@@ -9,8 +9,11 @@ import "../style/modalPlanillaControl.css";
 import ModalPago from "./ModalPago";
 import ModalValidacionPagos from "./ModalValidacionPagos";
 import ModalValidacionPagosAsociacion from "./ModalValidacionPagosAsociacion";
+import { planillaControl } from "../../../data/dataTable";
 
 const ModalPlanillaControl = ({ selected, actualizarTabla }) => {
+  const [contrato, setContrato] = useState([]);
+  const [dataSelected, setDataSelected] = useState([]);
   const {
     setPlanillaControl,
     validacionPagos,
@@ -20,18 +23,14 @@ const ModalPlanillaControl = ({ selected, actualizarTabla }) => {
     validacionPagosAsociacion,
     setValidacionPagosAsociacion,
   } = useContext(PlanillaContext);
-  const [contrato, setContrato] = useState([]);
-  const [dataSelected, setDataSelected] = useState([]);
   const closeModal = () => {
     setPlanillaControl(false);
   };
 
   useEffect(() => {
-    const filterContrato = selected.contrato.filter((item) => item !== null);
-    setContrato(filterContrato);
+    setContrato([selected.contrato]);
   }, [selected]);
 
-  console.log(contrato);
   const handleValidacion = () => {
     if (selected.codigo) {
       setValidacionPagosAsociacion(true);
@@ -45,57 +44,7 @@ const ModalPlanillaControl = ({ selected, actualizarTabla }) => {
     setDataSelected(e);
   };
 
-  const planilla = [
-    {
-      id: "Nro",
-      name: "Nro",
-      selector: (row, index) => index + 1,
-      width: "60px",
-    },
-    {
-      id: "fecha_inicio",
-      name: "Fecha de inicio",
-      selector: (row) => row?.fecha_inicio?.split("T")[0],
-      sortable: true,
-    },
-
-    {
-      id: "fecha_pago",
-      name: "Fecha de pago",
-      sortable: true,
-      selector: (row) => row?.fecha_fin?.split("T")[0],
-    },
-
-    {
-      id: "estado",
-      name: "Estado",
-      button: true,
-      selector: (row) => (row?.estado !== true ? "Pendiente" : "Pagado"),
-    },
-
-    {
-      id: "validacion",
-      name: "Validacion de pagos",
-      button: true,
-      center: true,
-      cell: (e) => (
-        <>
-          <AiFillEye onClick={() => handleValidacion(e)} />
-        </>
-      ),
-    },
-    {
-      id: "pagos",
-      name: "Pagos",
-      button: true,
-      center: true,
-      cell: (e) => (
-        <>
-          <AiFillEye onClick={() => handlePagos(e)} />
-        </>
-      ),
-    },
-  ];
+  const columns = planillaControl(handleValidacion, handlePagos);
 
   return (
     <div className="modal-planilla">
@@ -106,7 +55,7 @@ const ModalPlanillaControl = ({ selected, actualizarTabla }) => {
             <AiOutlineClose onClick={closeModal} />
           </section>
 
-          <Tabla columns={planilla} table={contrato} />
+          <Tabla columns={columns} table={contrato} />
         </div>
       </div>
 
@@ -118,6 +67,7 @@ const ModalPlanillaControl = ({ selected, actualizarTabla }) => {
         <ModalPago
           data={selected}
           selected={dataSelected}
+          evaluacion_id={selected.evaluacion_id}
           actualizarTabla={actualizarTabla}
         />
       )}

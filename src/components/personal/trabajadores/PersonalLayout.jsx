@@ -5,23 +5,16 @@ import {
   alertaEliminar,
   alertaEliminarExito,
 } from "../../../helpers/alertMessage";
-import {
-  AiFillEdit,
-  AiFillEye,
-  AiOutlineCheck,
-  AiOutlineClose,
-} from "react-icons/ai";
-import { BsFillTrash2Fill } from "react-icons/bs";
+
 import Header from "../../header/Header";
 import Tabla from "../../tabla/Tabla";
 import Buscador from "../Buscador";
 import ModalRegistroPersonal from "./ModalRegistroPersonal";
 import ModalHistorialContrato from "./ModalHistorialContrato";
-import ModalRegistrarContrato from "./ModalRegistrarContrato";
 import ModalHistorialEvaluacion from "./ModalHistorialEvaluacion";
-import ModalRegistroEvaluacion from "./ModalRegistroEvaluacion";
-import Swal from "sweetalert2";
 import "../styles/personalLayout.css";
+import { personalLayout } from "../../../data/dataTable";
+import useSearch from "../../../hooks/useSearch";
 
 const PersonalLayout = () => {
   const route = "trabajador";
@@ -39,6 +32,7 @@ const PersonalLayout = () => {
     useContext(CrudContext);
   const [id, setId] = useState("");
   const [search, setSearch] = useState([]);
+  const {result} = useSearch(data)
   const inputFileRef = useRef(null);
 
   const getTrabajadores = async () => {
@@ -83,158 +77,30 @@ const PersonalLayout = () => {
 
   useEffect(() => {
     getTrabajadores();
-    console.log(data);
   }, []);
 
-  useEffect(() => {
-    const filtered =
-      data &&
-      data.filter(
-        (item) =>
-          (item.codigo_trabajador &&
-            item.codigo_trabajador
-              .toLowerCase()
-              .includes(filterText.toLowerCase())) ||
-          (item.nombre &&
-            item.nombre.toLowerCase().includes(filterText.toLowerCase())) ||
-          (item?.apellido_paterno &&
-            item.apellido_paterno
-              .toLowerCase()
-              .includes(filterText.toLowerCase())) ||
-          (item?.apellido_materno &&
-            item.apellido_materno
-              .toLowerCase()
-              .includes(filterText.toLowerCase())) ||
-          (item?.dni && item.dni.toString().includes(filterText))
-      );
 
-    setSearch(filtered);
-  }, [filterText, data]);
 
-  const personal = [
-    {
-      id: "codigo",
-      name: "Codigo",
-      selector: (row) => row?.codigo_trabajador,
-    },
-    {
-      id: "foto",
-      name: "Foto",
-      selector: (row) => (
-        <div style={{ padding: "3px" }}>
-          <img src={row?.foto} style={{ height: "60px" }}></img>
-        </div>
-      ),
-    },
-    {
-      id: "Trabajador",
-      name: "Trabajador",
-      selector: (row) =>
-        row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
-      width: "300px",
-      sortable: true,
-    },
-    {
-      id: "Campamento",
-      name: "Campamento",
-      selector: (row) =>
-         row && row?.campamento?.length !== 0
-          ? row?.campamento?.map((item) => item?.nombre)
-          : "Por asignar",
-      sortable: true,
-    },
-    {
-      id: "Dni",
-      name: "Dni",
-      selector: (row) => row?.dni,
-      sortable: true,
-    },
-    {
-      id: "telefono",
-      name: "Telefono",
-      selector: (row) => row?.telefono,
-      sortable: true,
-    },
-    {
-      id: "Evaluación",
-      name: "Evaluación",
-      selector: (row) => row.id,
-
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEye onClick={() => handleEvaluacion(e)} />
-          {e.aprobado === "si" ? (
-            <AiOutlineCheck
-              style={{ color: "green", fontWeigth: "bold", fontSize: "16px" }}
-            />
-          ) : e.aprobado === "no" ? (
-            <AiOutlineClose
-              style={{ color: "red", fontWeigth: "bold", fontSize: "16px" }}
-            />
-          ) : null}
-        </>
-      ),
-    },
-    {
-      id: "Contrato",
-      name: "Contrato",
-      button: true,
-      cell: (e) => (
-        <div
-          disabled
-          style={{
-            width: "40px",
-            display: "flex",
-            justifyContent: "space-around",
-            fontSize: "13px",
-          }}
-        >
-          {e?.nota !== "" ? e.nota : "--"}
-          <AiFillEye
-            onClick={() => {
-              handleContrato(e);
-            }}
-          />
-        </div>
-      ),
-    },
-
-    {
-      id: "Deshabilitar",
-      name: "Deshabilitar",
-      button: true,
-      cell: (e) => (
-        <input
-          type="checkbox"
-          defaultChecked={e.deshabilitado}
-          onChange={(a) => deshabilitarTrabajador(a, e)}
-        />
-      ),
-    },
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
-        </>
-      ),
-    },
-  ];
+  const columns = personalLayout(
+    handleEvaluacion,
+    handleContrato,
+    deshabilitarTrabajador,
+    handleEdit,
+    handleDelete
+  );
 
   return (
     <>
+
       <Header text={"Trabajadores"} user={"Usuario"} ruta={"/personal"} />
 
       <Buscador
         abrirModal={setRegistrarPersonal}
         importar={true}
         registrar={true}
+        actualizarTrabajadores={getTrabajadores}
       />
-      <Tabla columns={personal} table={search} />
+      <Tabla columns={columns} table={result} />
 
       {registrarPersonal && (
         <ModalRegistroPersonal actualizarTabla={getTrabajadores} />

@@ -23,7 +23,8 @@ const ModalHistorialContrato = ({ selected }) => {
   const getContrato = async () => {
     const route = "empresa";
     const response = await getDataById(route, selected.id);
-    setData1(response.data);
+    const filter = response.filter(item => item.data.length !== 0)
+    setData1(filter.data);
   };
 
   const handleEdit = (e) => {
@@ -61,22 +62,24 @@ const ModalHistorialContrato = ({ selected }) => {
     {
       id: "Id contrato",
       name: "Id contrato",
-      selector: (row) => row?.contratos?.map(item => item.id),
+      selector: (row) => row?.contratos?.map((item) => item.id),
     },
     {
       id: "Tipo de Contrato",
       name: "Tipo de Contrato",
-      selector: (row) => row?.contratos?.map(item => item.tipo_contrato),
+      selector: (row) => row?.contratos?.map((item) => item.tipo_contrato),
     },
     {
       id: "Fecha de inicio",
       name: "Fecha de inicio",
-      selector: (row) => row?.contratos?.map(item => item.fecha_inicio.split("T")[0]),
+      selector: (row) =>
+        row?.contratos?.map((item) => item.fecha_inicio.split("T")[0]),
     },
     {
       id: "Fecha de fin",
       name: "Fecha de fin",
-      selector: (row) => row?.contratos?.map(item => item.fecha_fin.split("T")[0]),
+      selector: (row) =>
+        row?.contratos?.map((item) => item.fecha_fin.split("T")[0]),
     },
     {
       id: "Estado",
@@ -85,7 +88,7 @@ const ModalHistorialContrato = ({ selected }) => {
     {
       id: "Nota",
       name: "Nota",
-      selector: (row) => row?.contratos?.map(item => item.nota_contrato),
+      selector: (row) => row?.contratos?.map((item) => item.nota_contrato),
     },
     {
       id: "Acciones",
@@ -110,7 +113,7 @@ const ModalHistorialContrato = ({ selected }) => {
         <section className="buscador">
           <Buscador abrirModal={setRegistrarContrato} />
         </section>
-        <Tabla columns={historialContrato} table={[data1]}/>
+        <Tabla columns={historialContrato} table={[data1]} />
       </div>
       {registrarContrato && (
         <ModalRegistrarContrato

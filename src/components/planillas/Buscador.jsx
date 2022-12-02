@@ -4,6 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { CrudContext } from "../../context/CrudContext";
 import { PlanillaContext } from "../../context/PlanillaContext";
 import { alertaErrorCrear, alertaExito } from "../../helpers/alertMessage";
+import Swal from "sweetalert2";
 
 const Buscador = ({
   abrirModal,
@@ -12,9 +13,11 @@ const Buscador = ({
   exportar,
   cargar,
   actualizarTabla,
+  actualizarAsistencia,
+  actualizar,
 }) => {
-  const { createData } = useContext(CrudContext);
-  const { campamentoAsistencia } = useContext(PlanillaContext);
+  const { createData, setFilterText } = useContext(CrudContext);
+  const { setControlAsistencia } = useContext(PlanillaContext);
   const inputFileRef = useRef(null);
 
   const handleModal = () => {
@@ -27,14 +30,14 @@ const Buscador = ({
 
     const asistencia = {
       fecha: fecha,
-      // campamento_id: campamentoAsistencia.id,
+      hora_ingreso: "07:30",
     };
 
     createData(asistencia, route).then((res) => {
       if (res.status === 200) {
         alertaExito(res.msg, res.status).then((res) => {
           if (res.isConfirmed) {
-            actualizarTabla();
+            actualizarAsistencia();
           }
         });
       }
@@ -48,7 +51,7 @@ const Buscador = ({
   const excelFile = (e) => {
     let formData = new FormData();
     formData.append("myFile", e.target.files[0]);
-    fetch(`https://rinconada.herokuapp.com/api/v1/asistencia/excel`, {
+    fetch(`${import.meta.env.VITE_APP_BASE}/asistencia/excel`, {
       method: "post",
       body: formData,
       headers: {
@@ -64,7 +67,9 @@ const Buscador = ({
             text: "Asistencias registradas con éxito!",
           });
         }
+        actualizar();
         actualizarTabla();
+        setControlAsistencia(false);
       });
     inputFileRef.current.value = null;
   };
@@ -72,7 +77,10 @@ const Buscador = ({
   return (
     <div
       className="buscador-container"
-      style={{ display: "flex", alignItems: "center" }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+      }}
     >
       <input
         type="file"

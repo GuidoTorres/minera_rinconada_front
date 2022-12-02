@@ -1,0 +1,29 @@
+.modal-proveedor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+  .modal-proveedor .overlay {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+  }
+  .modal-proveedor .modal-container {
+    width: 400px;
+    height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-top: 5%;
+    margin-top: -100px;
+
+  }

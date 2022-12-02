@@ -1,15 +1,15 @@
 import React, { useContext, useEffect } from "react";
-import { AiFillEdit, AiOutlineClose } from "react-icons/ai";
-import { BsFillTrash2Fill } from "react-icons/bs";
+import {AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
 import { PersonalContext } from "../../../context/PersonalContext";
-import { alertaEliminarExito } from "../../../helpers/alertMessage";
 import ModalRegistroEvaluacion from "./ModalRegistroEvaluacion";
 import Tabla from "../../tabla/Tabla";
-import Buscador from "../Buscador";
-import Swal from "sweetalert2";
+
 
 import "../styles/modalHistorialEvaluacion.css";
+import { historialEvaluacion } from "../../../data/dataTable";
+import BuscadorEvaluacion from "../BuscadorEvaluacion";
+import useSearch from "../../../hooks/useSearch";
 
 const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
   const route = "evaluacion";
@@ -21,12 +21,12 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
   } = useContext(PersonalContext);
 
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
+  const {result} = useSearch(data1)
 
   const getEvaluacion = async () => {
     const response = await getDataById(route, selected.dni);
     setData1(response.data);
   };
-
   const handleEdit = (e) => {
     setDataToEdit(e);
     setRegistrarEvaluacion(true);
@@ -36,7 +36,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
     deleteData(route, id.evaluacion_id).then((res) => {
       if (res.status === 200) {
         alertaEliminar(res.msg, res.status).then((res) => {
-          closeModal()
+          closeModal();
           if (res.isConfirmed) {
             actualizarTabla();
           }
@@ -51,45 +51,12 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
 
   const closeModal = () => {
     setHistorialEvaluacion(false);
-    actualizarTrabajador()
+    actualizarTrabajador();
+    setData1([]);
   };
-  const historialEvaluacion = [
-    {
-      id: "Id Historial",
-      name: "Id Historial",
-      selector: (row, index) => index+1,
-      width: "120px",
-    },
-    {
-      id: "Nombre",
-      name: "Nombre",
-      selector: (row) => row?.nombre,
-      width: "250px",
-    },
-    {
-      id: "Fecha de inicio",
-      name: "Fecha de evaluación",
-      selector: (row) =>
-        row.fecha_evaluacion && row.fecha_evaluacion.split("T")[0],
-    },
-    {
-      id: "Nota",
-      name: "Nota",
-      selector: (row) => row?.evaluacion_laboral,
-    },
 
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
-        </>
-      ),
-    },
-  ];
+  const columns = historialEvaluacion(handleEdit, handleDelete);
+
   return (
     <div className="modal-evaluacion">
       <div className="overlay">
@@ -99,9 +66,13 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
             <AiOutlineClose onClick={closeModal} />
           </section>
           <section className="buscador">
-            <Buscador abrirModal={setRegistrarEvaluacion} registrar2={true} data={selected}/>
+            <BuscadorEvaluacion
+              abrirModal={setRegistrarEvaluacion}
+              registrar={true}
+              data={selected}
+            />
           </section>
-          <Tabla columns={historialEvaluacion} table={data1} />
+          <Tabla columns={columns} table={result} />
         </div>
       </div>
       {registrarEvaluacion && (
@@ -109,7 +80,6 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
           actualizarTabla={getEvaluacion}
           selected={selected}
           actualizarTrabajador={actualizarTrabajador}
-        
         />
       )}
     </div>

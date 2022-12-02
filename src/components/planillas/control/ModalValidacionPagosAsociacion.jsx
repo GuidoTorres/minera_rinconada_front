@@ -24,7 +24,6 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
     const response = await getDataById(route, data.id);
     setData3(response.data);
   };
-  console.log(data3);
   useEffect(() => {
     getTareoAsociacion();
   }, []);
@@ -42,51 +41,6 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
     setFechas(data3);
   }, [data3]);
 
-  const dateData = (row) => {
-    return (
-      <>
-        <label>
-          {row?.trabajador_asistencia?.map((item) =>
-            item.asistencia === "Permiso"
-              ? "P "
-              : item.asistencia === "Asistio"
-              ? "X "
-              : item.asistencia === "Falto"
-              ? "F "
-              : item.asistencia === "Dia libre"
-              ? "DL "
-              : item.asistencia === "Comision"
-              ? "C "
-              : ""
-          )}
-        </label>
-      </>
-    );
-  };
-
-  const planilla = [
-    {
-      id: "Nro",
-      name: "Nro",
-      selector: (row, index) => index + 1,
-      width: "100px",
-    },
-    {
-      id: "tareo",
-      name: "Hoja de Tareo Asistencia de operaciones",
-      sortable: true,
-      center: true,
-      selector: (row) =>
-        row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
-    },
-    {
-      // en name usar row.fecha para jalar las fechas dinamiacmente
-      id: "Asistencia",
-      name: <Fechas />,
-      selector: (row) => dateData(row),
-      sortable: true,
-    },
-  ];
 
   return (
     <div className="modal-validacion">
@@ -137,34 +91,35 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
           {/* <Tabla columns={planilla} table={data3} /> */}
           <section className="table-container">
             <table>
-              {data3?.map((item) => {
-                return (
-                  <tr>
-                    <th>Nro</th>
-                    <th>Hoja de tareo asistencia de operacion</th>
+              <tr>
+                <th>Nro</th>
+                <th>Hoja de tareo asistencia de operacion</th>
+                {data3?.map((item, i) => {
+                  
+                  [item]?.map(data => {
 
-                    {item?.fechas.map((data) => (
-                      <th style={{ height: "110px", position: "relative" }}>
-                        {" "}
-                        <span
-                          style={{
-                            bottom: "5px",
-                            left: "50%",
-                            position: "absolute",
-                            transform: "rotate(-90deg)",
-                            transformOrigin: "center left",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          {data?.dia}
-                        </span>
-                      </th>
-                    ))}
-                  </tr>
-                );
-              })}
+                    <label htmlFor="">{data}</label>
+
+                  })
+                  // <th key={i+3} style={{ height: "110px", position: "relative" }}>
+                  //   <span
+                  //     style={{
+                  //       bottom: "5px",
+                  //       left: "50%",
+                  //       position: "absolute",
+                  //       transform: "rotate(-90deg)",
+                  //       transformOrigin: "center left",
+                  //       whiteSpace: "nowrap",
+                  //     }}
+                  //   >
+                  //     {item}
+                  //   </span>
+                  //   aaaaaa
+                  // </th>
+                })}
+              </tr>
               {data3?.map((item, index) => (
-                <tr>
+                <tr key={index+2}>
                   <td>{index + 1}</td>
                   <td>
                     {item?.nombre +
@@ -176,16 +131,16 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
                   {item?.trabajador_asistencia?.map((data) => (
                     <td>
                       {data.asistencia === "Permiso"
-                        ? "P "
+                        ? "P"
                         : data.asistencia === "Asistio"
-                        ? "X "
+                        ? "X"
                         : data.asistencia === "Falto"
-                        ? "F "
+                        ? "F"
                         : data.asistencia === "Dia libre"
-                        ? "DL "
+                        ? "DL"
                         : data.asistencia === "Comision"
-                        ? "C "
-                        : ""}
+                        ? "C"
+                        : "F"}
                     </td>
                   ))}
                 </tr>

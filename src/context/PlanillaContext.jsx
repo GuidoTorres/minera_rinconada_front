@@ -16,6 +16,9 @@ export const PlanillaProvider = ({ children }) => {
   const [pago, setPago] = useState(false);
   const [fechas, setFechas] = useState([]);
   const [verificacion, setVerificacion] = useState(false);
+  const [juntarTeletrans, setJuntarTeletrans] = useState(false)
+  const [pagarVarios, setPagarVarios]= useState(false)
+  const [multiplesTeletrans, setMultiplesTeletrans] = useState([])
 
   const data = {
     planillaControl,
@@ -38,8 +41,8 @@ export const PlanillaProvider = ({ children }) => {
     setPago,
     validacionPagosAsociacion,
     setValidacionPagosAsociacion,
-    fechas,
-    setFechas,
+    fechas, multiplesTeletrans, setMultiplesTeletrans,
+    setFechas,juntarTeletrans, setJuntarTeletrans,pagarVarios, setPagarVarios
   };
 
   return (

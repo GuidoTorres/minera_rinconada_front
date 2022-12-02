@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
 import { PersonalContext } from "../../../context/PersonalContext";
-import { asociacionValues, trabajadorValues } from "../../../data/initalValues";
+import { trabajadorValues } from "../../../data/initalValues";
 import {
   alertaEditarExito,
   alertaError,
@@ -71,7 +71,7 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
     if (!trabajador.dni) {
       alertaError();
     } else if (dataToEdit === null) {
-      fetch(`https://rinconada.herokuapp.com/api/v1/trabajador`, {
+      fetch(`${import.meta.env.VITE_APP_BASE}/trabajador`, {
         method: "POST",
         body: formData,
       })
@@ -93,7 +93,7 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
     }
 
     if (dataToEdit) {
-      fetch(`https://rinconada.herokuapp.com/api/v1/trabajador/${dataToEdit.dni}`, {
+      fetch(`${import.meta.env.VITE_APP_BASE}/trabajador/${dataToEdit.dni}`, {
         method: "PUT",
         body: formData,
       })

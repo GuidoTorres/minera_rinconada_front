@@ -9,6 +9,8 @@ import { CrudContext } from "../../context/CrudContext";
 import ModalCampamento from "./ModalCampamento";
 import { alertaEliminarExito } from "../../helpers/alertMessage";
 import Swal from "sweetalert2";
+import useSearch from "../../hooks/useSearch";
+import { campamentoLayout } from "../../data/dataTable";
 
 const CampamentoLayout = () => {
   const route = "campamento";
@@ -16,7 +18,7 @@ const CampamentoLayout = () => {
   const { registrarCampamento, setRegistrarCampamento, setDataToEdit } =
     useContext(AdminContext);
   const { getData, data, setData, deleteData } = useContext(CrudContext);
-
+  const { result } = useSearch(data);
   const getCampamento = async () => {
     const response = await getData(route);
 
@@ -47,51 +49,13 @@ const CampamentoLayout = () => {
     });
   };
 
-  const campamento = [
-    {
-      id: "Nro",
-      name: "Nro",
-      selector: (row) => row.id,
-      sortable: true,
-    },
-    {
-      id: "Nombre",
-      name: "Nombre",
-      selector: (row) => row.nombre,
-      sortable: true,
-    },
-
-    {
-      id: "Dirección",
-      name: "Dirección",
-      selector: (row) => row.direccion,
-      sortable: true,
-    },
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <div
-          style={{
-            display: "flex",
-            width: "40px",
-            justifyContent: "space-between",
-            fontSize: "18px",
-          }}
-        >
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
-        </div>
-      ),
-    },
-  ];
+  const columns = campamentoLayout(handleEdit, handleDelete);
 
   return (
     <>
-      <Header text={"Campamentos"} user={"Usuario"} ruta={"/administracion"}/>
+      <Header text={"Campamentos"} user={"Usuario"} ruta={"/administracion"} />
       <Buscador abrirModal={setRegistrarCampamento} />
-      <Tabla columns={campamento} table={data} />
+      <Tabla columns={columns} table={result} />
       {registrarCampamento && (
         <ModalCampamento actualizarTabla={getCampamento} />
       )}

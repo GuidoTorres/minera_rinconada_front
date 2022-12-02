@@ -2,21 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "../../header/Header";
 import Tabla from "../../tabla/Tabla";
 import Buscador from "../Buscador";
-import { AiOutlineClose, AiFillEye, AiFillEdit } from "react-icons/ai";
-import { BsFillTrash2Fill } from "react-icons/bs";
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import { CrudContext } from "../../../context/CrudContext";
+import { listaAsistencia } from "../../../data/dataTable";
 import ModalCrearAsistencia from "./ModalCrearAsistencia";
+import "../style/listaAsistencia.css";
+import { BsSlashCircle } from "react-icons/bs";
+import useSearch from "../../../hooks/useSearch";
 
 const ListaAsistencia = () => {
-  const {
-    setAsistencia,
-    setControlAsistencia,
-    controlAsistencia,
-    campamentoAsistencia,
-    setFechaId,
-  } = useContext(PlanillaContext);
+  const { setControlAsistencia, controlAsistencia, setFechaId, fechaId } =
+    useContext(PlanillaContext);
   const { getData, setData, data, deleteData } = useContext(CrudContext);
+
+  const {result} = useSearch(data)
 
   const getAsistencia = async () => {
     const route = "asistencia";
@@ -42,44 +41,26 @@ const ListaAsistencia = () => {
     });
   };
 
-  const planilla = [
-    {
-      id: "Nro",
-      name: "Nro",
-      selector: (row, index) => index + 1,
-    },
-    {
-      id: "fecha",
-      name: "Fecha",
-      sortable: true,
+  const handleIngreso = (e) => {
+    console.log(e.target.value);
+  };
 
-      selector: (row) => row?.fecha,
-    },
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
-        </>
-      ),
-    },
-  ];
+  const columns = listaAsistencia(handleEdit, handleDelete);
 
   return (
-    <div>
+    <div className="lista-asistencia">
       <Header text={"Asistencia"} user={"Usuario"} ruta={"/planilla"} />
+
       <Buscador
         registrar={false}
         crear={true}
         exportar={false}
         cargar={false}
-        actualizarTabla={getAsistencia}
+        actualizarAsistencia ={getAsistencia}
+        // actualizarTabla={getAsistencia}
       />
-      <Tabla columns={planilla} table={data} />
-      {controlAsistencia && <ModalCrearAsistencia data={data} />}
+      <Tabla columns={columns} table={result} />
+      {controlAsistencia && <ModalCrearAsistencia data={fechaId} actualizarTabla={getAsistencia} />}
     </div>
   );
 };

@@ -12,38 +12,18 @@ import {
 } from "../../../helpers/alertMessage";
 import "../styles/modalRegistrarContrato.css";
 import moment from "moment";
+import { trabajadorContratoValues } from "../../../data/initalValues";
 
 const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
-  
   const route = "contrato";
   const route1 = "cargo";
   const route2 = "campamento";
   const route3 = "gerencia";
   const route4 = "area";
   const route5 = "socio";
-  const contratoValues = {
-    fecha_inicio: "",
-    codigo_contrato: "",
-    tipo_contrato: "",
-    recomendado_por: "",
-    cooperativa: "",
-    condicion_cooperativa: "",
-    periodo_trabajo: "",
-    fecha_fin: "",
-    gerencia: "",
-    area: "",
-    jefe_directo: "",
-    base: "",
-    termino_contrato: "",
-    campamento_id: "",
-    nota_contrato: "",
-    puesto: "",
-    evaluacion_id: data.evaluacion_id,
-    estado: false,
-  };
+  const contratoValues = trabajadorContratoValues(data);
   const { setRegistrarContrato, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
-
   const { createData, updateData, getData } = useContext(CrudContext);
   const [contrato, setContrato] = useState(contratoValues);
   const [cargo, setCargo] = useState([]);
@@ -111,13 +91,6 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
     setContrato((values) => {
       return { ...values, [name]: value };
     });
-
-    if (name === "recomendado_por") {
-      const prueba = socio.filter((item) => item.nombre === value);
-      const cooperativa = prueba.map(
-        (item) => (contrato.cooperativa = item.cooperativa)
-      );
-    }
   };
 
   const handleSubmit = (e) => {
@@ -367,7 +340,11 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
             </fieldset>
 
             <div className="footer">
-              {dataToEdit ? <button>Editar</button> : <button>Registar</button>}
+              {dataToEdit ? (
+                <button>Editar</button>
+              ) : (
+                <button>Registrar</button>
+              )}
             </div>
           </form>
         </section>

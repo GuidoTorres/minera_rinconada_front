@@ -4,7 +4,7 @@ import { CrudContext } from "../../../context/CrudContext";
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import { alertaExito } from "../../../helpers/alertMessage";
 import "../style/modalPagos.css";
-const ModalPago = ({ data, selected, actualizarTabla }) => {
+const ModalPago = ({ data, selected, actualizarTabla, evaluacion_id }) => {
   const [initialValues, setInitialValues] = useState([
     {
       conductor: "",
@@ -14,6 +14,7 @@ const ModalPago = ({ data, selected, actualizarTabla }) => {
       teletrans: "",
       lugar: "",
       contrato_id: selected?.id,
+      evaluacion_id: parseInt(evaluacion_id)
     },
   ]);
   const { setPago } = useContext(PlanillaContext);
@@ -30,7 +31,7 @@ const ModalPago = ({ data, selected, actualizarTabla }) => {
 
     setInitialValues(data);
   };
-
+  console.log(evaluacion_id);
   const addFields = () => {
     let object = {
       conductor: "",
@@ -43,7 +44,6 @@ const ModalPago = ({ data, selected, actualizarTabla }) => {
     };
     setInitialValues([...initialValues, object]);
   };
-
   const handleSubmit = async (e) => {
     const route = "pago";
     const route2 = "pago/multiple";
@@ -52,7 +52,7 @@ const ModalPago = ({ data, selected, actualizarTabla }) => {
     e.preventDefault();
 
     if (data.asociacion !== null) {
-      const response = createData(initialValues, route2).then((res) => {
+      createData(initialValues, route2).then((res) => {
         if (res.status) {
           alertaExito(res.msg, res.status).then((res) => {
             closeModal();
@@ -63,7 +63,7 @@ const ModalPago = ({ data, selected, actualizarTabla }) => {
         }
       });
     } else {
-      const response = createData(initialValues, route).then((res) => {
+      createData(initialValues, route).then((res) => {
         if (res.status) {
           alertaExito(res.msg, res.status).then((res) => {
             closeModal();

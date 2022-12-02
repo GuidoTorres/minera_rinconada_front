@@ -1,0 +1,213 @@
+.content {
+  padding: 20px;
+}
+
+.content .header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.content .header div {
+  display: flex;
+  flex-direction: column;
+}
+
+.content .header div select {
+  width: 100%;
+  height: 25px;
+  margin-top: 2px;
+}
+.content .header div input {
+  width: 100%;
+  height: 25px;
+  margin-top: 2px;
+}
+
+.content .registro {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.content .registro form {
+  flex: 1;
+}
+.content .registro form fieldset {
+  border: 1px solid grey;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.content .registro form .input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.content .registro form .input-container .encargado {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+.content .registro form .input-container .encargado div:nth-child(1) {
+  width: 30%;
+}
+.content .registro form .input-container .encargado div:nth-child(2) {
+  width: 70%;
+}
+
+.content .registro form .input-container .area-sucursal {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+.content .registro form .input-container .area-sucursal div:nth-child(1) {
+  width: 50%;
+}
+.content .registro form .input-container .area-sucursal div:nth-child(2) {
+  width: 50%;
+}
+
+.content .registro form .input-container div {
+  display: flex;
+  flex-direction: column;
+}
+.content .registro form .input-container div label {
+  margin-top: 4px;
+}
+.content .registro form .input-container div select {
+  margin-top: 2px;
+  height: 25px;
+}
+.content .registro form .input-container div input {
+  margin-top: 2px;
+  height: 25px;
+}
+
+.content .registro section {
+  flex: 1;
+}
+
+.content .registro .footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.content .registro .footer button {
+  border: 1px solid lightgray;
+  height: 30px;
+  width: 100px;
+  border-radius: 6px;
+  background-color: white;
+}
+
+.content .registro .footer button:hover {
+  background-color: black;
+  color: white;
+}
+
+.content .registro section fieldset {
+  border: 1px solid grey;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.content .saldo .input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.content .saldo .input-container label {
+  margin-top: 4px;
+}
+.content .saldo .input-container input {
+  margin-top: 2px;
+}
+
+.content .buscador {
+  margin-top: 40px;
+}
+.content .buscador div {
+  display: flex;
+  margin-top: 20px;
+}
+
+.content .buscador div span {
+  border: 1px solid grey;
+  border-radius: 6px;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  height: 30px;
+}
+
+.content .buscador div span input {
+  border: none;
+  width: 90%;
+  height: 25px;
+  outline: none;
+  padding-left: 2px;
+}
+
+.content .buscador div button {
+  margin-left: 15px;
+  border-radius: 6px;
+  width: 100px;
+  background-color: white;
+  border: 1px solid grey;
+}
+
+@media screen and (min-width: 400px) {
+  .content .header {
+    flex-direction: row;
+  }
+  .content .header div {
+    width: 50%;
+  }
+
+  .content .registro form .input-container {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .content .registro form .input-container div {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .saldo .input-container {
+    flex-direction: row;
+    margin-top: 10px;
+  }
+  .content .registro form {
+    flex: 1.5;
+  }
+
+  .content .registro section {
+    flex: 0.5;
+  }
+  .saldo .input-container label {
+    width: 100px;
+  }
+  .saldo .input-container input {
+    width: 70%;
+  }
+
+  .content .header div {
+    width: 250px;
+  }
+  .content .registro {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .content .saldo .input-container {
+    display: flex;
+    flex-direction: row;
+  }
+}

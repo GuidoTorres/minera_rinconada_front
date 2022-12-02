@@ -13,7 +13,13 @@ import moment from "moment";
 import "../styles/modalRegistrarContrato.css";
 import { valuesContrato } from "../../../data/initalValues";
 import { addDays } from "../../../helpers/calcularFechaFin";
-const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
+const ModalContratoAsociacion = ({
+  actualizarTabla,
+  selected,
+  data,
+  evaluaciones,
+  actualizarAsociacion,
+}) => {
   const route = "contrato/asociacion";
   const route1 = "cargo";
   const route2 = "campamento";
@@ -22,7 +28,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
   const route5 = "socio";
 
   //valores iniciales de contrato
-  const contratoValues = valuesContrato(data);
+  const contratoValues = valuesContrato(data, evaluaciones);
 
   const { setRegistrarContratoAsociacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
@@ -36,17 +42,24 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
   const [socio, setSocio] = useState([]);
 
   const getAll = async () => {
-    const response1 = await getData(route1);
-    const response2 = await getData(route2);
-    const response3 = await getData(route3);
-    const response4 = await getData(route4);
-    const response5 = await getData(route5);
+    const cargoData = await getData(route1);
+    const campamentoData = await getData(route2);
+    const gerenciaData = await getData(route3);
+    const areaData = await getData(route4);
+    const socioData = await getData(route5);
 
-    setCargo(response1.data);
-    setCampamento(response2.data);
-    setGerencia(response3.data);
-    setArea(response4.data);
-    setSocio(response5.data);
+    const all = await Promise.all([
+      cargoData,
+      campamentoData,
+      gerenciaData,
+      areaData,
+      socioData,
+    ]);
+    setCargo(all[0].data);
+    setCampamento(all[1].data);
+    setGerencia(all[2].data);
+    setArea(all[3].data);
+    setSocio(all[4].data);
   };
   useEffect(() => {
     getAll();
@@ -57,13 +70,6 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
     setContratos((values) => {
       return { ...values, [name]: value };
     });
-
-    if (name === "recomendado_por") {
-      const prueba = socio.filter((item) => item.nombre === value);
-      const cooperativa = prueba.map(
-        (item) => (contratos.cooperativa = item.cooperativa)
-      );
-    }
   };
 
   const handleSubmit = (e) => {
@@ -72,37 +78,35 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
     if (!contratos.fecha_inicio || !contratos.fecha_fin) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(contratos, route)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
-          } else {
-            alertaErrorCrear(res.msg).then((res) => {
-              closeModal();
-            });
-          }
-        });
+      createData(contratos, route).then((res) => {
+        if (res.status === 200) {
+          alertaExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              actualizarAsociacion();
+              actualizarTabla();
+            }
+          });
+        } else {
+          alertaErrorCrear(res.msg).then((res) => {
+            closeModal();
+          });
+        }
+      });
     }
 
     if (dataToEdit) {
-      updateData(contratos, dataToEdit.id, "contrato")
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaEditarExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
-          }
-        });
+      updateData(contratos, dataToEdit.id, "contrato").then((res) => {
+        if (res.status === 200) {
+          alertaEditarExito(res.msg, res.status).then((res) => {
+            closeModal();
+            if (res.isConfirmed) {
+              actualizarAsociacion();
+              actualizarTabla();
+            }
+          });
+        }
+      });
     }
   };
 
@@ -121,6 +125,7 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
   }, [dataToEdit]);
 
   useEffect(() => {
+    //para calcular la fecha de fin al registrar contrato
     if (contratos.fecha_inicio !== "" && contratos.periodo_trabajo !== "") {
       let inicial = 14;
       let fechaInicio = contratos.fecha_inicio;
@@ -292,58 +297,6 @@ const ModalContratoAsociacion = ({ actualizarTabla, selected, data }) => {
                 </div>
               </section>
             </fieldset>
-
-            {/* {data.tipo !== "Canteadores" ? (
-              <fieldset>
-                <legend>Recomendado</legend>
-                <section>
-                  <div>
-                    <label>Recomendado por</label>
-                    <select
-                      value={contratos?.recomendado_por}
-                      name="recomendado_por"
-                      onChange={handleData}
-                    >
-                      <option value="-1">Seleccione</option>
-                      {socio.map((item, i) => (
-                        <option key={i} value={item.nombre}>
-                          {item.nombre}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label>Cooperativa</label>
-                    <input
-                      disabled
-                      type="text"
-                      name="cooperativa"
-                      value={contratos?.cooperativa}
-                    />
-                  </div>
-
-                  <div>
-                    <label>Condición de cooperativa</label>
-                    <select
-                      value={contratos?.condicion_cooperativa}
-                      name="condicion_cooperativa"
-                      onChange={handleData}
-                    >
-                      <option value="-1">Seleccione</option>
-                      <option value="Hijo">Hijo</option>
-                      <option value="Sobrino">Sobrino</option>
-                      <option value="Primo">Primo</option>
-                      <option value="Tio">Tio</option>
-                      <option value="Tio">Compadre</option>
-                      <option value="Tio">Compañero</option>
-                      <option value="Tio">Amigo</option>
-                    </select>
-                  </div>
-                </section>
-              </fieldset>
-            ) : (
-              ""
-            )} */}
 
             <fieldset>
               <legend>Termino de contrato</legend>

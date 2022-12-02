@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import AdministracionLayout from "../components/administracion/AdministracionLayout";
 import CampamentoLayout from "../components/administracion/CampamentoLayout";
-import ModalUsuario from "../components/administracion/ModalUsuario";
 import RolLayout from "../components/administracion/RolLayout";
 import UsuarioLayout from "../components/administracion/UsuarioLayout";
 import AsociacionLayout from "../components/personal/asociaciones/AsociacionLayout";
@@ -18,14 +17,17 @@ import Sidebar from "../components/sidebar/Sidebar";
 import { AdminProvider } from "../context/AdminContext";
 import { CrudProvider } from "../context/CrudContext";
 import { PersonalProvider } from "../context/PersonalContext";
-import Administrador from "./Administrador";
 import "./styles/mainPage.css";
 import IndexLayout from "../components/planillas/IndexLayout";
 import ControlPlanilla from "../components/planillas/control/ControlPlanilla";
 import { PlanillaProvider } from "../context/PlanillaContext";
 import ListaAsistencia from "../components/planillas/asistencia/ListaAsistencia";
-import Header from "../components/header/Header";
 import SocioLayout from "../components/personal/socios/SocioLayout";
+import { FinanzasProvider } from "../context/FinanzasProvider";
+import Finanzas from "../components/Finanzas/ingresos-egresos/FinanzasLayout";
+import MainLayout from "../components/Finanzas/MainLayout";
+import Proveedores from "../components/Finanzas/proveedor/Proveedores";
+import Sucursales from "../components/Finanzas/sucursal/Sucursales";
 
 const MainPage = () => {
   return (
@@ -36,8 +38,8 @@ const MainPage = () => {
             <Sidebar />
           </section>
           <section className="main-content">
-            <AdminProvider>
-              <CrudProvider>
+            <CrudProvider>
+              <AdminProvider>
                 <Routes>
                   <Route path="administracion">
                     <Route index element={<AdministracionLayout />} />
@@ -46,11 +48,9 @@ const MainPage = () => {
                     <Route path="campamentos" element={<CampamentoLayout />} />
                   </Route>
                 </Routes>
-              </CrudProvider>
-            </AdminProvider>
+              </AdminProvider>
 
-            <PersonalProvider>
-              <CrudProvider>
+              <PersonalProvider>
                 <Routes>
                   <Route path="personal">
                     <Route index element={<PersonalTipoLayout />} />
@@ -58,14 +58,11 @@ const MainPage = () => {
                     <Route path="asociacion" element={<AsociacionLayout />} />
                     <Route path="empresa" element={<EmpresaLayout />} />
                     <Route path="socio" element={<SocioLayout />} />
-
                   </Route>
                 </Routes>
-              </CrudProvider>
-            </PersonalProvider>
+              </PersonalProvider>
 
-            <PlanillaProvider>
-              <CrudProvider>
+              <PlanillaProvider>
                 <Routes>
                   <Route path="planilla">
                     <Route index element={<IndexLayout />} />
@@ -73,9 +70,20 @@ const MainPage = () => {
                     <Route path="control" element={<ControlPlanilla />} />
                   </Route>
                 </Routes>
-              </CrudProvider>
-            </PlanillaProvider>
+              </PlanillaProvider>
 
+              <FinanzasProvider>
+                <Routes>
+                  <Route path="finanzas">
+                    
+                    <Route index element={<MainLayout />} />
+                    <Route path="saldo" element={<Finanzas />} />
+                    <Route path="proveedor" element={<Proveedores />} />
+                    <Route path="sucursal" element={<Sucursales />} />
+                  </Route>
+                </Routes>
+              </FinanzasProvider>
+            </CrudProvider>
           </section>
         </div>
       </>

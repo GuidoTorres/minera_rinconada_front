@@ -9,13 +9,15 @@ import Header from "../header/Header";
 import Tabla from "../tabla/Tabla";
 import { alertaEliminarExito } from "../../helpers/alertMessage";
 import Swal from "sweetalert2";
+import useSearch from "../../hooks/useSearch";
+import { rolLayout } from "../../data/dataTable";
 
 const RolLayout = () => {
   const route = "rol";
   const { asignarUsuario, setAsignarUsuario, setDataToEdit, filterText } =
     useContext(AdminContext);
   const { getData, deleteData, setData, data } = useContext(CrudContext);
-  const [search, setSearch] = useState([]);
+  const { result } = useSearch(data);
 
   const getRoles = async () => {
     const response = await getData(route);
@@ -42,61 +44,14 @@ const RolLayout = () => {
     getRoles();
   }, []);
 
-  useEffect(() => {
-    const filteredData = data.filter(
-      (item) =>
-        item.nombre.toLowerCase().includes(filterText.toLowerCase()) ||
-        item.usuario.toLowerCase().includes(filterText.toLowerCase()) ||
-        item.cargo.toLowerCase().includes(filterText.toLowerCase()) ||
-        item.rol.toLowerCase().includes(filterText.toLowerCase())
-    );
-    setSearch(filteredData);
-  }, [filterText, data]);
+  const columns = rolLayout(handleEdit, handleDelete);
 
-  const rol = [
-    {
-      id: "Nro",
-      name: "Nro",
-      selector: (row) => row.id,
-    },
-    {
-      id: "Nombre",
-      name: "Nombre",
-      selector: (row) => row.nombre,
-    },
-    {
-      id: "Usuario",
-      name: "Usuario",
-      selector: (row) => row.usuario,
-    },
-    {
-      id: "Puesto",
-      name: "Puesto",
-      selector: (row) => row.cargo,
-    },
-    {
-      id: "Rol",
-      name: "Rol",
-      selector: (row) => row.rol,
-    },
-    {
-      id: "Acciones",
-      name: "Acciones",
-      button: true,
-      cell: (e) => (
-        <>
-          <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
-        </>
-      ),
-    },
-  ];
   return (
     <>
-      <Header text={"Roles"} user={"Usuario"} ruta={"/administracion"}/>
+      <Header text={"Roles"} user={"Usuario"} ruta={"/administracion"} />
       <Buscador abrirModal={setAsignarUsuario} />
-      <Tabla columns={rol} table={search} />
-      {asignarUsuario && <ModalAsignarRol actualizarTabla={getRoles}/>}
+      <Tabla columns={columns} table={result} />
+      {asignarUsuario && <ModalAsignarRol actualizarTabla={getRoles} />}
     </>
   );
 };
