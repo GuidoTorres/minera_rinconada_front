@@ -2,8 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import fileDownload from "js-file-download";
+import { useContext } from "react";
+import axios from "axios";
+import { CrudContext } from "../../../context/CrudContext";
 
 const ModalDescarga = ({ estado, id }) => {
+  const { getData } = useContext(CrudContext);
   const [fechas, setFechas] = useState({
     fecha_inicio: "",
     fecha_fin: "",
@@ -14,29 +18,21 @@ const ModalDescarga = ({ estado, id }) => {
   };
 
   const handleSubmit = async (e) => {
-    let route = "finanzas/excel";
+    let route = "http://localhost:3000/api/v1/finanzas/excel";
 
     e.preventDefault();
 
     if (id !== "") {
-      const prueba = await fetch(
-        `${import.meta.env.VITE_APP_BASE}/${route}/${id}?fecha_inicio=${
-          fechas.fecha_inicio
-        }&fecha_fin=${fechas.fecha_fin}`,
+      const prueba = await axios.get(
+        `${route}/${id}?fecha_inicio=${fechas.fecha_inicio}&fecha_fin=${fechas.fecha_fin}`,
         {
-          method: "GET",
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
-          //   param: JSON.stringify(fechas),
+          responseType: "arraybuffer",
+          headers: { "Content-Type": "blob" },
         }
       );
 
       if (prueba) {
-        const url = URL.createObjectURL(new Blob([prueba]));
-
-        console.log(url);
+        const url = URL.createObjectURL(new Blob([prueba.data]));
         const link = document.createElement("a");
         link.href = url;
         link.setAttribute(

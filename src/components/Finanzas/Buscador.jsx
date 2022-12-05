@@ -19,11 +19,9 @@ const Buscador = ({ abrirModal, abrirReporte }) => {
           />
           <AiOutlineSearch className="icon" />
         </span>
-        {/* <button>Buscar</button> */}
       </div>
       <div>
-        <button onClick={() => abrirReporte(true)}>Reportes</button>
-
+        <button onClick={() => abrirReporte(true)}>Reporte</button>
         <button onClick={() => abrirModal(true)}>Gráfico</button>
       </div>
     </div>

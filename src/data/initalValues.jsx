@@ -163,10 +163,6 @@ export const IngresoEgresoValues = (data) => {
     proveedor: "",
     comprobante: "",
     dni: "",
-    // saldo_inicial: "",
-    // ingresos: "",
-    // egresos: "",
-    // saldo_final: "",
     sucursal_transferencia: ""
   };
 };

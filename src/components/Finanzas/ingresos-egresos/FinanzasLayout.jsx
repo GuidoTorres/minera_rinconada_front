@@ -136,7 +136,6 @@ const Finanzas = () => {
 
     if (dataToEdit === null) {
       const create = await createData(sucursal, route);
-
       if (create.status === 200) {
         alertaExito(create.msg, create.status).then((res) => {
           if (res.isConfirmed) {
@@ -144,8 +143,24 @@ const Finanzas = () => {
           }
         });
         setId(sucursal.sucursal_id);
-        setSucursal(IngresoEgresoValues);
+        setSucursal({
+          sucursal_id: id,
+          fecha: "",
+          movimiento: "",
+          forma_pago: "",
+          encargado: "",
+          area: "",
+          cantidad: "",
+          medida: "",
+          descripcion: "",
+          monto: "",
+          proveedor: "",
+          comprobante: "",
+          dni: "",
+          sucursal_transferencia: "",
+        });
       }
+      setModalReporte(false);
     } else {
       const prueba = await fetch(
         `http://localhost:3000/api/v1/finanzas/${sucursal.sucursal_id}`,
@@ -159,7 +174,6 @@ const Finanzas = () => {
         }
       );
       const content = await prueba.json();
-      // const content = await updateData(sucursal, sucursal.sucursal_id, route);
       if (content.status === 200) {
         alertaExito(content.msg, content.status).then((res) => {
           if (res.isConfirmed) {
@@ -168,8 +182,24 @@ const Finanzas = () => {
         });
         setId(sucursal.sucursal_id);
         setDataToEdit(null);
-        setSucursal(IngresoEgresoValues);
+        setSucursal({
+          sucursal_id: id,
+          fecha: "",
+          movimiento: "",
+          forma_pago: "",
+          encargado: "",
+          area: "",
+          cantidad: "",
+          medida: "",
+          descripcion: "",
+          monto: "",
+          proveedor: "",
+          comprobante: "",
+          dni: "",
+          sucursal_transferencia: "",
+        });
       }
+      setModalReporte(false);
     }
   };
 
@@ -206,7 +236,11 @@ const Finanzas = () => {
         <section className="header">
           <div>
             <label htmlFor="">Sucursal</label>
-            <select name="sucursal_id" onChange={handleData}>
+            <select
+              name="sucursal_id"
+              value={sucursal.sucursal_id || id}
+              onChange={handleData}
+            >
               <option value="-1">Seleccione</option>
               {data.map((item, i) => (
                 <option key={i} value={item.id}>
