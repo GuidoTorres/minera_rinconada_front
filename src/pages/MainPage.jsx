@@ -49,7 +49,7 @@ const MainPage = () => {
                   </Route>
                 </Routes>
               </AdminProvider>
-
+    {/* pokemonnnnnnn */}
               <PersonalProvider>
                 <Routes>
                   <Route path="personal">
