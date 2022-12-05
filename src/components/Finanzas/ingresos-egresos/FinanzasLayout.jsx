@@ -163,7 +163,7 @@ const Finanzas = () => {
       setModalReporte(false);
     } else {
       const prueba = await fetch(
-        `http://localhost:3000/api/v1/finanzas/${sucursal.sucursal_id}`,
+        `${import.meta.env.VITE_APP_BASE}/finanzas/${sucursal.sucursal_id}`,
         {
           method: "PUT",
           headers: {

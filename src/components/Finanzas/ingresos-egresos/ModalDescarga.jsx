@@ -18,7 +18,7 @@ const ModalDescarga = ({ estado, id }) => {
   };
 
   const handleSubmit = async (e) => {
-    let route = "http://localhost:3000/api/v1/finanzas/excel";
+    let route = `${import.meta.env.VITE_APP_BASE}/v1/finanzas/excel`;
 
     e.preventDefault();
 
