@@ -254,7 +254,7 @@ const Finanzas = () => {
             <input
               type="date"
               name="fecha"
-              value={dataToEdit?.fecha || sucursal?.fecha}
+              value={sucursal?.fecha}
               onChange={handleData}
             />
           </div>
