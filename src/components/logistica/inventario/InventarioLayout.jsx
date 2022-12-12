@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { useEffect } from "react";
 import { CrudContext } from "../../../context/CrudContext";
-import { almacen, inventario } from "../../../data/dataTable";
+import {  inventario } from "../../../data/dataTable";
 import Header from "../../header/Header";
 import Tabla from "../../tabla/Tabla";
 import Buscador from "../Buscador";
-import ModalRegistrarProducto from "./modalRegistrarProducto";
+import ModalRegistrarProducto from "./ModalRegistrarProducto";
 import "../styles/inventarioLayout.css";
 import ModalHistorialEntradas from "./ModalHistorialEntradas";
 import { useState } from "react";
