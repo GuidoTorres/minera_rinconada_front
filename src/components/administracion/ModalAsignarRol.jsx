@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { AdminContext } from "../../context/AdminContext";
 import { CrudContext } from "../../context/CrudContext";
 import { rolValues } from "../../data/initalValues";
 import {
@@ -12,8 +11,6 @@ import {
 import "./styles/modalAsignarUsuario.css";
 
 const ModalAsignarRol = ({ actualizarTabla }) => {
-  const { setAsignarUsuario, dataToEdit, setDataToEdit } =
-    useContext(AdminContext);
   const {
     data1,
     data2,
@@ -24,6 +21,9 @@ const ModalAsignarRol = ({ actualizarTabla }) => {
     getData,
     createData,
     updateData,
+    setModal,
+    dataToEdit,
+    setDataToEdit,
   } = useContext(CrudContext);
 
   const [rol, setRol] = useState(rolValues);
@@ -62,32 +62,31 @@ const ModalAsignarRol = ({ actualizarTabla }) => {
   };
 
   const handleSubmit = (e) => {
+    const route = "rol";
     e.preventDefault();
     if (!rol.usuario_id || !rol.cargo_id || !rol.rol_id) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(rol, route);
-      alertaExito("Rol").then((res) => {
+      const response = createData(rol, "rol");
+      if (response.status === 200) {
+        alertaExito(response.msg, response.status);
         closeModal();
-        if (res.isConfirmed) {
-          actualizarTabla();
-        }
-      });
+        actualizarTabla();
+      }
     }
 
     if (dataToEdit) {
-      updateData(rol, dataToEdit.id, route);
-      alertaEditarExito("Rol").then((res) => {
+      const response = updateData(rol, dataToEdit.id, route);
+      if (response.status === 200) {
+        alertaExito(response.msg, response.status);
         closeModal();
-        if (res.isConfirmed) {
-          actualizarTabla();
-        }
-      });
+        actualizarTabla();
+      }
     }
   };
 
   const closeModal = () => {
-    setAsignarUsuario(false);
+    setModal(false);
     setDataToEdit(null);
     setRol(rolValues);
   };

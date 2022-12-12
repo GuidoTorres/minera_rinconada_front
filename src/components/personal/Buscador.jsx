@@ -13,8 +13,7 @@ const Buscador = ({
   registrar,
   tipo,
 }) => {
-  const { render, setFilterText } = useContext(PersonalContext);
-  // const {setFilterText} = useContext(CrudContext)
+  const { setFilterText } = useContext(CrudContext);
   const inputFileRef = useRef(null);
 
   const changeHandler = (e) => {
@@ -27,9 +26,6 @@ const Buscador = ({
     fetch(`${import.meta.env.VITE_APP_BASE}/trabajador/bulk`, {
       method: "post",
       body: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
     })
       .then((res) => res.json())
       .then((res) => {
@@ -72,7 +68,7 @@ const Buscador = ({
             style={{ marginRight: "10px" }}
             onClick={() => abrirModal(true)}
           >
-            + {render === "Roles o Puestos" ? "Asignar" : "Registrar"}
+            + Registrar
           </button>
         ) : (
           ""

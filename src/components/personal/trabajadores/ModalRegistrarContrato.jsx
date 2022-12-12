@@ -14,7 +14,7 @@ import "../styles/modalRegistrarContrato.css";
 import moment from "moment";
 import { trabajadorContratoValues } from "../../../data/initalValues";
 
-const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
+const ModalRegistrarContrato = ({ actualizarTrabajadores, actualizarTabla, selected, data, cerrarHistorial }) => {
   const route = "contrato";
   const route1 = "cargo";
   const route2 = "campamento";
@@ -105,6 +105,8 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
             closeModal();
             if (res.isConfirmed) {
               actualizarTabla();
+              actualizarTrabajadores()
+              cerrarHistorial(false)
             }
           });
         } else {
@@ -177,6 +179,7 @@ const ModalRegistrarContrato = ({ actualizarTabla, selected, data }) => {
                 <div>
                   <label>Periodo de trabajo (quincena)</label>
                   <input
+                  type="number"
                     value={contrato?.periodo_trabajo}
                     name="periodo_trabajo"
                     onChange={handleData}

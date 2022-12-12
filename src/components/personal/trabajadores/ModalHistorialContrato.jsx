@@ -13,7 +13,7 @@ import { historialContrato } from "../../../data/dataTable";
 import BuscadorContrato from "../BuscadorContrato";
 import useSearch from "../../../hooks/useSearch";
 
-const ModalHistorialContrato = ({ selected }) => {
+const ModalHistorialContrato = ({ selected, actualizarTrabajadores }) => {
   const route = "contrato";
   const {
     setHistorialContrato,
@@ -82,6 +82,8 @@ const ModalHistorialContrato = ({ selected }) => {
           actualizarTabla={getContrato}
           selected={id}
           data={selected}
+          cerrarHistorial={setHistorialContrato}
+          actualizarTrabajadores={actualizarTrabajadores}
         />
       )}
     </div>

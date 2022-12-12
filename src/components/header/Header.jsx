@@ -1,11 +1,11 @@
 import React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AdminContext } from "../../context/AdminContext";
+// import { AdminContext } from "../../context/AdminContext";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import "./header.css";
 const Header = ({ text, user, ruta }) => {
-  const setRender = useContext(AdminContext);
+  // const setRender = useContext(AdminContext);
 
   return (
     <div className="header-container">
@@ -14,12 +14,12 @@ const Header = ({ text, user, ruta }) => {
           <Link
             className="link"
             to={ruta}
-            onClick={(e) => {
-              setRender(text);
-            }}
+            // onClick={(e) => {
+            //   setRender(text);
+            // }}
           >
             <AiOutlineArrowLeft
-              onClick={(e) => setRender(null)}
+              // onClick={(e) => setRender(null)}
               className="back"
             />
           </Link>

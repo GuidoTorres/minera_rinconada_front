@@ -14,7 +14,6 @@ import EmpresaLayout from "../components/personal/empresas/EmpresaLayout";
 import PersonalLayout from "../components/personal/trabajadores/PersonalLayout";
 import PersonalTipoLayout from "../components/personal/PersonalTipoLayout";
 import Sidebar from "../components/sidebar/Sidebar";
-import { AdminProvider } from "../context/AdminContext";
 import { CrudProvider } from "../context/CrudContext";
 import { PersonalProvider } from "../context/PersonalContext";
 import "./styles/mainPage.css";
@@ -26,8 +25,11 @@ import SocioLayout from "../components/personal/socios/SocioLayout";
 import { FinanzasProvider } from "../context/FinanzasProvider";
 import Finanzas from "../components/Finanzas/ingresos-egresos/FinanzasLayout";
 import MainLayout from "../components/Finanzas/MainLayout";
+import MainLayoutInventario from "../components/logistica/MainLayout";
 import Proveedores from "../components/Finanzas/proveedor/Proveedores";
 import Sucursales from "../components/Finanzas/sucursal/Sucursales";
+import InventarioLayout from "../components/logistica/inventario/InventarioLayout";
+import AlmacenLayout from "../components/logistica/almacen/AlmacenLayout";
 
 const MainPage = () => {
   return (
@@ -39,17 +41,14 @@ const MainPage = () => {
           </section>
           <section className="main-content">
             <CrudProvider>
-              <AdminProvider>
-                <Routes>
-                  <Route path="administracion">
-                    <Route index element={<AdministracionLayout />} />
-                    <Route path="usuarios" element={<UsuarioLayout />} />
-                    <Route path="roles" element={<RolLayout />} />
-                    <Route path="campamentos" element={<CampamentoLayout />} />
-                  </Route>
-                </Routes>
-              </AdminProvider>
-    {/* pokemonnnnnnn */}
+              <Routes>
+                <Route path="administracion">
+                  <Route index element={<AdministracionLayout />} />
+                  <Route path="usuarios" element={<UsuarioLayout />} />
+                  <Route path="roles" element={<RolLayout />} />
+                  <Route path="campamentos" element={<CampamentoLayout />} />
+                </Route>
+              </Routes>
               <PersonalProvider>
                 <Routes>
                   <Route path="personal">
@@ -75,7 +74,6 @@ const MainPage = () => {
               <FinanzasProvider>
                 <Routes>
                   <Route path="finanzas">
-                    
                     <Route index element={<MainLayout />} />
                     <Route path="saldo" element={<Finanzas />} />
                     <Route path="proveedor" element={<Proveedores />} />
@@ -83,6 +81,15 @@ const MainPage = () => {
                   </Route>
                 </Routes>
               </FinanzasProvider>
+
+              <Routes>
+                <Route path="logistica">
+                  <Route index element={<MainLayoutInventario />} />
+                  <Route path="inventario" element={<InventarioLayout />} />
+                  <Route path="almacen" element={<AlmacenLayout />} />
+                  <Route path="sucursal" element={<Sucursales />} />
+                </Route>
+              </Routes>
             </CrudProvider>
           </section>
         </div>

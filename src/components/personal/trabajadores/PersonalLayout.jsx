@@ -32,7 +32,7 @@ const PersonalLayout = () => {
     useContext(CrudContext);
   const [id, setId] = useState("");
   const [search, setSearch] = useState([]);
-  const {result} = useSearch(data)
+  const { result } = useSearch(data);
   const inputFileRef = useRef(null);
 
   const getTrabajadores = async () => {
@@ -46,9 +46,16 @@ const PersonalLayout = () => {
   };
 
   const handleDelete = (e) => {
-    deleteData(route, e).then((res) => {
+    const route = "trabajador/softdelete";
+
+    let eliminar = {
+
+      eliminar: true
+    }
+
+    updateData(eliminar, e.dni, route).then((res) => {
       if (res.status === 200) {
-        alertaEliminar(res.msg, res.status).then((res) => {
+        alertaEliminar("Trabajador eliminado con éxito!", res.status).then((res) => {
           if (res.isConfirmed) {
             getTrabajadores();
           }
@@ -71,15 +78,12 @@ const PersonalLayout = () => {
     const json = {
       deshabilitado: e.target.checked,
     };
-
-    updateData(json, data.id, route);
+    updateData(json, data.dni, route);
   };
 
   useEffect(() => {
     getTrabajadores();
   }, []);
-
-
 
   const columns = personalLayout(
     handleEvaluacion,
@@ -91,7 +95,6 @@ const PersonalLayout = () => {
 
   return (
     <>
-
       <Header text={"Trabajadores"} user={"Usuario"} ruta={"/personal"} />
 
       <Buscador
@@ -112,7 +115,12 @@ const PersonalLayout = () => {
           actualizarTrabajador={getTrabajadores}
         />
       )}
-      {historialContrato && <ModalHistorialContrato selected={id} />}
+      {historialContrato && (
+        <ModalHistorialContrato
+          selected={id}
+          actualizarTrabajadores={getTrabajadores}
+        />
+      )}
     </>
   );
 };

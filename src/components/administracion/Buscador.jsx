@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
-import { AdminContext } from "../../context/AdminContext";
 import { AiOutlineSearch } from "react-icons/ai";
 import "./styles/buscador.css";
 import { CrudContext } from "../../context/CrudContext";
 
 const Buscador = ({ abrirModal }) => {
-  const { render } = useContext(AdminContext);
   const { setFilterText } = useContext(CrudContext);
 
   return (
@@ -20,7 +18,7 @@ const Buscador = ({ abrirModal }) => {
         <AiOutlineSearch className="icon" />
       </span>
       <button onClick={() => abrirModal(true)}>
-        + {render === "Roles o Puestos" ? "Asignar" : "Registrar"}
+        +  Registrar
       </button>
     </div>
   );

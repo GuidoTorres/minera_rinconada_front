@@ -4,7 +4,7 @@ import { AiOutlineClose, AiFillEye } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import { alertaExito } from "../../../helpers/alertMessage";
-import "../style/modalPagos.css";
+import "../style/modalPagarVarios.css";
 const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
   const { setPag, setPagarVarios, multiplesTeletrans, setMultiplesTeletrans } =
     useContext(PlanillaContext);
@@ -21,23 +21,10 @@ const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
     const { name, value } = e.target;
     data[i][name] = value;
 
-    setInitialValues(data);
+    setInitialValues(initialValues);
   };
 
   useEffect(() => {
-    const object = multiplesTeletrans.map((item) => {
-      return {
-        conductor: "",
-        dni: "",
-        telefono: "",
-        placa: "",
-        teletrans: "",
-        lugar: "",
-        contrato_id: item?.contrato[item.contrato.length - 1]?.id,
-      };
-    });
-
-    setInitialValues(object);
     initialValues.slice(0);
   }, []);
 
@@ -111,66 +98,61 @@ const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
           </section>
 
           <form className="form" onSubmit={handleSubmit}>
-            {initialValues.map((input, i) => {
-              return (
-                <>
-                  <section className="body">
-                    <div className="input-container">
-                      <div>
-                        <label htmlFor="">Conductor</label>
-                        <input
-                          name="conductor"
-                          type="text"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
+            <section className="body">
+              <div className="input-container">
+                <div>
+                  <label htmlFor="">Conductor</label>
+                  <input
+                    name="conductor"
+                    type="text"
+                    onChange={(e) => handleChange(e, i)}
+                  />
+                </div>
 
-                      <div>
-                        <label htmlFor="">Dni</label>
-                        <input
-                          name="dni"
-                          type="text"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="">Teléfono</label>
-                        <input
-                          name="telefono"
-                          type="text"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
+                <div>
+                  <label htmlFor="">Dni</label>
+                  <input
+                    name="dni"
+                    type="text"
+                    onChange={(e) => handleChange(e, i)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Teléfono</label>
+                  <input
+                    name="telefono"
+                    type="text"
+                    onChange={(e) => handleChange(e, i)}
+                  />
+                </div>
 
-                      <div>
-                        <label htmlFor="">Placa</label>
-                        <input
-                          name="placa"
-                          type="text"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="">Teletrans</label>
-                        <input
-                          name="teletrans"
-                          type="text"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="">Lugar de Despacho</label>
-                        <input
-                          name="lugar"
-                          type="text"
-                          onChange={(e) => handleChange(e, i)}
-                        />
-                      </div>
-                    </div>
-                  </section>
-                </>
-              );
-            })}
+                <div>
+                  <label htmlFor="">Placa</label>
+                  <input
+                    name="placa"
+                    type="text"
+                    onChange={(e) => handleChange(e, i)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Teletrans</label>
+                  <input
+                    name="teletrans"
+                    type="text"
+                    onChange={(e) => handleChange(e, i)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Lugar de Despacho</label>
+                  <input
+                    name="lugar"
+                    type="text"
+                    onChange={(e) => handleChange(e, i)}
+                  />
+                </div>
+              </div>
+            </section>
+
             <div className="footer">
               <button>Guardar</button>
             </div>

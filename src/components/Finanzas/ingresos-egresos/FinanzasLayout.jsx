@@ -414,14 +414,25 @@ const Finanzas = () => {
                   </select>
                 </div>
 
-                <div>
-                  <label htmlFor="">Comprobante</label>
-                  <input
-                    type="text"
-                    name="comprobante"
-                    value={sucursal?.comprobante}
-                    onChange={handleData}
-                  />
+                <div className="area-sucursal">
+                  <div>
+                    <label htmlFor="">Comprobante</label>
+                    <input
+                      type="text"
+                      name="comprobante"
+                      value={sucursal?.comprobante}
+                      onChange={handleData}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="">Nro</label>
+                    <input
+                      type="text"
+                      name="nro_comprobante"
+                      value={sucursal?.nro_comprobante}
+                      onChange={handleData}
+                    />
+                  </div>
                 </div>
               </div>
 

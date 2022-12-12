@@ -2,15 +2,26 @@ import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import { AdminContext } from "../context/AdminContext";
 import { CrudContext } from "../context/CrudContext";
 
 const useSearch = (data) => {
-  const { filterText } = useContext(CrudContext);
+  const { filterText, filterTextModal } = useContext(CrudContext);
   const [result, setResult] = useState();
 
   useEffect(() => {
     if (filterText !== "") {
+      const filteredData = data.filter((item) => {
+        return Object.values(item)
+          .join("")
+          .toLowerCase()
+          .includes(filterText.toLowerCase());
+      });
+      setResult(filteredData);
+    } else {
+      setResult(data);
+    }
+
+    if (filterTextModal !== "") {
       const filteredData = data.filter((item) => {
         return Object.values(item)
           .join("")

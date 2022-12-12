@@ -29,6 +29,7 @@ export const trabajadorValues = {
   genero: "",
   direccion: "",
   asociacion_id: null,
+  eliminar: false
 };
 
 export const trabajadorEvaluacionValues = (selected) => {
@@ -147,6 +148,8 @@ export const trabajadorContratoValues = (data) => {
   });
 };
 
+
+//finanzas
 export const IngresoEgresoValues = (data) => {
   let ingresoEgreso
   return ingresoEgreso = {
@@ -177,3 +180,12 @@ export const sucursalValues = {
   descripcion: "",
   saldo_inicial: "",
 };
+
+
+//logistica
+export const almacenValues = {
+  nombre: "",
+  codigo: "",
+  descripcion: "",
+};
+

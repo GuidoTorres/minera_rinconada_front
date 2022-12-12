@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AdminContext } from "../../context/AdminContext";
 import { CrudContext } from "../../context/CrudContext";
 import { AiFillEdit } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
@@ -14,9 +13,9 @@ import { rolLayout } from "../../data/dataTable";
 
 const RolLayout = () => {
   const route = "rol";
-  const { asignarUsuario, setAsignarUsuario, setDataToEdit, filterText } =
-    useContext(AdminContext);
-  const { getData, deleteData, setData, data } = useContext(CrudContext);
+
+  const { getData, deleteData, setData, data, modal, setModal, setDataToEdit } =
+    useContext(CrudContext);
   const { result } = useSearch(data);
 
   const getRoles = async () => {
@@ -26,13 +25,13 @@ const RolLayout = () => {
 
   const handleEdit = (e) => {
     setDataToEdit(e);
-    setAsignarUsuario(true);
+    setModal(true);
   };
 
   const handleDelete = (id) => {
     alertaEliminarExito("rol").then((res) => {
       if (res.isConfirmed) {
-        deleteData(id, route);
+        deleteData(route, id);
 
         Swal.fire("Eliminado!", "Se elimino el rol correctamente.", "success");
       }
@@ -49,9 +48,9 @@ const RolLayout = () => {
   return (
     <>
       <Header text={"Roles"} user={"Usuario"} ruta={"/administracion"} />
-      <Buscador abrirModal={setAsignarUsuario} />
+      <Buscador abrirModal={setModal} />
       <Tabla columns={columns} table={result} />
-      {asignarUsuario && <ModalAsignarRol actualizarTabla={getRoles} />}
+      {modal && <ModalAsignarRol actualizarTabla={getRoles} />}
     </>
   );
 };

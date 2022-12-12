@@ -5,14 +5,26 @@ import { CrudContext } from "../../context/CrudContext";
 import { PlanillaContext } from "../../context/PlanillaContext";
 import { alertaErrorCrear, alertaExito } from "../../helpers/alertMessage";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const BuscadorJuntarTeletrans = ({ registrar }) => {
   const { pagarVarios, setPagarVarios, multiplesTeletrans } =
     useContext(PlanillaContext);
+  const [sumar, setSumar] = useState(0);
   const { setFilterText } = useContext(CrudContext);
   const handleModal = () => {
     setPagarVarios(true);
   };
+
+  useEffect(() => {
+    const sumarSaldos =
+      multiplesTeletrans.length > 0 &&
+      multiplesTeletrans
+        .map((item) => item.saldo % 4)
+        .reduce((partialSum, a) => partialSum + a, 0);
+    setSumar(sumarSaldos);
+  }, [multiplesTeletrans]);
   return (
     <div
       className="buscador-container"
@@ -40,9 +52,11 @@ const BuscadorJuntarTeletrans = ({ registrar }) => {
         }}
       >
         <div>
-          {registrar !== false && multiplesTeletrans.length > 1 ? (
+          {registrar !== false &&
+          multiplesTeletrans.length > 1 &&
+          sumar === 4 ? (
             <button onClick={handleModal} style={{ width: "150px" }}>
-              Pagar
+              Pagar 
             </button>
           ) : (
             ""

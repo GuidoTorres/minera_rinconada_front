@@ -1,0 +1,33 @@
+.modal-producto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  
+}
+.modal-producto .overlay {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.modal-producto .modal-container {
+  width: 30%;
+  height: 650px;
+  background-color: white;
+  position: absolute;
+  z-index: 2;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.modal-producto .modal-container .imagen{
+
+  height: 250px;
+}

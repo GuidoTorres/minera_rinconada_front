@@ -8,10 +8,15 @@ export const CrudProvider = ({ children }) => {
 
   const [data2, setData2] = useState([]);
   const [data3, setData3] = useState([]);
-  const [filterText, setFilterText] = useState("")
-  const [dataToEdit, setDataToEdit] = useState(null)
+  const [filterText, setFilterText] = useState("");
+  const [filterTextModal, setFilterTextModal] = useState("");
 
+  const [dataToEdit, setDataToEdit] = useState(null);
   const [modalCampamento, setModalCampamento] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
+  const [modal3, setModal3] = useState(false);
 
   const getData = async (route) => {
     const response = await fetch(`${import.meta.env.VITE_APP_BASE}/${route}`);
@@ -98,7 +103,19 @@ export const CrudProvider = ({ children }) => {
     data3,
     setData3,
     getDataById,
-    getDataById2,filterText, setFilterText,dataToEdit, setDataToEdit
+    getDataById2,
+    filterText,
+    setFilterText,
+    dataToEdit,
+    setDataToEdit,
+    modal,
+    setModal,
+    modal1,
+    setModal1,
+    modal2,
+    setModal2,
+    modal3,
+    setModal3,filterTextModal, setFilterTextModal
   };
   return <CrudContext.Provider value={info}>{children}</CrudContext.Provider>;
 };

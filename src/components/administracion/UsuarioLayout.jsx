@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AdminContext } from "../../context/AdminContext";
 import { CrudContext } from "../../context/CrudContext";
 import { AiFillEdit } from "react-icons/ai";
 import { BsFillTrash2Fill } from "react-icons/bs";
@@ -14,9 +13,9 @@ import useSearch from "../../hooks/useSearch";
 
 const UsuarioLayout = () => {
   const route = "usuario";
-  const { registroUsuario, setRegistroUsuario, setDataToEdit } =
-    useContext(AdminContext);
-  const { getData, deleteData, data, setData } = useContext(CrudContext);
+
+  const { getData, deleteData, data, setData, modal, setModal, setDataToEdit } =
+    useContext(CrudContext);
 
   const { result } = useSearch(data);
 
@@ -26,7 +25,7 @@ const UsuarioLayout = () => {
   };
   const handleEdit = (e) => {
     setDataToEdit(e);
-    setRegistroUsuario(true);
+    setModal(true);
   };
 
   const handleDelete = (id) => {
@@ -53,9 +52,9 @@ const UsuarioLayout = () => {
   return (
     <div style={{ width: "100%" }}>
       <Header text={"Usuarios"} user={"Usuario"} ruta={"/administracion"} />
-      <Buscador abrirModal={setRegistroUsuario} />
+      <Buscador abrirModal={setModal} />
       <Tabla columns={columns} table={result} />
-      {registroUsuario && <ModalUsuario actualizarTabla={getUsuarios} />}
+      {modal && <ModalUsuario actualizarTabla={getUsuarios} />}
     </div>
   );
 };

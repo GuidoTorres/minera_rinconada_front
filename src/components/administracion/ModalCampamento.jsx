@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AdminContext } from "../../context/AdminContext";
 import { AiOutlineClose } from "react-icons/ai";
 import { campamentoValues } from "../../data/initalValues";
 import "./styles/modalCampamento.css";
@@ -11,10 +10,9 @@ import {
 import { CrudContext } from "../../context/CrudContext";
 
 const ModalCampamento = ({ actualizarTabla }) => {
-  const route = "campamento"
-  const { dataToEdit, setRegistrarCampamento, setDataToEdit } =
-    useContext(AdminContext);
-  const { createData, updateData } = useContext(CrudContext);
+  const route = "campamento";
+  const { createData, updateData, modal, setModal, dataToEdit, setDataToEdit } =
+    useContext(CrudContext);
   const [campamento, setCampamento] = useState(campamentoValues);
 
   useEffect(() => {
@@ -39,8 +37,8 @@ const ModalCampamento = ({ actualizarTabla }) => {
     } else if (dataToEdit === null) {
       createData(campamento, route);
       alertaExito("Campamento").then((res) => {
-        closeModal();
         if (res.isConfirmed) {
+          closeModal();
           actualizarTabla();
         }
       });
@@ -57,7 +55,7 @@ const ModalCampamento = ({ actualizarTabla }) => {
   };
 
   const closeModal = () => {
-    setRegistrarCampamento(false);
+    setModal(false);
     setDataToEdit(null);
     setCampamento(campamentoValues);
   };

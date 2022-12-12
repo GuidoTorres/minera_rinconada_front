@@ -10,9 +10,13 @@ const BuscadorContrato = ({
   registrar,
   data,
 }) => {
+  const { setFilterText } = useContext(CrudContext);
+  const noFinalizado = data?.contrato?.filter(
+    (item) => item.finalizado === false
+  );
+  const finalizado = data?.contrato?.filter((item) => item.finalizado === true);
 
-  const {setFilterText} = useContext(CrudContext)
-
+  console.log(registrar);
   return (
     <div className="buscador-container">
       <span>
@@ -25,31 +29,13 @@ const BuscadorContrato = ({
         <AiOutlineSearch className="icon" />
       </span>
       <div>
-        {registrar &&
-        data?.fiscalizador === "si" &&
-        data?.control === "si" &&
-        data?.topico === "si" &&
-        data?.seguridad === "si" &&
-        data?.medio_ambiente === "si" &&
-        data?.recursos_humanos === "si" ? (
-          <button
-            style={{ marginRight: "10px" }}
-            onClick={() => abrirModal(true)}
-          >
-            + Registrar
-          </button>
-        ) : (
-          ""
-        )}
-
-        {registrar &&
-        data?.fiscalizador === "si" &&
+        {data?.fiscalizador === "si" &&
         data?.control === "si" &&
         data?.topico === "si" &&
         data?.seguridad === "si" &&
         data?.medio_ambiente === "si" &&
         data?.recursos_humanos === "si" &&
-        data?.evaluacion_finalizado ? (
+        noFinalizado.length === 0 ? (
           <button
             style={{ marginRight: "10px" }}
             onClick={() => abrirModal(true)}

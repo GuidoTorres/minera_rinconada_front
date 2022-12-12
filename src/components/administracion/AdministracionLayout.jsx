@@ -1,5 +1,4 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 import Header from "../header/Header";
 import OpcionUsuario from "./OpcionUsuario";
 
@@ -8,7 +7,6 @@ const AdministracionLayout = () => {
     <>
       <Header user={"Usuario"} ruta={"/administracion"}/>
       <OpcionUsuario />
-      <Outlet/>
     </>
   );
 };

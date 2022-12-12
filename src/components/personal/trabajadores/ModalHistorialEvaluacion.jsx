@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import {AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
 import { PersonalContext } from "../../../context/PersonalContext";
 import ModalRegistroEvaluacion from "./ModalRegistroEvaluacion";
 import Tabla from "../../tabla/Tabla";
-
 
 import "../styles/modalHistorialEvaluacion.css";
 import { historialEvaluacion } from "../../../data/dataTable";
@@ -21,7 +20,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
   } = useContext(PersonalContext);
 
   const { getDataById, deleteData, data1, setData1 } = useContext(CrudContext);
-  const {result} = useSearch(data1)
+  const { result } = useSearch(data1);
 
   const getEvaluacion = async () => {
     const response = await getDataById(route, selected.dni);
@@ -80,6 +79,7 @@ const ModalHistorialEvaluacion = ({ selected, actualizarTrabajador }) => {
           actualizarTabla={getEvaluacion}
           selected={selected}
           actualizarTrabajador={actualizarTrabajador}
+          cerrarHistorial={setHistorialEvaluacion}
         />
       )}
     </div>

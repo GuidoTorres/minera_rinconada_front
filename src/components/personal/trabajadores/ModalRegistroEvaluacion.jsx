@@ -17,6 +17,7 @@ const ModalRegistroEvaluacion = ({
   actualizarTabla,
   selected,
   actualizarTrabajador,
+  cerrarHistorial,
 }) => {
   const route = "evaluacion";
   const route1 = "cargo";
@@ -24,7 +25,7 @@ const ModalRegistroEvaluacion = ({
   const { setRegistrarEvaluacion, setDataToEdit, dataToEdit } =
     useContext(PersonalContext);
 
-  const evaluacionValues = trabajadorEvaluacionValues(selected)
+  const evaluacionValues = trabajadorEvaluacionValues(selected);
   const { createData, updateData, getData } = useContext(CrudContext);
   const [evaluacion, setEvaluacion] = useState(evaluacionValues);
   const [cargo, setCargo] = useState([]);
@@ -73,6 +74,7 @@ const ModalRegistroEvaluacion = ({
             closeModal();
             actualizarTabla();
             actualizarTrabajador();
+            cerrarHistorial(false);
           });
         }
       });
@@ -178,9 +180,12 @@ const ModalRegistroEvaluacion = ({
                   <option value="Sobrino">Sobrino</option>
                   <option value="Primo">Primo</option>
                   <option value="Tio">Tio</option>
-                  <option value="Tio">Compadre</option>
-                  <option value="Tio">Compañero</option>
-                  <option value="Tio">Amigo</option>
+                  <option value="Compadre">Compadre</option>
+                  <option value="Compañero">Compañero</option>
+                  <option value="Amigo">Amigo</option>
+                  <option value="Nuera">Nuera</option>
+                  <option value="Conocido">Conocido</option>
+                  <option value="Recomendado">Recomendado</option>
                 </select>
               </div>
             </section>
@@ -337,12 +342,21 @@ const ModalRegistroEvaluacion = ({
               </div>
               <div>
                 <label htmlFor="">Diabetes</label>
-                <input
+                <select
+                  value={evaluacion.diabetes}
+                  name="diabetes"
+                  onChange={handleData}
+                >
+                  <option value="-1">Seleccione</option>
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
+                {/* <input
                   type="text"
                   value={evaluacion.diabetes}
                   name="diabetes"
                   onChange={handleData}
-                />
+                /> */}
               </div>
             </section>
             <div className="aprobado">

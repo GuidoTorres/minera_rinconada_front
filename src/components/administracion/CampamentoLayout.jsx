@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { AdminContext } from "../../context/AdminContext";
 import Buscador from "./Buscador";
 import Header from "../header/Header";
 import Tabla from "../tabla/Tabla";
@@ -15,9 +14,8 @@ import { campamentoLayout } from "../../data/dataTable";
 const CampamentoLayout = () => {
   const route = "campamento";
 
-  const { registrarCampamento, setRegistrarCampamento, setDataToEdit } =
-    useContext(AdminContext);
-  const { getData, data, setData, deleteData } = useContext(CrudContext);
+  const { getData, data, setData, deleteData, modal, setModal, setDataToEdit } =
+    useContext(CrudContext);
   const { result } = useSearch(data);
   const getCampamento = async () => {
     const response = await getData(route);
@@ -31,21 +29,21 @@ const CampamentoLayout = () => {
 
   const handleEdit = (e) => {
     setDataToEdit(e);
-    setRegistrarCampamento(true);
+    setModal(true);
   };
 
   const handleDelete = (id) => {
     alertaEliminarExito("campamento").then((res) => {
       if (res.isConfirmed) {
-        deleteData(id, route);
+        deleteData(route, id);
 
         Swal.fire(
           "Eliminado!",
           "El campamento se eliminó correctamente.",
           "success"
         );
+        getCampamento();
       }
-      getCampamento();
     });
   };
 
@@ -54,11 +52,9 @@ const CampamentoLayout = () => {
   return (
     <>
       <Header text={"Campamentos"} user={"Usuario"} ruta={"/administracion"} />
-      <Buscador abrirModal={setRegistrarCampamento} />
+      <Buscador abrirModal={setModal} />
       <Tabla columns={columns} table={result} />
-      {registrarCampamento && (
-        <ModalCampamento actualizarTabla={getCampamento} />
-      )}
+      {modal && <ModalCampamento actualizarTabla={getCampamento} />}
     </>
   );
 };

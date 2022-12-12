@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { AdminContext } from "../../context/AdminContext";
 import "./styles/modalUsuario.css";
 import { usuarioValues } from "../../data/initalValues";
 import { AiOutlineClose } from "react-icons/ai";
@@ -13,9 +12,9 @@ import { CrudContext } from "../../context/CrudContext";
 
 const ModalUsuario = ({ actualizarTabla }) => {
   const route = "usuario";
-  const { setRegistroUsuario, dataToEdit, setDataToEdit } =
-    useContext(AdminContext);
-  const { createData, updateData } = useContext(CrudContext);
+
+  const { createData, updateData, modal, setModal, setDataToEdit, dataToEdit } =
+    useContext(CrudContext);
   const [usuario, setUsuario] = useState(usuarioValues);
 
   useEffect(() => {
@@ -63,7 +62,7 @@ const ModalUsuario = ({ actualizarTabla }) => {
   };
 
   function closeModal() {
-    setRegistroUsuario(false);
+    setModal(false);
     setDataToEdit(null);
     setUsuario(usuarioValues);
   }

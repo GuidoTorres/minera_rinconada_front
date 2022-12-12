@@ -76,11 +76,11 @@ export const rolLayout = (handleEdit, handleDelete) => {
       name: "Nombre",
       selector: (row) => row.nombre,
     },
-    {
-      id: "Usuario",
-      name: "Usuario",
-      selector: (row) => row.usuario,
-    },
+    // {
+    //   id: "Usuario",
+    //   name: "Usuario",
+    //   selector: (row) => row.usuario,
+    // },
     {
       id: "Puesto",
       name: "Puesto",
@@ -154,7 +154,7 @@ export const historialEvaluacion = (handleEdit, handleDelete) => {
     {
       id: "Id Historial",
       name: "Id Historial",
-      selector: (row, index) => row?.evaluacion_id,
+      selector: (row, index) => index + 1,
       width: "120px",
     },
     {
@@ -331,7 +331,6 @@ export const personalLayout = (
       button: true,
       cell: (e) => (
         <div
-          disabled
           style={{
             width: "40px",
             display: "flex",
@@ -340,11 +339,13 @@ export const personalLayout = (
           }}
         >
           {e?.nota ? e.nota : "--"}
-          <AiFillEye
-            onClick={() => {
-              handleContrato(e);
-            }}
-          />
+          <>
+            <AiFillEye
+              onClick={() => {
+                handleContrato(e);
+              }}
+            />
+          </>
         </div>
       ),
     },
@@ -368,7 +369,7 @@ export const personalLayout = (
       cell: (e) => (
         <>
           <AiFillEdit onClick={() => handleEdit(e)} />
-          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
         </>
       ),
     },
@@ -748,7 +749,7 @@ export const sumarTeletrans = (handleValidacion, handlePagos) => {
       selector: (row) =>
         row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
       sortable: true,
-      width: "200px",
+      width: "250px",
     },
 
     {
@@ -776,10 +777,16 @@ export const sumarTeletrans = (handleValidacion, handlePagos) => {
       selector: (row) => row?.teletrans,
     },
     {
+      id: "total",
+      name: "Total",
+      // sortable: true,
+      selector: (row) => row?.saldo,
+    },
+    {
       id: "saldo",
       name: "Saldo",
       sortable: true,
-      selector: (row) => row?.saldo,
+      selector: (row) => row?.saldo % 4,
     },
 
     // {
@@ -864,7 +871,7 @@ export const finanzas = (handleEdit, handleDelete) => {
     },
     {
       id: "tipo",
-      name: "Tipo de movimiento",
+      name: "Movimiento",
       sortable: true,
       selector: (row) => row?.movimiento,
     },
@@ -997,6 +1004,139 @@ export const sucursalData = (handleEdit, handleDelete) => {
       sortable: true,
       selector: (row) => row?.saldo_inicial,
     },
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <AiFillEdit onClick={() => handleEdit(e)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const almacen = (handleEdit, handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "Nro",
+      name: "Nro",
+      selector: (row, index) => index + 1,
+    },
+    {
+      id: "codigo",
+      name: "Código",
+      sortable: true,
+      selector: (row) => row?.nombre,
+    },
+    {
+      id: "nombre",
+      name: "Nombre",
+      sortable: true,
+      selector: (row) => row?.nombre,
+    },
+    {
+      id: "descripcion",
+      name: "Descripción",
+      sortable: true,
+      selector: (row) => row?.descripcion,
+    },
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <AiFillEdit onClick={() => handleEdit(e)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const inventario = (handleEdit, handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row, index) => row.codigo,
+    },
+    {
+      id: "barras",
+      name: "Cod_barras",
+      sortable: true,
+      selector: (row) => row?.codigo_barras,
+    },
+    {
+      id: "interno",
+      name: "Cod_interno",
+      sortable: true,
+      selector: (row) => row?.codigo_interno,
+    },
+    {
+      id: "descripcion",
+      name: "Descripción",
+      sortable: true,
+      selector: (row) => row?.descripcion,
+    },
+    {
+      id: "categoria",
+      name: "Categoría",
+      sortable: true,
+      selector: (row) => row?.categoria,
+    },
+    {
+      id: "stock",
+      name: "Stock",
+      sortable: true,
+      selector: (row) => row?.stock,
+    },
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <AiFillEdit onClick={() => handleEdit(e)} />
+          <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const entradas = (handleEdit, handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row, index) => row.codigo,
+    },
+    {
+      id: "descripcion",
+      name: "Descripción",
+      sortable: true,
+      selector: (row) => row?.descripcion,
+    },
+    {
+      id: "fecha",
+      name: "Fecha",
+      sortable: true,
+      selector: (row) => row?.fecha,
+    },
+    {
+      id: "ord_compra",
+      name: "Orden de compra",
+      sortable: true,
+      selector: (row) => row?.ord_compra,
+    },
+
     {
       id: "Acciones",
       name: "Acciones",
