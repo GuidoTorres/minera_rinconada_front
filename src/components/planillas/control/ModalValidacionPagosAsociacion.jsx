@@ -18,6 +18,7 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
   } = useContext(PlanillaContext);
   const { getDataById, data3, setData3 } = useContext(CrudContext);
   const [text, setText] = useState();
+  const [fechasTabla, setFechasTabla] = useState();
 
   const getTareoAsociacion = async () => {
     const route = "planilla/tareo/asociacion";
@@ -39,8 +40,10 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
 
   useEffect(() => {
     setFechas(data3);
+    setFechasTabla(
+      data3.map((item) => item.fecha).filter((item) => item !== undefined)
+    );
   }, [data3]);
-
 
   return (
     <div className="modal-validacion">
@@ -88,38 +91,22 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
               </div>
             </div>
           </section>
-          {/* <Tabla columns={planilla} table={data3} /> */}
           <section className="table-container">
             <table>
-              <tr>
+              <tr style={{}}>
                 <th>Nro</th>
                 <th>Hoja de tareo asistencia de operacion</th>
-                {data3?.map((item, i) => {
-                  
-                  [item]?.map(data => {
 
-                    <label htmlFor="">{data}</label>
-
-                  })
-                  // <th key={i+3} style={{ height: "110px", position: "relative" }}>
-                  //   <span
-                  //     style={{
-                  //       bottom: "5px",
-                  //       left: "50%",
-                  //       position: "absolute",
-                  //       transform: "rotate(-90deg)",
-                  //       transformOrigin: "center left",
-                  //       whiteSpace: "nowrap",
-                  //     }}
-                  //   >
-                  //     {item}
-                  //   </span>
-                  //   aaaaaa
-                  // </th>
-                })}
+                {fechasTabla?.map((item) =>
+                  item.map((data) => (
+                    <th style={{ writingMode: "vertical-lr", transform: "scale(-1)" }}>
+                      <span>{data}</span>
+                    </th>
+                  ))
+                )}
               </tr>
               {data3?.map((item, index) => (
-                <tr key={index+2}>
+                <tr key={index + 2}>
                   <td>{index + 1}</td>
                   <td>
                     {item?.nombre +
@@ -147,10 +134,6 @@ const ModalValidacionPagosAsociacion = ({ data }) => {
               ))}
             </table>
           </section>
-
-          {/* <div style={{ paddingLeft: "30px", marginTop: "5px" }}>
-            <label htmlFor="">Total de días asistidos:</label>
-          </div> */}
           <section
             style={{
               paddingLeft: "30px",

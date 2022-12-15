@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
+import { PersonalContext } from "../../../context/PersonalContext";
 import { trabajadorValues } from "../../../data/initalValues";
 import {
   alertaEditarExito,
@@ -16,7 +17,9 @@ import "../styles/modalRegistroPersonal.css";
 const ModalRegistroPersonal = ({ actualizarTabla }) => {
   const route = "trabajador";
 
-  const { getData, createData, updateData, setData3, data3, setModal,setDataToEdit ,dataToEdit } =
+  const { dataToEdit, setRegistrarPersonal, setDataToEdit } =
+    useContext(PersonalContext);
+  const { getData, createData, updateData, setData3, data3, setModal } =
     useContext(CrudContext);
   const [trabajador, setTrabajador] = useState(trabajadorValues);
   const [avatar, setAvatar] = useState(null);
@@ -109,7 +112,7 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
   };
 
   const closeModal = () => {
-    setModal(false);
+    setRegistrarPersonal(false);
     setDataToEdit(null);
     setTrabajador(trabajadorValues);
   };

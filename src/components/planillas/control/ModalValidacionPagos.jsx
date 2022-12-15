@@ -14,7 +14,7 @@ const ModalValidacionPagos = ({ data }) => {
     useContext(PlanillaContext);
   const { getDataById, data2, setData2 } = useContext(CrudContext);
   const [text, setText] = useState();
-  const {result} = useSearch(data2)
+  const { result } = useSearch(data2);
   const getTareo = async () => {
     const route = "planilla/tareo";
     const response = await getDataById(route, data.dni);
@@ -78,9 +78,9 @@ const ModalValidacionPagos = ({ data }) => {
                       )}
                   </label>
                 </div>
-                <div>
+                {/* <div>
                   <label htmlFor="">Cargo:</label>
-                </div>
+                </div> */}
 
                 <div
                   style={{
@@ -90,22 +90,26 @@ const ModalValidacionPagos = ({ data }) => {
                     gap: "150px",
                   }}
                 ></div>
+                <div style={{ marginBottom: "10px" }}>
+                  <label htmlFor="">
+                    Total de días asistidos:{" "}
+                    {
+                      data2.filter((item) => item.asistencia === "Asistio")
+                        .length
+                    }
+                  </label>
+                </div>
               </div>
             </section>
             <Tabla columns={columns} table={result} />
-            <div style={{ paddingLeft: "30px", marginTop: "5px" }}>
-              <label htmlFor="">
-                Total de días asistidos:{" "}
-                {data2.filter((item) => item.asistencia === "Asistio").length}
-              </label>
-            </div>
+
             <section
               style={{
                 paddingLeft: "30px",
-                marginTop: "20px",
                 display: "flex",
                 gap: 20,
                 paddingRight: "30px",
+                marginBottom: "20px"
               }}
             >
               <button

@@ -2,8 +2,21 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import "./tabla.css";
 
-const Tabla = ({ columns, table }) => {
-
+const TablaPlanilla = ({ columns, table }) => {
+  const conditionalRowStyles = [
+    // Cambio de color en la tabla dependiendo de la fecha que devuelve el backend en el json
+    {
+      when: (row) => row?.asistencia,
+      style: (row) => ({
+        backgroundColor:
+          parseInt(row.asistencia) % 15 > 1
+            ? "#ffef76"
+            : parseInt(row.asistencia) % 15 === 0
+            ? "#ff7467"
+            : "",
+      }),
+    },
+  ];
 
   const paginationComponentOptions = {
     rowsPerPageText: "Filas por página",
@@ -25,9 +38,10 @@ const Tabla = ({ columns, table }) => {
         paginationComponentOptions={paginationComponentOptions}
         paginationPerPage={8}
         paginationRowsPerPageOptions={[8, 16, 24, 32, 40]}
+        conditionalRowStyles={conditionalRowStyles}
       />
     </div>
   );
 };
 
-export default Tabla;
+export default TablaPlanilla;

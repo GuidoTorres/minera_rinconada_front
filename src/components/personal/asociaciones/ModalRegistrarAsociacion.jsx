@@ -35,43 +35,34 @@ const ModalRegistrarAsociacion = ({ actualizarTabla, selected }) => {
     setAsociacion(asociacionValues);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!asociacion.nombre || !asociacion.codigo) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(asociacion, route)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
-          } else {
-            alertaErrorCrear(res.msg).then((res) => {
-              closeModal();
-            });
+      const response = await createData(asociacion, route);
+
+      if (response.status === 200) {
+        alertaExito(response.msg, response.status).then((res) => {
+          closeModal();
+          if (res.isConfirmed) {
+            actualizarTabla();
           }
         });
+      }
     }
 
     if (dataToEdit) {
-      updateData(asociacion, dataToEdit.id, route)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.status === 200) {
-            alertaEditarExito(res.msg, res.status).then((res) => {
-              closeModal();
-              if (res.isConfirmed) {
-                actualizarTabla();
-              }
-            });
+      const response = await updateData(asociacion, dataToEdit.id, route);
+      if (response.status === 200) {
+        alertaExito(response.msg, response.status).then((res) => {
+          closeModal();
+          if (res.isConfirmed) {
+            actualizarTabla();
           }
         });
+      }
     }
   };
 

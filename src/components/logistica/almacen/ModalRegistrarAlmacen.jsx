@@ -22,7 +22,7 @@ const ModalRegistrarAlmacen = ({ actualizarTabla }) => {
 
   const closeModal = () => {
     setModal(false);
-    setDataToEdit(null)
+    setDataToEdit(null);
   };
 
   const handleSubmit = async (e) => {

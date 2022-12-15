@@ -29,7 +29,7 @@ export const trabajadorValues = {
   genero: "",
   direccion: "",
   asociacion_id: null,
-  eliminar: false
+  eliminar: false,
 };
 
 export const trabajadorEvaluacionValues = (selected) => {
@@ -148,11 +148,10 @@ export const trabajadorContratoValues = (data) => {
   });
 };
 
-
 //finanzas
 export const IngresoEgresoValues = (data) => {
-  let ingresoEgreso
-  return ingresoEgreso = {
+  let ingresoEgreso;
+  return (ingresoEgreso = {
     sucursal_id: "",
     fecha: "",
     movimiento: "",
@@ -166,8 +165,8 @@ export const IngresoEgresoValues = (data) => {
     proveedor: "",
     comprobante: "",
     dni: "",
-    sucursal_transferencia: ""
-  };
+    sucursal_transferencia: "",
+  });
 };
 
 export const proveedorValues = {
@@ -181,7 +180,6 @@ export const sucursalValues = {
   saldo_inicial: "",
 };
 
-
 //logistica
 export const almacenValues = {
   nombre: "",
@@ -189,3 +187,31 @@ export const almacenValues = {
   descripcion: "",
 };
 
+export const productoValues = (id) => {
+  let data;
+
+  return (data = {
+    codigo: "",
+    nombre: "",
+    codigo_interno: "",
+    codigo_barras: "",
+    descripcion: "",
+    categoria: "",
+    almacen_id: id,
+  });
+};
+
+export const entradaSalidaValues = (id) => {
+  let data;
+
+  return (data = {
+    codigo: "",
+    motivo: "",
+    fecha: "",
+    encargado: "",
+    codigo_compra: "",
+    cantidad: "",
+    unidad: "",
+    tipo: ""
+  });
+};

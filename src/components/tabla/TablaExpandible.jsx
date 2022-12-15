@@ -39,6 +39,7 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
     selectAllRowsItemText: "Todos",
   };
 
+
   const handleDelete = (e) => {
     alertaEliminarExito("trabajador").then((res) => {
       if (res.isConfirmed) {
@@ -57,7 +58,6 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
     setHistorialEvaluacion(true);
     setId(e);
   };
-
   const personal = [
     {
       id: "codigo",
@@ -112,24 +112,24 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
       selector: (row) => row?.id,
 
       button: true,
-      cell: (e) => (
+      cell: (e, index) => (
         <>
-          <AiFillEye onClick={() => handleEvaluacion(e)} />
+          <label htmlFor="">{e.evaluacions.control}</label>
 
-          {e?.evaluacions?.capacitacion_gema === 12 ? (
-            <>
-              <AiOutlineCheck
-                style={{ color: "green", fontWeigth: "bold", fontSize: "16px" }}
-              />
-            </>
-          ) : e?.evaluacions?.capacitacion_gema === 12 ? (
+          <AiFillEye onClick={() => handleEvaluacion(e)} />
+          {e.evaluacions.control === "si" &&
+          e.evaluacions.topico === "si" &&
+          e.evaluacions.seguridad === "si" &&
+          e.evaluacions.medio_ambiente === "si" &&
+          e.evaluacions.recursos_humanos === "si" ? (
+            <AiOutlineCheck
+              style={{ color: "green", fontWeigth: "bold", fontSize: "16px" }}
+            />
+          ) : (
             <AiOutlineClose
               style={{ color: "red", fontWeigth: "bold", fontSize: "16px" }}
             />
-          ) : (
-            ""
-          )}
-          <label htmlFor="">{e?.trabajador?.evaluacions?.id}</label>
+          ) }
         </>
       ),
     },
@@ -149,7 +149,14 @@ const Tabla = ({ columns, table, actualizarTabla }) => {
 
   const expandedComponent = ({ data }) => (
     <div style={{ padding: "10px 20px 10px 20px" }}>
-      <DataTable columns={personal} data={data.trabajador} />
+      <DataTable
+        columns={personal}
+        data={data.trabajador}
+        pagination
+        paginationPerPage={6}
+        paginationComponentOptions={paginationComponentOptions}
+        paginationRowsPerPageOptions={[6, 10, 15, 20]}
+      />
     </div>
   );
 

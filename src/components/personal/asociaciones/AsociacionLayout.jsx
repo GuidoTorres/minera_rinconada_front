@@ -21,11 +21,10 @@ const AsociacionLayout = () => {
     registrarAsociacion,
     setRegistrarAsociacion,
     setDataToEdit,
-    filterText,
     historialContratoAsociacion,
     setHistorialContratoAsociacion,
   } = useContext(PersonalContext);
-  const { getData, deleteData, data, setData } = useContext(CrudContext);
+  const { getData, deleteData, data, setData, filterText } = useContext(CrudContext);
   const [asociacionId, setAsociacionId] = useState();
   const [id, setId] = useState("");
   const [search, setSearch] = useState([]);
@@ -39,7 +38,6 @@ const AsociacionLayout = () => {
     setDataToEdit(e);
     setRegistrarAsociacion(true);
   };
-  console.log(data);
 
   const handleDelete = (e) => {
     alertaEliminarExito("asociación").then((res) => {

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { CrudContext } from "../../../context/CrudContext";
 import { PlanillaContext } from "../../../context/PlanillaContext";
 import Header from "../../header/Header";
-import Tabla from "../../tabla/Tabla";
 import Buscador from "../Buscador";
 import { AiFillEye } from "react-icons/ai";
 import ModalPlanillaControl from "./ModalPlanillaControl";
@@ -10,6 +9,7 @@ import { controlPlanilla } from "../../../data/dataTable";
 import BuscadorControlPlanilla from "../BuscadorControlPlanilla";
 import ModalJuntarTeletrans from "./ModalJuntarTeletrans";
 import useSearch from "../../../hooks/useSearch";
+import TablaPlanilla from "../../tabla/TablaPlanilla";
 
 const ControlPlanilla = () => {
   const { planillaControl, setPlanillaControl, setUserdata,juntarTeletrans } =
@@ -45,7 +45,7 @@ const ControlPlanilla = () => {
         exportar={false}
         cargar={false}
       />
-      <Tabla columns={columns} table={result} />
+      <TablaPlanilla columns={columns} table={result} />
       {planillaControl && (
         <ModalPlanillaControl
           selected={tableData}

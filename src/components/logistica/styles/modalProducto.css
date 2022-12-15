@@ -19,7 +19,8 @@
 
 .modal-producto .modal-container {
   width: 30%;
-  height: 650px;
+  /* height: 650px; */
+  height: 450px;
   background-color: white;
   position: absolute;
   z-index: 2;
@@ -29,5 +30,5 @@
 
 .modal-producto .modal-container .imagen{
 
-  height: 250px;
+  height: 200px;
 }

@@ -1,0 +1,83 @@
+.modal-producto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.modal-producto .overlay {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-producto .modal-container {
+  width: 60%;
+  height: 550px;
+  background-color: white;
+  position: absolute;
+  z-index: 2;
+  border-radius: 6px;
+  margin-top: 10px;
+  overflow-y: auto;
+}
+
+.modal-producto .modal-container .modal-body section {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.modal-producto .modal-container .modal-body section div {
+  width: 33%;
+}
+
+.modal-producto .modal-container .modal-body section .productos {
+  display: flex;
+  flex-direction: row;
+  width: 52%;
+}
+
+.modal-producto
+  .modal-container
+  .modal-body
+  section
+  .productos
+  div:nth-child(1) {
+  width: 80%;
+}
+
+.modal-producto
+  .modal-container
+  .modal-body
+  section
+  .productos
+  div:nth-child(2) {
+  width: 20%;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.modal-producto .modal-container .modal-body section .productos div button {
+  height: 32px;
+  margin-top: 20px;
+}
+
+.modal-producto .modal-container .modal-body .button-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.modal-producto .modal-container .modal-body .button-container button {
+  height: 32px;
+  width: 100px;
+}

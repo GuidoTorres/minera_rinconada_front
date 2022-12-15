@@ -425,7 +425,7 @@ export const asociacionLayout = (
       id: "Contrato",
       name: "Contrato",
       button: true,
-      cell: (e) => (
+      cell: (e, index) => (
         <div
           style={{
             width: "40px",
@@ -546,7 +546,7 @@ export const crearAsistencia = (handleAsistencia) => {
       id: "dni",
       name: "Dni",
       sortable: true,
-      width: "20%",
+      width: "110px",
 
       selector: (row) => row?.dni,
     },
@@ -555,7 +555,6 @@ export const crearAsistencia = (handleAsistencia) => {
       id: "nombre",
       name: "Nombre",
       sortable: true,
-      width: "30%",
 
       selector: (row) =>
         row?.nombre + " " + row?.apellido_paterno + " " + row?.apellido_materno,
@@ -611,7 +610,7 @@ export const controlPlanilla = (handleContrato) => {
       id: "nombres",
       name: "Nombres y apellidos",
       selector: (row) => row?.nombre,
-
+      width: "250px",
       sortable: true,
     },
     {
@@ -637,6 +636,11 @@ export const controlPlanilla = (handleContrato) => {
       name: "Dias laborados",
       button: true,
       selector: (row) => (row?.asistencia ? row.asistencia : "--"),
+      style: {
+        borderBotton: "none",
+        color: "#555555",
+        // maxWidth: "40px",
+      },
     },
     {
       id: "volquete",
@@ -656,8 +660,8 @@ export const controlPlanilla = (handleContrato) => {
       center: true,
     },
     {
-      id: "saldo",
-      name: "Saldo",
+      id: "total",
+      name: "Total",
       button: true,
       selector: (row) => row?.saldo,
 
@@ -696,7 +700,7 @@ export const planillaControl = (handleValidacion, handlePagos) => {
 
     {
       id: "fecha_pago",
-      name: "Fecha de pago",
+      name: "Fecha de fin",
       sortable: true,
       selector: (row) => row?.fecha_fin?.split("T")[0],
     },
@@ -726,7 +730,10 @@ export const planillaControl = (handleValidacion, handlePagos) => {
       center: true,
       cell: (e) => (
         <>
-          <AiFillEye onClick={() => handlePagos(e)} />
+          <AiFillEye
+            onClick={() => handlePagos(e)}
+            style={{ pointerEvents: e.asistencia === 15 ? "auto" : "none" }}
+          />
         </>
       ),
     },
@@ -821,7 +828,7 @@ export const validacionPagos = () => {
     {
       id: "Asistencia",
       name: "Asistencia",
-      selector: (row) => row?.asistencia,
+      selector: (row) => (row?.asistencia === "-1" ? "--" : row.asistencia),
       sortable: true,
     },
     {
@@ -836,10 +843,7 @@ export const validacionPagos = () => {
     {
       id: "tardanza",
       name: "Tardanza",
-      selector: (row) =>
-        row?.tarde === "Falto" || row?.tarde === null
-          ? "--"
-          : row.tarde + " min",
+      selector: (row) => (row?.tarde === "No" ? "No" : row.tarde),
       sortable: true,
     },
 
@@ -1067,14 +1071,19 @@ export const inventario = (handleEdit, handleDelete) => {
       selector: (row, index) => row.codigo,
     },
     {
+      id: "nombre",
+      name: "Nombre",
+      selector: (row, index) => row.nombre,
+    },
+    {
       id: "barras",
-      name: "Cod_barras",
+      name: "Código de barras",
       sortable: true,
       selector: (row) => row?.codigo_barras,
     },
     {
       id: "interno",
-      name: "Cod_interno",
+      name: "Código interno",
       sortable: true,
       selector: (row) => row?.codigo_interno,
     },
