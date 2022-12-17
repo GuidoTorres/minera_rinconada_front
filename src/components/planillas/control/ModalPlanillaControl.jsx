@@ -28,7 +28,7 @@ const ModalPlanillaControl = ({ selected, actualizarTabla }) => {
   };
 
   useEffect(() => {
-    setContrato([selected.contrato]);
+    setContrato([selected]);
   }, [selected]);
 
   const handleValidacion = () => {

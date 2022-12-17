@@ -7,6 +7,9 @@ import { CrudContext } from "../../../context/CrudContext";
 import { productoValues } from "../../../data/initalValues";
 import { alertaExito } from "../../../helpers/alertMessage";
 import DragAndDrop from "../../personal/DragAndDrop";
+import TextField from "@mui/material/TextField";
+// import { DesktopDatePicker } from '@mui/material/';
+
 import "../styles/modalProducto.css";
 
 const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
@@ -60,7 +63,7 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
   };
 
   return (
-    <div className="modal-producto">
+    <div className="modal-registrar-producto">
       <div className="overlay"></div>
       <div className="modal-container">
         <section className="modal-header">
@@ -69,70 +72,160 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
         </section>
         <section>
           <form className="modal-body" onSubmit={handleSubmit}>
-            <div>
-              <label>Nombre</label>
-              <input
-                value={producto.nombre}
-                type="text"
-                name="nombre"
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Código</label>
-              <input
-                value={producto.codigo}
-                type="text"
-                name="codigo"
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Código interno</label>
-              <input
-                type="text"
-                name="codigo_interno"
-                onChange={handleData}
-                value={producto.codigo_interno}
-              ></input>
-            </div>
-            <div>
-              <label>Código de barras</label>
-              <input
-                type="text"
-                name="codigo_barras"
-                onChange={handleData}
-                value={producto.codigo_barras}
-              ></input>
-            </div>
-            <div>
-              <label>Descripción</label>
-              <input
-                type="text"
-                name="descripcion"
-                onChange={handleData}
-                value={producto.descripcion}
-              ></input>
-            </div>
-            <div>
-              <label>Categoría</label>
-              <input
-                type="text"
-                name="categoria"
-                onChange={handleData}
-                value={producto.categoria}
-              ></input>
-            </div>
+            <div className="grid">
+              <section>
+                <div>
+                  <div>
+                    <TextField
+                      label="Nombre"
+                      variant="outlined"
+                      name="nombre"
+                      type="text"
+                      value={producto.nombre}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Código"
+                      variant="outlined"
+                      name="codigo"
+                      type="text"
+                      value={producto.codigo}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                </div>
 
-            {/* <div className="imagen">
-                <label>Imagen</label>
-                <DragAndDrop
-                  avatar={image}
-                  setAvatar={setImage}
-                  selected={dataToEdit}
-                />
-              </div> */}
-            <div>
+                <div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Código interno"
+                      variant="outlined"
+                      name="codigo_interno"
+                      type="text"
+                      value={producto.codigo_interno}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Código de barras"
+                      variant="outlined"
+                      name="codigo_barras"
+                      type="text"
+                      value={producto.codigo_barras}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Descripción"
+                      variant="outlined"
+                      name="descripcion"
+                      type="text"
+                      value={producto.descripcion}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Categoría"
+                      variant="outlined"
+                      name="categoria"
+                      type="text"
+                      value={producto.categoria}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Unidades"
+                      variant="outlined"
+                      name="unidad"
+                      type="text"
+                      value={producto.unidad}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Precio"
+                      variant="outlined"
+                      name="precio"
+                      type="text"
+                      value={producto.precio}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div>
+                    {/* <DesktopDatePicker
+                      label="Date desktop"
+                      inputFormat="MM/DD/YYYY"
+                      value={value}
+                      onChange={handleChange}
+                      renderInput={(params) => <TextField {...params} />}
+                    /> */}
+                    <TextField
+                      className="text"
+                      label="Fecha de registro"
+                      variant="outlined"
+                      name="fecha_registro"
+                      type="text"
+                      value={producto.fecha_registro}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      className="text"
+                      label="Observaciones"
+                      variant="outlined"
+                      name="observacion"
+                      type="text"
+                      value={producto.observacion}
+                      onChange={handleData}
+                      size="small"
+                    />
+                  </div>
+                </div>
+              </section>
+              <section>
+                <div className="imagen">
+                  <DragAndDrop
+                    avatar={image}
+                    setAvatar={setImage}
+                    selected={dataToEdit}
+                  />
+                </div>
+              </section>
+            </div>
+            <div className="button-container">
               <button>Guardar</button>
             </div>
           </form>

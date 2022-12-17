@@ -45,7 +45,9 @@ const ControlPlanilla = () => {
         exportar={false}
         cargar={false}
       />
+
       <TablaPlanilla columns={columns} table={result} />
+
       {planillaControl && (
         <ModalPlanillaControl
           selected={tableData}

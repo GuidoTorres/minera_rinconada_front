@@ -13,12 +13,14 @@ const Buscador = ({
   registrar,
   tipo,
 }) => {
-  const { setFilterText } = useContext(CrudContext);
+  const { setFilterText, filterText } = useContext(CrudContext);
   const inputFileRef = useRef(null);
 
   const changeHandler = (e) => {
     inputFileRef.current.click();
   };
+
+
   const excelFile = (e) => {
     let formData = new FormData();
     formData.append("myFile", e.target.files[0]);

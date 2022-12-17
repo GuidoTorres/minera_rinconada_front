@@ -9,6 +9,13 @@ import {
   alertaErrorCrear,
   alertaExito,
 } from "../../../helpers/alertMessage";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Button from "@mui/material/Button";
+
 import useForm from "../../../hooks/useForm";
 import DragAndDrop from "../DragAndDrop";
 
@@ -117,6 +124,12 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
     setTrabajador(trabajadorValues);
   };
 
+  const styles = theme => ({
+    name: {
+      paddingTop: '50px', // for example
+    },
+  });
+
   return (
     <div className="modal-trabajador">
       <div className="overlay"></div>
@@ -127,142 +140,183 @@ const ModalRegistroPersonal = ({ actualizarTabla }) => {
           <AiOutlineClose onClick={closeModal} />
         </section>
         <form className="modal-body" onSubmit={handleSubmit}>
-          <section className="avatar">
-            <DragAndDrop
-              avatar={avatar}
-              setAvatar={setAvatar}
-              selected={dataToEdit}
-            />
-          </section>
-          <section className="data">
-            <div>
-              <label>Dni</label>
-              <input
-                type="text"
-                value={trabajador.dni}
-                name="dni"
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Código Trabajador</label>
-              <input
-                type="text"
-                name="codigo_trabajador"
-                value={trabajador.codigo_trabajador}
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Fecha de nacimiento</label>
-              <input
-                type="date"
-                name="fecha_nacimiento"
-                value={trabajador?.fecha_nacimiento?.split("T")[0]}
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Nombre</label>
-              <input
-                type="text"
-                value={trabajador.nombre}
-                name="nombre"
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Apellido Paterno</label>
-              <input
-                type="text"
-                name="apellido_paterno"
-                value={trabajador.apellido_paterno}
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Apellido Materno</label>
-              <input
-                type="text"
-                name="apellido_materno"
-                value={trabajador.apellido_materno}
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Teléfono</label>
-              <input
-                type="number"
-                name="telefono"
-                value={trabajador.telefono}
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Email</label>
-              <input
-                type="text"
-                name="email"
-                value={trabajador.email}
-                onChange={handleData}
-              ></input>
-            </div>
-            <div>
-              <label>Estado civil</label>
-              <select
-                name="estado_civil"
-                value={trabajador.estado_civil}
-                onChange={handleData}
-              >
-                <option value="-1">Seleccione</option>
-                <option value="Soltero">Soltero</option>
-                <option value="Casado">Casado</option>
-                <option value="Divorciado">Divorciado</option>
-                <option value="Viudo">Viudo</option>
-              </select>
-            </div>
-            <div>
-              <label>Género</label>
-              <select
-                name="genero"
-                value={trabajador.genero}
-                onChange={handleData}
-              >
-                <option value="-1">Seleccione</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-              </select>
-            </div>
-            <div>
-              <label>Dirección</label>
-              <input
-                type="text"
-                name="direccion"
-                value={trabajador.direccion}
-                onChange={handleData}
-              ></input>
-            </div>
-            {dataToEdit && (
+          <section className="modal-grid">
+            <section className="avatar">
+              <DragAndDrop
+                avatar={avatar}
+                setAvatar={setAvatar}
+                selected={dataToEdit}
+              />
+            </section>
+            <section className="data">
               <div>
-                <label>Asignar asociación</label>
-                <select
-                  name="asociacion_id"
-                  value={trabajador.asociacion_id}
+                <TextField
+                  className="text"
+                  label="Dni"
+                  variant="outlined"
+                  name="dni"
+                  type="number"
+                  value={trabajador.dni}
                   onChange={handleData}
-                >
-                  <option value="-1">Seleccione</option>
-                  {data3.map((item, i) => (
-                    <option value={item.id} key={i}>
-                      {item.nombre}
-                    </option>
-                  ))}
-                </select>
+                  size="small"
+                />
               </div>
-            )}
+              <div>
+                <TextField
+                  className="text"
+                  label="Código Trabajador"
+                  variant="outlined"
+                  name="codigo_trabajador"
+                  type="text"
+                  value={trabajador.codigo_trabajador}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Fecha de nacimiento"
+                  variant="outlined"
+                  name="fecha_nacimiento"
+                  type="text"
+                  value={trabajador.fecha_nacimiento?.split("T")[0]}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Nombre"
+                  variant="outlined"
+                  name="nombre"
+                  type="text"
+                  value={trabajador.nombre}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Apellido paterno"
+                  variant="outlined"
+                  name="apellido_paterno"
+                  type="text"
+                  value={trabajador.apellido_paterno}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Apellido materno"
+                  variant="outlined"
+                  name="apellido_materno"
+                  type="text"
+                  value={trabajador.apellido_materno}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Teléfono"
+                  variant="outlined"
+                  name="telefono"
+                  type="text"
+                  value={trabajador.telefono}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Email"
+                  variant="outlined"
+                  name="email"
+                  type="text"
+                  value={trabajador.email}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Estado civil"
+                  select
+                  variant="outlined"
+                  name="estado_civil"
+                  type="text"
+                  value={trabajador.estado_civil}
+                  onChange={handleData}
+                  size="small"
+                >
+                  <MenuItem value={"Soltero"}>Soltero</MenuItem>
+                  <MenuItem value={"Casado"}>Casado</MenuItem>
+                  <MenuItem value={"Divorciado"}>Divorciado</MenuItem>
+                  <MenuItem value={"Viudo"}>Viudo</MenuItem>
+                </TextField>
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Genero"
+                  select
+                  variant="outlined"
+                  name="genero"
+                  type="text"
+                  value={trabajador.genero}
+                  onChange={handleData}
+                  size="small"
+                >
+                  <MenuItem value={"Masculino"}>Masculino</MenuItem>
+                  <MenuItem value={"Femenino"}>Femenino</MenuItem>
+                </TextField>
+              </div>
+              <div>
+                <TextField
+                  className="text"
+                  label="Dirección"
+                  variant="outlined"
+                  name="direccion"
+                  type="text"
+                  value={trabajador.direccion}
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              {dataToEdit && (
+                <div>
+                  <TextField
+                    className="text"
+                    label="Asignar asociación"
+                    select
+                    variant="outlined"
+                    name="asociacion_id"
+                    type="text"
+                    value={trabajador.asociacion_id}
+                    onChange={handleData}
+                    size="small"
+                  >
+                    {data3.map((item, i) => (
+                      <MenuItem value={item.id} key={i}>
+                        {item.nombre}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </div>
+              )}
+            </section>
           </section>
 
           <div className="footer">
-            <button>Registrar</button>
+            <Button>Registrar</Button>
           </div>
         </form>
       </div>

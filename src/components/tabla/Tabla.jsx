@@ -2,7 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import "./tabla.css";
 
-const Tabla = ({ columns, table }) => {
+const Tabla = ({ columns, table, filas }) => {
 
 
   const paginationComponentOptions = {

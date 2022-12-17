@@ -22,6 +22,8 @@ const SocioLayout = () => {
 
   const {result} = useSearch(data)
 
+
+
   const getSocios = async () => {
     const response = await getData(route);
     setData(response.data);

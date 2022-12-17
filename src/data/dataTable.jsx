@@ -458,7 +458,7 @@ export const socioLayout = (handleEdit, handleDelete) => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row, index) => index + 1,
+      selector: (row, index) => row.id,
       sortable: true,
     },
     {
@@ -711,6 +711,12 @@ export const planillaControl = (handleValidacion, handlePagos) => {
       button: true,
       selector: (row) => (row?.finalizado !== true ? "Pendiente" : "Pagado"),
     },
+    {
+      id: "dias",
+      name: "Días laborados",
+      button: true,
+      selector: (row) => (row?.asistencia ? row.asistencia : "--"),
+    },
 
     {
       id: "validacion",
@@ -732,7 +738,7 @@ export const planillaControl = (handleValidacion, handlePagos) => {
         <>
           <AiFillEye
             onClick={() => handlePagos(e)}
-            style={{ pointerEvents: e.asistencia === 15 ? "auto" : "none" }}
+            style={{ pointerEvents: !e?.asistencia ? " auto": e?.asistencia == 15 ? "auto" : "none" }}
           />
         </>
       ),

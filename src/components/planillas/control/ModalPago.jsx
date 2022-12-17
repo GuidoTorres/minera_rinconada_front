@@ -181,6 +181,8 @@ const ModalPago = ({ data, selected, actualizarTabla, evaluacion_id }) => {
               <button>Guardar</button>
             </div>
           </form>
+
+          
         </div>
       </div>
     </div>

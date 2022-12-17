@@ -21,20 +21,25 @@ const useSearch = (data) => {
       setResult(data);
     }
 
-    if (filterTextModal !== "") {
-      const filteredData = data.filter((item) => {
-        return Object.values(item)
-          .join("")
-          .toLowerCase()
-          .includes(filterText.toLowerCase());
-      });
-      setResult(filteredData);
-    } else {
-      setResult(data);
-    }
-  }, [filterText,data]);
+    // if (filterTextModal !== "") {
+    //   const filteredData = data.filter((item) => {
+    //     return Object.values(item)
+    //       .join("")
+    //       .toLowerCase()
+    //       .includes(filterText.toLowerCase());
+    //   });
+    //   setResult(filteredData);
+    // } else {
+    //   setResult(data);
+  // }
 
-  return {result};
+      console.log('====================================');
+      console.log(result);
+      console.log('====================================');
+    
+  }, [filterText, data]);
+
+  return { result };
 };
 
 export default useSearch;

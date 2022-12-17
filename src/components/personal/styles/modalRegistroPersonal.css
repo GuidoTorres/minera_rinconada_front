@@ -21,49 +21,45 @@
 .modal-trabajador .modal-container {
   width: 90%;
   height: 90%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin-top: 5%;
 }
 
-.drag {
-  border: 1px solid grey;
-  height: 150px;
-  width: 100%;
+.modal-trabajador .modal-container .modal-body .modal-grid {
+  display: grid;
+  grid-template-columns: 23% 75%;
+  gap: 10px;
+}
+
+.modal-trabajador .modal-container .modal-body .drag {
+  border: 1px solid lightgray;
+  height: 100%;
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.drag img {
-  width: 150px;
-  height: 150px;
-}
-
-.modal-trabajador .modal-container .modal-body {
-  display: grid;
-  grid-template-columns: auto;
-  gap: 10px;
-}
 
 .modal-trabajador .modal-container .modal-body .data {
   display: grid;
   grid-template-columns: auto;
-  gap: 10px;
+  gap: 4px;
+}
+
+.modal-trabajador .modal-container .modal-body .data .text div label {
+  font-size: 12px !important;
+}
+
+.modal-trabajador .modal-container .modal-body .data .text div input {
+  font-size: 14px !important;
 }
 
 .modal-trabajador .footer {
   width: 100%;
-
 }
 .modal-trabajador .footer button {
-  width: 100%;
-
+  width: 20%;
 }
 
 @media screen and (min-width: 600px) {
-
-
   .modal-trabajador .modal-container {
     width: 90%;
     height: 75%;
@@ -76,14 +72,11 @@
   }
   .modal-trabajador .footer {
     width: 100%;
-    align-items: flex-end;  
-  
+    align-items: flex-end;
   }
 }
 
 @media screen and (min-width: 1000px) {
-
-  
   .drag {
     height: 240px;
     width: 100%;

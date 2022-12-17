@@ -8,7 +8,17 @@ import "../style/modalPagarVarios.css";
 const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
   const { setPag, setPagarVarios, multiplesTeletrans, setMultiplesTeletrans } =
     useContext(PlanillaContext);
-  const [initialValues, setInitialValues] = useState([]);
+
+  const initial = {
+    conductor: "",
+    dni: "",
+    telefono: "",
+    placa: "",
+    teletrans: "",
+    lugar: "",
+    contrato_id: multiplesTeletrans.map((item) => item.contrato_id),
+  };
+  const [initialValues, setInitialValues] = useState(initial);
 
   const { createData } = useContext(CrudContext);
   const [pagar, setPagar] = useState();
@@ -16,17 +26,17 @@ const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
   const closeModal = () => {
     setPagarVarios(false);
   };
+  console.log(initialValues);
   const handleChange = (e, i) => {
-    let data = [...initialValues];
     const { name, value } = e.target;
-    data[i][name] = value;
-
-    setInitialValues(initialValues);
+    setInitialValues((values) => {
+      return { ...values, [name]: value };
+    });
   };
 
-  useEffect(() => {
-    initialValues.slice(0);
-  }, []);
+  // useEffect(() => {
+  //   initialValues.slice(0);
+  // }, []);
 
   const handleSubmit = async (e) => {
     const route = "pago";
@@ -105,7 +115,7 @@ const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
                   <input
                     name="conductor"
                     type="text"
-                    onChange={(e) => handleChange(e, i)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
 
@@ -113,16 +123,16 @@ const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
                   <label htmlFor="">Dni</label>
                   <input
                     name="dni"
-                    type="text"
-                    onChange={(e) => handleChange(e, i)}
+                    type="number"
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
                 <div>
                   <label htmlFor="">Teléfono</label>
                   <input
                     name="telefono"
-                    type="text"
-                    onChange={(e) => handleChange(e, i)}
+                    type="number"
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
 
@@ -131,15 +141,15 @@ const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
                   <input
                     name="placa"
                     type="text"
-                    onChange={(e) => handleChange(e, i)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
                 <div>
                   <label htmlFor="">Teletrans</label>
                   <input
                     name="teletrans"
-                    type="text"
-                    onChange={(e) => handleChange(e, i)}
+                    type="number"
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
                 <div>
@@ -147,7 +157,7 @@ const ModalPagarVarios = ({ data, selected, actualizarTabla }) => {
                   <input
                     name="lugar"
                     type="text"
-                    onChange={(e) => handleChange(e, i)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
               </div>

@@ -10,7 +10,7 @@ import {
   alertaExito,
   alertaEditarExito,
 } from "../../../helpers/alertMessage";
-import "../styles/modalRegistroSocio.css"
+import "../styles/modalRegistroSocio.css";
 
 const ModalRegistroSocio = ({ actualizarTabla }) => {
   const route = "socio";
@@ -39,43 +39,29 @@ const ModalRegistroSocio = ({ actualizarTabla }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!socio.nombre) {
       alertaError();
     } else if (dataToEdit === null) {
-      createData(socio, route)
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === 200) {
-          alertaExito(res.msg, res.status).then((res) => {
-            closeModal();
-            if (res.isConfirmed) {
-              actualizarTabla();
-            }
-          });
-        } else {
-          alertaErrorCrear(res.msg).then((res) => {
-            closeModal();
-          });
-        }
-      });
+      const response = await createData(socio, route);
+      
+      if (response.status === 200) {
+        alertaExito(response.msg, response.status);
+        closeModal();
+        actualizarTabla();
+      }
     }
 
     if (dataToEdit) {
-      updateData(socio, dataToEdit.id, route)
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === 200) {
-          alertaEditarExito(res.msg, res.status).then((res) => {
-            closeModal();
-            if (res.isConfirmed) {
-              actualizarTabla();
-            }
-          });
-        }
-      });
+      const response = await updateData(socio, dataToEdit.id, route);
+      console.log(response);
+      if (response.status === 200) {
+        alertaExito(response.msg, response.status);
+        closeModal();
+        actualizarTabla();
+      }
     }
   };
 
@@ -127,10 +113,17 @@ const ModalRegistroSocio = ({ actualizarTabla }) => {
               </div>
               <div>
                 <label>Cooperativa</label>
-                <select name="cooperativa"  value={socio?.cooperativa} onChange={handleData}>
+                <select
+                  name="cooperativa"
+                  value={socio?.cooperativa}
+                  onChange={handleData}
+                >
                   <option value="-1">Seleccione</option>
-                  <option value="Cooperativa 1">Cooperativa 1</option>
-                  <option value="Cooperativa 2">Cooperativa 2</option>
+                  <option value="Cerro San Francisco">
+                    Cerro San Francisco
+                  </option>
+                  <option value="Lunar de Oro">Lunar de Oro</option>
+                  <option value="Lunar de Oro">San Francisco</option>
                 </select>
               </div>
               <div>

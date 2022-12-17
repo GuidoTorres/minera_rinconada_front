@@ -34,7 +34,6 @@ const TablaPlanilla = ({ columns, table }) => {
         highlightOnHover
         responsive
         noDataComponent={"No se encontraron resultados."}
-        // progressPending={"...cargando"}
         paginationComponentOptions={paginationComponentOptions}
         paginationPerPage={8}
         paginationRowsPerPageOptions={[8, 16, 24, 32, 40]}

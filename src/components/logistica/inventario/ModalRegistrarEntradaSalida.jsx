@@ -8,6 +8,8 @@ import { entradas } from "../../../data/dataTable";
 import { entradaSalidaValues } from "../../../data/initalValues";
 import { alertaExito } from "../../../helpers/alertMessage";
 import Tabla from "../../tabla/Tabla";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import "../styles/modalRegistrarEntrada.css";
 
 const ModalRegistrarEntradaSalida = () => {
@@ -69,100 +71,132 @@ const ModalRegistrarEntradaSalida = () => {
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
               <div>
-                <label>Código</label>
-                <input
-                  // value={entrada.codigo}
-                  type="text"
+                <TextField
+                  label="Código"
+                  variant="outlined"
                   name="codigo"
-                  onChange={handleData}
-                ></input>
-              </div>
-              <div>
-                <label>Motivo de {tipo}</label>
-                <input
-                  // value={entrada.codigo}
                   type="text"
-                  name="motivo"
                   onChange={handleData}
-                ></input>
+                  size="small"
+                />
               </div>
               <div>
-                <label>Fecha de {tipo}</label>
-                <input
-                  type="date"
-                  name="fecha"
+                <TextField
+                  label={`Motivo de ${tipo}`}
+                  variant="outlined"
+                  name="motivo"
+                  type="text"
                   onChange={handleData}
-                  // value={entrada.fecha}
-                ></input>
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  label={`Fecha de ${tipo}`}
+                  variant="outlined"
+                  name="fecha"
+                  type="text"
+                  onChange={handleData}
+                  size="small"
+                />
               </div>
             </section>
 
             <section>
               <div>
-                <label>Encargado</label>
-                <input
-                  type="text"
+                <TextField
+                  label="Encargado"
+                  variant="outlined"
                   name="encargado"
+                  type="text"
                   onChange={handleData}
-                  // value={entrada.encargado}
-                ></input>
+                  size="small"
+                />
               </div>
               <div>
-                <label>Código orden de compra</label>
-                <input
+                <TextField
+                  label="Código orden de compra"
+                  variant="outlined"
+                  name="codigo"
                   type="text"
-                  name="descripcion"
                   onChange={handleData}
-                  // value={entrada.orden_compra}
-                ></input>
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  label="Boleta/factura"
+                  variant="outlined"
+                  name="boleta"
+                  type="text"
+                  onChange={handleData}
+                  size="small"
+                />
+              </div>
+              <div>
+                <TextField
+                  label="Código de requerimiento"
+                  variant="outlined"
+                  name="codigo_requerimiento"
+                  type="text"
+                  onChange={handleData}
+                  size="small"
+                />
               </div>
             </section>
 
             <section>
               <div className="productos">
                 <div>
-                  <label>Productos</label>
-                  <input
+                  <TextField
+                    label="Productos"
+                    variant="outlined"
+                    name="producto"
                     type="text"
-                    name="productos"
-                    //   onChange={handleData}
-                    // value={entrada.producto}
-                  ></input>
+                    onChange={handleData}
+                    size="small"
+                  />
                 </div>
                 {tipo === "entrada" ? (
                   <div>
-                    <button>+</button>
+                    <Button variant="outlined">+</Button>
                   </div>
                 ) : (
                   ""
                 )}
               </div>
               <div>
-                <label>Categoría</label>
-                <input
-                  type="text"
+                <TextField
+                  label="Categoría"
+                  variant="outlined"
                   name="categoria"
+                  type="text"
                   onChange={handleData}
-                  // value={entrada.categoria}
-                ></input>
+                  size="small"
+                />
               </div>
               <div>
-                <label>Cantidad</label>
-                <input
-                  type="text"
+                <TextField
+                  label="Cantidad"
+                  variant="outlined"
                   name="cantidad"
+                  type="text"
                   onChange={handleData}
-                  // value={entrada.cantidad}
-                ></input>
+                  size="small"
+                />
               </div>
               <div>
-                <label>Unidades</label>
-                <input
+                <TextField
+                  label="Unidades"
+                  variant="outlined"
+                  name="unidad"
                   type="text"
-                  name="cantidad"
                   onChange={handleData}
-                  // value={entrada.unidad}
-                ></input>
+                  size="small"
+                />
+              </div>
+              <div>
+                <Button variant="outlined">+</Button>
               </div>
             </section>
 
