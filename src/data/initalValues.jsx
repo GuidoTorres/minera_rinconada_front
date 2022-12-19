@@ -197,7 +197,13 @@ export const productoValues = (id) => {
     codigo_barras: "",
     descripcion: "",
     categoria: "",
-    almacen_id: id,
+    unidad: "",
+    precio: "",
+    fecha: "",
+    observacion: "",
+    almacen_id: parseInt(id),
+    stock: "0",
+    costo_total: "",
   });
 };
 
@@ -210,8 +216,12 @@ export const entradaSalidaValues = (id) => {
     fecha: "",
     encargado: "",
     codigo_compra: "",
+    boleta: "",
+    codigo_requerimiento: "",
+    producto_id: "",
+    categoria: "",
     cantidad: "",
     unidad: "",
-    tipo: ""
+    tipo: "",
   });
 };

@@ -7,8 +7,6 @@ import { CrudContext } from "../../../context/CrudContext";
 import { productoValues } from "../../../data/initalValues";
 import { alertaExito } from "../../../helpers/alertMessage";
 import DragAndDrop from "../../personal/DragAndDrop";
-import TextField from "@mui/material/TextField";
-// import { DesktopDatePicker } from '@mui/material/';
 
 import "../styles/modalProducto.css";
 
@@ -67,7 +65,11 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
       <div className="overlay"></div>
       <div className="modal-container">
         <section className="modal-header">
-          {dataToEdit ? "Editar producto" : "Registrar producto"}
+          {dataToEdit ? (
+            <label>Editar producto</label>
+          ) : (
+            <label>Registrar producto</label>
+          )}
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section>
@@ -76,142 +78,118 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
               <section>
                 <div>
                   <div>
-                    <TextField
-                      label="Nombre"
-                      variant="outlined"
-                      name="nombre"
-                      type="text"
+                    <label>Nombre</label>
+                    <input
                       value={producto.nombre}
+                      type="text"
+                      name="nombre"
                       onChange={handleData}
-                      size="small"
-                    />
+                    ></input>
                   </div>
                   <div>
-                    <TextField
-                      className="text"
-                      label="Código"
-                      variant="outlined"
-                      name="codigo"
-                      type="text"
+                    <label>Código</label>
+                    <input
                       value={producto.codigo}
+                      type="text"
+                      name="codigo"
                       onChange={handleData}
-                      size="small"
-                    />
+                    ></input>
                   </div>
                 </div>
 
                 <div>
                   <div>
-                    <TextField
-                      className="text"
-                      label="Código interno"
-                      variant="outlined"
+                    <label>Código interno</label>
+                    <input
+                      type="text"
                       name="codigo_interno"
-                      type="text"
+                      onChange={handleData}
                       value={producto.codigo_interno}
-                      onChange={handleData}
-                      size="small"
-                    />
+                    ></input>
                   </div>
                   <div>
-                    <TextField
-                      className="text"
-                      label="Código de barras"
-                      variant="outlined"
+                    <label>Código de barras</label>
+                    <input
+                      type="text"
                       name="codigo_barras"
-                      type="text"
+                      onChange={handleData}
                       value={producto.codigo_barras}
-                      onChange={handleData}
-                      size="small"
-                    />
+                    ></input>
                   </div>
                 </div>
 
                 <div>
                   <div>
-                    <TextField
-                      className="text"
-                      label="Descripción"
-                      variant="outlined"
+                    <label>Descripción</label>
+                    <input
+                      type="text"
                       name="descripcion"
-                      type="text"
+                      onChange={handleData}
                       value={producto.descripcion}
-                      onChange={handleData}
-                      size="small"
-                    />
+                    ></input>
                   </div>
                   <div>
-                    <TextField
-                      className="text"
-                      label="Categoría"
-                      variant="outlined"
+                    <label>Categoría</label>
+                    <input
+                      type="text"
                       name="categoria"
-                      type="text"
+                      onChange={handleData}
                       value={producto.categoria}
-                      onChange={handleData}
-                      size="small"
-                    />
+                    ></input>
                   </div>
                 </div>
 
                 <div>
                   <div>
-                    <TextField
-                      className="text"
-                      label="Unidades"
-                      variant="outlined"
+                    <label>Unidades</label>
+                    <input
+                      type="text"
                       name="unidad"
-                      type="text"
-                      value={producto.unidad}
                       onChange={handleData}
-                      size="small"
-                    />
+                      value={producto.unidad}
+                    ></input>
                   </div>
                   <div>
-                    <TextField
-                      className="text"
-                      label="Precio"
-                      variant="outlined"
-                      name="precio"
+                    <label>Precio</label>
+                    <input
                       type="text"
-                      value={producto.precio}
+                      name="precio"
                       onChange={handleData}
-                      size="small"
-                    />
+                      value={producto.precio}
+                    ></input>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <label>Costo total</label>
+                    <input
+                      type="text"
+                      name="fecha"
+                      onChange={handleData}
+                      value={producto.costo_total}
+                    ></input>
+                  </div>
+
+                  <div>
+                    <label>Fecha de registro</label>
+                    <input
+                      type="date"
+                      name="fecha"
+                      onChange={handleData}
+                      value={producto.fecha}
+                    ></input>
                   </div>
                 </div>
 
                 <div>
                   <div>
-                    {/* <DesktopDatePicker
-                      label="Date desktop"
-                      inputFormat="MM/DD/YYYY"
-                      value={value}
-                      onChange={handleChange}
-                      renderInput={(params) => <TextField {...params} />}
-                    /> */}
-                    <TextField
-                      className="text"
-                      label="Fecha de registro"
-                      variant="outlined"
-                      name="fecha_registro"
+                    <label>Observaciones</label>
+                    <input
                       type="text"
-                      value={producto.fecha_registro}
-                      onChange={handleData}
-                      size="small"
-                    />
-                  </div>
-                  <div>
-                    <TextField
-                      className="text"
-                      label="Observaciones"
-                      variant="outlined"
                       name="observacion"
-                      type="text"
-                      value={producto.observacion}
                       onChange={handleData}
-                      size="small"
-                    />
+                      value={producto.observacion}
+                    ></input>
                   </div>
                 </div>
               </section>

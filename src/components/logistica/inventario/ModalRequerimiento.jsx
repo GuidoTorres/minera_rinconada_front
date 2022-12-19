@@ -1,62 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useContext } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { CrudContext } from "../../../context/CrudContext";
-import { entradas } from "../../../data/dataTable";
-import { entradaSalidaValues } from "../../../data/initalValues";
-import { alertaExito } from "../../../helpers/alertMessage";
 import Tabla from "../../tabla/Tabla";
-import "../styles/modalRegistrarEntrada.css";
 
-const ModalRegistrarEntradaSalida = () => {
-  const { dataToEdit, setModal2, tipo, setDataToEdit, createData, updateData } =
-    useContext(CrudContext);
-  const [entrada, setEntrada] = useState(entradaSalidaValues);
-
-  const closeModal = () => {
-    setModal2(false);
-    setDataToEdit(null);
-  };
-
-  useEffect(() => {
-    if (dataToEdit !== null) {
-      setEntrada(dataToEdit);
-    } else {
-      setEntrada(entradaSalidaValues);
-    }
-  }, [dataToEdit]);
-
-  const handleSubmit = async (e) => {
-    let route = "entrada";
-    e.preventDefault();
-    if (dataToEdit === null) {
-      const response = await createData(entrada, route);
-      if (response.status === 200) {
-        alertaExito(response.msg, response.status);
-        closeModal();
-        actualizarTabla();
-      }
-    } else {
-      const response = await updateData(entrada, dataToEdit.id, route);
-      if (response.status === 200) {
-        alertaExito(response.msg, response.status);
-        closeModal();
-        actualizarTabla();
-      }
-    }
-  };
-
-  const handleData = (e) => {
-    const { name, value } = e.target;
-    setEntrada((values) => {
-      return { ...values, [name]: value };
-    });
-  };
-
-  const columns = entradas();
-
+const ModalRequerimiento = () => {
   return (
     <div className="modal-producto">
       <div className="overlay"></div>
@@ -69,7 +14,7 @@ const ModalRegistrarEntradaSalida = () => {
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
               <div>
-                <label>Código</label>
+                <label>Código requerimiento</label>
                 <input
                   // value={entrada.codigo}
                   type="text"
@@ -78,19 +23,19 @@ const ModalRegistrarEntradaSalida = () => {
                 ></input>
               </div>
               <div>
-                <label>Motivo de {tipo}</label>
+                <label>Fecha de Pedido</label>
                 <input
                   // value={entrada.codigo}
                   type="text"
-                  name="motivo"
+                  name="fecha_pedido"
                   onChange={handleData}
                 ></input>
               </div>
               <div>
-                <label>Fecha de {tipo}</label>
+                <label>Fecha de entrega</label>
                 <input
                   type="date"
-                  name="fecha"
+                  name="fecha_entrega"
                   onChange={handleData}
                   // value={entrada.fecha}
                 ></input>
@@ -99,37 +44,37 @@ const ModalRegistrarEntradaSalida = () => {
 
             <section>
               <div>
-                <label>Encargado</label>
+                <label>Nombre solicitante</label>
                 <input
                   type="text"
-                  name="encargado"
+                  name="nombre"
                   onChange={handleData}
                   // value={entrada.encargado}
                 ></input>
               </div>
               <div>
-                <label>Código orden de compra</label>
+                <label>Área</label>
                 <input
                   type="text"
-                  name="descripcion"
+                  name="area"
                   onChange={handleData}
                   // value={entrada.orden_compra}
                 ></input>
               </div>
               <div>
-                <label>Boleta/Factura</label>
+                <label>Celular</label>
                 <input
                   type="text"
-                  name="boleta"
+                  name="celular"
                   onChange={handleData}
                   // value={entrada.orden_compra}
                 ></input>
               </div>
               <div>
-                <label>Código de requerimiento</label>
+                <label>Proyecto/Actividad</label>
                 <input
                   type="text"
-                  name="codigo_requerimiento"
+                  name="proyecto"
                   onChange={handleData}
                   // value={entrada.orden_compra}
                 ></input>
@@ -137,33 +82,16 @@ const ModalRegistrarEntradaSalida = () => {
             </section>
 
             <section>
-              <div className="productos">
-                <div>
-                  <label>Productos</label>
-                  <input
-                    type="text"
-                    name="productos"
-                    //   onChange={handleData}
-                    // value={entrada.producto}
-                  ></input>
-                </div>
-                {tipo === "entrada" ? (
-                  <div>
-                    <button>+</button>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
               <div>
-                <label>Categoría</label>
+                <label>Productos</label>
                 <input
                   type="text"
-                  name="categoria"
-                  onChange={handleData}
-                  // value={entrada.categoria}
+                  name="productos"
+                  //   onChange={handleData}
+                  // value={entrada.producto}
                 ></input>
               </div>
+
               <div>
                 <label>Cantidad</label>
                 <input
@@ -187,6 +115,7 @@ const ModalRegistrarEntradaSalida = () => {
               </div>
             </section>
 
+            
             <Tabla columns={columns} />
 
             <div className="button-container">
@@ -199,4 +128,4 @@ const ModalRegistrarEntradaSalida = () => {
   );
 };
 
-export default ModalRegistrarEntradaSalida;
+export default ModalRequerimiento;

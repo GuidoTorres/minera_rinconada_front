@@ -2,14 +2,16 @@ import React from "react";
 import { useContext } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { CrudContext } from "../../context/CrudContext";
+import { Button, Radio, Space, Divider } from "antd";
+import "./styles/buscador.css"
 
 const Buscador = ({ abrirModal, abrirEntrada, abrirSalida }) => {
   const { setFilterText, filterText, getDataById, setTipo } =
     useContext(CrudContext);
 
   return (
-    <div className="buscador-finanzas">
-      <div>
+    <div className="buscador-inventario">
+      <div className="buscador">
         <span>
           <input
             type="text"
@@ -19,7 +21,7 @@ const Buscador = ({ abrirModal, abrirEntrada, abrirSalida }) => {
           <AiOutlineSearch className="icon" />
         </span>
       </div>
-      <div>
+      <div className="button-container">
         <button onClick={() => abrirModal(true)}>Registrar</button>
         <button
           onClick={() => {
@@ -34,6 +36,13 @@ const Buscador = ({ abrirModal, abrirEntrada, abrirSalida }) => {
           }}
         >
           Salidas
+        </button>
+        <button
+          onClick={() => {
+            abrirSalida(true), setTipo("salida");
+          }}
+        >
+          Requerimiento
         </button>
       </div>
     </div>

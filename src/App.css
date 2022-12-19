@@ -1,4 +1,32 @@
-.App{
+.App {
   height: 100vh;
   overflow-x: hidden;
-} 
+}
+
+.App input {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  color: #222222;
+  padding: 4px 11px;
+}
+
+.App label {
+  color: #222222;
+}
+.App select {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 6px;
+  border-radius: 6px;
+
+  color: #222222;
+}
+
+.App textarea {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
+
+  /* color: #D7D7D7; */
+}
+
