@@ -102,7 +102,7 @@ const ModalAsignarRol = ({ actualizarTabla }) => {
         <section>
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
-              <div>
+              <div className="inputs">
                 <label>Nombre</label>
                 <select
                   value={rol.usuario_id}
@@ -118,7 +118,7 @@ const ModalAsignarRol = ({ actualizarTabla }) => {
                   ))}
                 </select>
               </div>
-              <div>
+              <div className="inputs">
                 <label>Puesto</label>
                 <select
                   name="cargo_id"
@@ -135,7 +135,7 @@ const ModalAsignarRol = ({ actualizarTabla }) => {
                 </select>
               </div>
 
-              <div>
+              <div className="inputs">
                 <label>Rol</label>
                 <select name="rol_id" value={rol.rol_id} onChange={handleData}>
                   <option value="-1">Seleccione</option>

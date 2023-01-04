@@ -17,7 +17,8 @@ export const CrudProvider = ({ children }) => {
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
-  const [tipo, setTipo] = useState()
+  const [tipo, setTipo] = useState();
+  const [multipleRequerimientos, setMultipleRequerimientos] = useState([]);
 
   const getData = async (route) => {
     const response = await fetch(`${import.meta.env.VITE_APP_BASE}/${route}`);
@@ -116,7 +117,13 @@ export const CrudProvider = ({ children }) => {
     modal2,
     setModal2,
     modal3,
-    setModal3,filterTextModal, setFilterTextModal,tipo, setTipo
+    setModal3,
+    filterTextModal,
+    setFilterTextModal,
+    tipo,
+    setTipo,
+    multipleRequerimientos,
+    setMultipleRequerimientos,
   };
   return <CrudContext.Provider value={info}>{children}</CrudContext.Provider>;
 };

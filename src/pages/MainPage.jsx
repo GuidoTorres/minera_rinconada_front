@@ -30,6 +30,9 @@ import Proveedores from "../components/Finanzas/proveedor/Proveedores";
 import Sucursales from "../components/Finanzas/sucursal/Sucursales";
 import InventarioLayout from "../components/logistica/inventario/InventarioLayout";
 import AlmacenLayout from "../components/logistica/almacen/AlmacenLayout";
+import RequerimientoLayout from "../components/logistica/requerimientos/RequerimientoLayout";
+import AprobacionLayout from "../components/logistica/aprobaciones/AprobacionLayout";
+import TransferenciaLayout from "../components/logistica/transferencia/TransferenciaLayout";
 
 const MainPage = () => {
   return (
@@ -88,6 +91,11 @@ const MainPage = () => {
                   <Route path="inventario" element={<InventarioLayout />} />
                   <Route path="almacen" element={<AlmacenLayout />} />
                   <Route path="sucursal" element={<Sucursales />} />
+                  <Route path="requerimiento" element={<RequerimientoLayout />} />
+                  <Route path="aprobacion" element={<AprobacionLayout />} />
+                  <Route path="transferencia" element={<TransferenciaLayout />} />
+
+
                 </Route>
               </Routes>
             </CrudProvider>

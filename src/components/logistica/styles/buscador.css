@@ -15,6 +15,7 @@
   align-items: center;
   border: none;
   width: 98%;
+  height: 25px;
 }
 
 .buscador-inventario .buscador span input {
@@ -24,6 +25,7 @@
   border: none;
   width: 90%;
   outline: none;
+  
 }
 .buscador-inventario .button-container {
   display: flex;
@@ -32,7 +34,7 @@
 
 .buscador-inventario .button-container button {
   background-color: white;
-  width: 120px;
+  width: 130px;
   border: 1px solid lightgray;
   border-radius: 6px;
 }

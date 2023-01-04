@@ -77,7 +77,7 @@ const ModalUsuario = ({ actualizarTabla }) => {
         <section>
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
-              <div>
+              <div className="inputs">
                 <label>Nombre</label>
                 <input
                   value={usuario.nombre}
@@ -86,7 +86,7 @@ const ModalUsuario = ({ actualizarTabla }) => {
                   onChange={handleData}
                 ></input>
               </div>
-              <div>
+              <div className="inputs">
                 <label>Usuario</label>
                 <input
                   type="text"
@@ -95,7 +95,7 @@ const ModalUsuario = ({ actualizarTabla }) => {
                   value={usuario.usuario}
                 ></input>
               </div>
-              <div>
+              <div className="inputs">
                 <label>Contraseña</label>
                 <input
                   type="text"
@@ -105,7 +105,7 @@ const ModalUsuario = ({ actualizarTabla }) => {
                 ></input>
               </div>
 
-              <div>
+              <div className="inputs">
                 <label>Estado</label>
                 <select
                   name="estado"

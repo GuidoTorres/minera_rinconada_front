@@ -5,7 +5,7 @@ import OpcionLayout from './OpcionLayout'
 const IndexLayout = () => {
   return (
     <div style={{height : "100%"}}>
-      <Header user={"Usuario"} />
+      <Header back={false} text={"Planillas"} user={"Usuario"} />
       <OpcionLayout/>
     </div>
   )

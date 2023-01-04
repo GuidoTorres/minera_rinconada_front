@@ -5,7 +5,7 @@ import OpcionUsuario from "./OpcionUsuario";
 const AdministracionLayout = () => {
   return (
     <>
-      <Header user={"Usuario"} ruta={"/administracion"}/>
+      <Header back={false} text={"Administración"} user={"Usuario"} ruta={"/administracion"}/>
       <OpcionUsuario />
     </>
   );

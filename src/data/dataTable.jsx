@@ -738,7 +738,13 @@ export const planillaControl = (handleValidacion, handlePagos) => {
         <>
           <AiFillEye
             onClick={() => handlePagos(e)}
-            style={{ pointerEvents: !e?.asistencia ? " auto": e?.asistencia == 15 ? "auto" : "none" }}
+            style={{
+              pointerEvents: !e?.asistencia
+                ? " auto"
+                : e?.asistencia == 15
+                ? "auto"
+                : "none",
+            }}
           />
         </>
       ),
@@ -1034,7 +1040,7 @@ export const almacen = (handleEdit, handleDelete) => {
     {
       id: "Nro",
       name: "Nro",
-      selector: (row, index) => index + 1,
+      selector: (row, index) => row?.id,
     },
     {
       id: "codigo",
@@ -1134,22 +1140,28 @@ export const entradas = (handleEdit, handleDelete) => {
       selector: (row, index) => row.codigo,
     },
     {
-      id: "descripcion",
-      name: "Descripción",
-      sortable: true,
-      selector: (row) => row?.descripcion,
-    },
-    {
       id: "fecha",
-      name: "Fecha",
+      name: "Fecha de entrada",
       sortable: true,
       selector: (row) => row?.fecha,
+    },
+    {
+      id: "encargado",
+      name: "Encargado",
+      sortable: true,
+      selector: (row) => row?.encargado,
     },
     {
       id: "ord_compra",
       name: "Orden de compra",
       sortable: true,
-      selector: (row) => row?.ord_compra,
+      selector: (row) => row?.codigo_compra,
+    },
+    {
+      id: "cod_factura",
+      name: "Código de factura",
+      sortable: true,
+      selector: (row) => row?.boleta,
     },
 
     {
@@ -1160,6 +1172,389 @@ export const entradas = (handleEdit, handleDelete) => {
         <>
           <AiFillEdit onClick={() => handleEdit(e)} />
           <BsFillTrash2Fill onClick={() => handleDelete(e.id)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const registrarEntrada = (handleData, handleDelete, entrada) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row, index) => row.id,
+    },
+    {
+      id: "producto",
+      name: "Producto",
+      selector: (row) => row?.nombre,
+    },
+
+    {
+      id: "cantidad",
+      name: "Cantidad",
+      cell: (e) => (
+        <>
+          <input
+            type="number"
+            name="cantidad"
+            defaultValue={e.cantidad}
+            onChange={handleData}
+            style={{ width: "60px" }}
+          />
+        </>
+      ),
+    },
+    {
+      id: "unidad",
+      name: "Unidad",
+      selector: (row) => row?.unidad,
+    },
+
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          {/* <AiFillEdit onClick={() => handleEdit(e)} /> */}
+
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const productoEntrada = (handleEdit, handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row, index) => row.codigo,
+    },
+    {
+      id: "fecha",
+      name: "Fecha de entrada",
+      selector: (row) => row?.fecha,
+    },
+    {
+      id: "encargado",
+      name: "Encargado",
+      selector: (row) => row?.encargado,
+    },
+    {
+      id: "orden_compra",
+      name: "Orden de compra",
+      selector: (row) => row?.codigo_compra,
+    },
+    {
+      id: "factura",
+      name: "Código factura",
+      selector: (row) => row?.boleta,
+    },
+
+    {
+      id: "acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <AiFillEdit onClick={() => handleEdit(e)} />
+
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const productoSalida = (handleEdit, handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row, index) => row.codigo,
+    },
+    {
+      id: "fecha",
+      name: "Fecha de salida",
+      selector: (row) => row?.fecha,
+    },
+    {
+      id: "area",
+      name: "Área",
+      selector: (row) => row?.cantidad,
+    },
+    {
+      id: "personal",
+      name: "Personal",
+      selector: (row) => row?.unidad,
+    },
+    {
+      id: "motivo",
+      name: "Motivo",
+      selector: (row) => row?.motivo,
+    },
+
+    {
+      id: "acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <AiFillEdit onClick={() => handleEdit(e)} />
+
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const requerimientoTable = (handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row) => row.codigo_producto,
+    },
+    {
+      id: "descripcion",
+      name: "Decripción",
+      selector: (row) => row?.descripcion,
+    },
+    {
+      id: "cantidad",
+      name: "Cantidad",
+      selector: (row) => row?.cantidad,
+    },
+    {
+      id: "unidad",
+      name: "Unidad",
+      selector: (row) => row?.unidad,
+    },
+
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const requerimientoLayout = (handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      width: "80px",
+      selector: (row) => "000" + row.id,
+    },
+    {
+      id: "fecha_pedido",
+      name: "Fecha_pedido",
+      width: "120px",
+      selector: (row) => row?.fecha_pedido,
+    },
+    // {
+    //   id: "fecha_entrega",
+    //   name: "Fecha_entrega",
+    //   selector: (row) => row?.fecha_entrega,
+    // },
+    {
+      id: "solicitante",
+      name: "Solicitante",
+      selector: (row) => row?.solicitante,
+    },
+    {
+      id: "area",
+      name: "Área",
+      selector: (row) => row?.area,
+    },
+    {
+      id: "estado",
+      name: "Estado",
+      selector: (row) => row?.estado,
+    },
+
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <BsFillTrash2Fill
+            style={{ pointerEvents: e.estado === "Aprobado" ? "none" : "auto" }}
+            onClick={() => handleDelete(e)}
+          />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const pedidoLayout = (handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row) => "000" + row.id,
+    },
+    {
+      id: "fecha",
+      name: "Fecha",
+      selector: (row) => row?.fecha,
+    },
+    {
+      id: "estado",
+      name: "Estado",
+      selector: (row) => row?.estado,
+    },
+
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const transferenciaLayout = (
+  handleChange,
+  handleDelete,
+  transferencia
+) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row) => row.codigo,
+    },
+    {
+      id: "descripcion",
+      name: "Descripción",
+      selector: (row) => row?.nombre,
+    },
+
+    {
+      id: "stock",
+      name: "Stock",
+      selector: (row) => row?.stock,
+    },
+
+    {
+      id: "cantidad",
+      name: "Cantidad",
+      cell: (e, i) => (
+        <input
+          type="number"
+          min="0"
+          name="cantidad"
+          style={{width: "60px"}}
+          onChange={(a) => handleChange(a, i)}
+        />
+      ),
+    },
+
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const aprobacionLayout = (handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row) => "000" + row.id,
+    },
+    {
+      id: "fecha",
+      name: "Fecha",
+      selector: (row) => row?.fecha,
+    },
+    {
+      id: "estado",
+      name: "Estado",
+      selector: (row) => row?.estado,
+    },
+    {
+      id: "aprobacion1",
+      name: "Aprobación",
+      cell: (e) => <input type="checkbox" />,
+    },
+    {
+      id: "aprobacion2",
+      name: "Aprobación",
+      cell: (e) => <input type="checkbox" />,
+    },
+    {
+      id: "aprobacion3",
+      name: "Aprobación",
+      cell: (e) => <input type="checkbox" />,
+    },
+
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
+        </>
+      ),
+    },
+  ]);
+};
+
+export const transferenciaHistorial = (handleDelete) => {
+  let data;
+  return (data = [
+    {
+      id: "codigo",
+      name: "Código",
+      selector: (row) => "000" + row.id,
+    },
+    {
+      id: "fecha",
+      name: "Fecha",
+      selector: (row) => row?.fecha,
+    },
+    {
+      id: "Acciones",
+      name: "Acciones",
+      button: true,
+      cell: (e) => (
+        <>
+          <BsFillTrash2Fill onClick={() => handleDelete(e)} />
         </>
       ),
     },

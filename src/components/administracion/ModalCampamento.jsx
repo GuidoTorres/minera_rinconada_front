@@ -71,7 +71,7 @@ const ModalCampamento = ({ actualizarTabla }) => {
         <section>
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
-              <div>
+              <div className="inputs">
                 <label>Nombre</label>
                 <input
                   type="text"
@@ -80,7 +80,7 @@ const ModalCampamento = ({ actualizarTabla }) => {
                   onChange={handleData}
                 ></input>
               </div>
-              <div>
+              <div className="inputs">
                 <label>Dirección</label>
                 <input
                   type="text"

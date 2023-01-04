@@ -3,26 +3,20 @@
   overflow-x: hidden;
 }
 
-.App input {
+.App form input {
   border: 1px solid #d9d9d9;
   border-radius: 4px;
   color: #222222;
   padding: 4px 11px;
+  
 }
 
-.App label {
-  color: #222222;
-}
-.App select {
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 4px 6px;
-  border-radius: 6px;
-
+.App form label {
   color: #222222;
 }
 
-.App textarea {
+
+.App form textarea {
   border: 1px solid #d9d9d9;
   border-radius: 4px;
   padding: 4px 11px;

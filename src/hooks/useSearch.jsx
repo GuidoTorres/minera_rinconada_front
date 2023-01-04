@@ -33,9 +33,6 @@ const useSearch = (data) => {
     //   setResult(data);
   // }
 
-      console.log('====================================');
-      console.log(result);
-      console.log('====================================');
     
   }, [filterText, data]);
 

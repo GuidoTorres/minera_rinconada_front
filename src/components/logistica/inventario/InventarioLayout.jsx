@@ -10,6 +10,7 @@ import "../styles/inventarioLayout.css";
 import ModalHistorialEntradas from "./ModalHistorialEntradas";
 import { useState } from "react";
 import { alertaExito } from "../../../helpers/alertMessage";
+import ModalRequerimiento from "./ModalRequerimiento";
 
 const InventarioLayout = () => {
   const {
@@ -25,6 +26,8 @@ const InventarioLayout = () => {
     setModal1,
     getDataById,
     deleteData,
+    modal3,
+    setModal3,
   } = useContext(CrudContext);
 
   const [almacen_id, setAlmacen_id] = useState("");
@@ -72,6 +75,8 @@ const InventarioLayout = () => {
       <Header text={"Inventario"} user={"Usuario"} ruta={"/logistica"} />
 
       <div className="selector">
+        <label htmlFor="">Seleccione un almacén:</label>
+        <br />
         <select name="almacen" onChange={(e) => setAlmacen_id(e.target.value)}>
           <option value="-1">Seleccione</option>
           {data.map((item, i) => (
@@ -81,7 +86,16 @@ const InventarioLayout = () => {
           ))}
         </select>
       </div>
-      <Buscador abrirModal={setModal} abrirEntrada={setModal1} abrirSalida={setModal1}/>
+      {
+        almacen_id !== "" && almacen_id !== "-1" ?
+        <>
+      <Buscador
+        abrirModal={setModal}
+        abrirEntrada={setModal1}
+        abrirSalida={setModal1}
+        abrirRequerimiento={setModal3}
+
+      />
       <br />
       <br />
       <Tabla columns={columns} table={data1} />
@@ -92,7 +106,12 @@ const InventarioLayout = () => {
           id={almacen_id}
         />
       )}
-      {modal1 && <ModalHistorialEntradas id={almacen_id} />}
+      </>
+      : ""
+      }
+      
+      {modal1 && <ModalHistorialEntradas id={almacen_id} data={data1} />}
+      {modal3 && <ModalRequerimiento id={almacen_id} data={data1} />}
     </>
   );
 };

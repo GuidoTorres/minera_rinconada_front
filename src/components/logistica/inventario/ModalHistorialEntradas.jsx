@@ -4,15 +4,27 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CrudContext } from "../../../context/CrudContext";
-import { entradas } from "../../../data/dataTable";
+import {
+  entradas,
+  productoEntrada,
+  productoSalida,
+} from "../../../data/dataTable";
 import Tabla from "../../tabla/Tabla";
 import BuscadorEntradaSalida from "../BuscadorEntradaSalida";
 import "../styles/modalEntradaSalida.css";
 import ModalRegistrarEntradaSalida from "./ModalRegistrarEntradaSalida";
 
-const ModalHistorialEntradas = ({ id }) => {
-  const { setModal1, setModal2, modal2, tipo, setTipo, getDataById } =
-    useContext(CrudContext);
+const ModalHistorialEntradas = ({ id, data }) => {
+  const {
+    setModal1,
+    setModal2,
+    modal2,
+    tipo,
+    setTipo,
+    getDataById,
+
+    setDataToEdit,
+  } = useContext(CrudContext);
   const [historial, setHistorial] = useState();
   const closeModal = () => {
     setModal1(false);
@@ -20,17 +32,26 @@ const ModalHistorialEntradas = ({ id }) => {
   };
 
   const getHistorial = async () => {
-    const route = `${id}/${tipo}`;
-    const route1 = `${id}/${tipo}`;
-    const response = await getDataById(route, route1);
+    const route = `entrada`;
+    console.log(tipo);
+    const routeId = `${id}?tipo=${tipo}`;
+    // const route1 = `${tipo}/${id}`;
+    const response = await getDataById(route, routeId);
     setHistorial(response.data);
   };
-
   useEffect(() => {
     getHistorial();
   }, []);
 
-  const colums = entradas()
+  const handleEdit = (e) => {
+    setDataToEdit(e);
+    setModal2(true);
+  };
+
+  const handleDelete = (e) => {};
+
+  const colums1 = productoEntrada(handleEdit, handleDelete);
+  const colums2 = productoSalida(handleEdit, handleDelete);
 
   return (
     <>
@@ -46,11 +67,15 @@ const ModalHistorialEntradas = ({ id }) => {
             </section>
             <br />
             <br />
-            <Tabla columns={colums} table={historial}/>
+            {tipo === "entrada" ? (
+              <Tabla columns={colums1} table={historial} />
+            ) : (
+              <Tabla columns={colums2} table={historial} />
+            )}
           </div>
         </div>
 
-        {modal2 && <ModalRegistrarEntradaSalida />}
+        {modal2 && <ModalRegistrarEntradaSalida data={data} almacen_id={id} />}
       </div>
     </>
   );

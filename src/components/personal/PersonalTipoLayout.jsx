@@ -5,7 +5,7 @@ import OpcionUsuario from "./OpcionUsuario";
 const PersonalTipoLayout = () => {
   return (
     <div style={{height : "100%"}}>
-      <Header user={"Usuario"} />
+      <Header back={false} text={"Personal"} user={"Usuario"} />
       <OpcionUsuario/>
     </div>
   );

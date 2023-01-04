@@ -6,7 +6,7 @@ import Opciones from './Opciones'
 const MainLayout = () => {
   return (
     <>
-    <Header/>
+    <Header back={false} text={"Finanzas"}/>
     <Opciones/>
     </>
   )

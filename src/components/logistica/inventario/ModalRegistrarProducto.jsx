@@ -11,13 +11,26 @@ import DragAndDrop from "../../personal/DragAndDrop";
 import "../styles/modalProducto.css";
 
 const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
-  const { dataToEdit, setModal, createData, setDataToEdit, updateData } =
+  const { dataToEdit, setModal, createData, setDataToEdit, updateData, getData } =
     useContext(CrudContext);
+
+  const [unidad, setUnidad] = useState([])
   const [image, setImage] = useState("");
 
   const productoValue = productoValues(id);
 
   const [producto, setProducto] = useState(productoValue);
+
+  const getUnidad = async() => {
+    const route = "unidad"
+    const response = await getData(route)
+    setUnidad(response.data)
+  } 
+
+  useEffect(() => {
+
+    getUnidad()
+  },[])
 
   const closeModal = () => {
     setModal(false);
@@ -73,7 +86,7 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
           <AiOutlineClose onClick={closeModal} />
         </section>
         <section>
-          <form className="modal-body" onSubmit={handleSubmit}>
+          <form className="modal-body" >
             <div className="grid">
               <section>
                 <div>
@@ -142,12 +155,19 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
                 <div>
                   <div>
                     <label>Unidades</label>
-                    <input
-                      type="text"
-                      name="unidad"
-                      onChange={handleData}
-                      value={producto.unidad}
-                    ></input>
+
+                    <select name="unidad" onChange={handleData}
+                      value={producto.unidad}>
+
+                      <option value="-1">Seleccione</option>
+                      {
+
+                        unidad.map(item => 
+                          
+                            <option value={item.nombre}>{item.nombre}</option>
+                          )
+                      }
+                      </select>
                   </div>
                   <div>
                     <label>Precio</label>
@@ -165,8 +185,9 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
                     <input
                       type="text"
                       name="fecha"
+                      disabled
                       onChange={handleData}
-                      value={producto.costo_total}
+                      value={parseInt(producto.stock) * parseInt(producto.precio) || ""}
                     ></input>
                   </div>
 
@@ -203,10 +224,10 @@ const ModalRegistrarProducto = ({ actualizarTabla, id }) => {
                 </div>
               </section>
             </div>
-            <div className="button-container">
-              <button>Guardar</button>
-            </div>
           </form>
+            <div className="button-container">
+              <button onClick={handleSubmit}>Registrar</button>
+            </div>
         </section>
       </div>
     </div>

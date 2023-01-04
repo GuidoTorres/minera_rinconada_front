@@ -8,7 +8,7 @@ const Opciones = () => {
     <TipoUsuario text={"Almacenes"} path={"/logistica/almacen"}/>
     <TipoUsuario text={"Requerimientos"} path={"/logistica/requerimiento"}/>
     <TipoUsuario text={"Aprobaciones"} path={"/logistica/aprobacion"}/>
-    <TipoUsuario text={"Transferencia de alamacenes"} path={"/logistica/transferencia"}/>
+    <TipoUsuario text={"Transferencia "} path={"/logistica/transferencia"}/>
 
 </div>
   )

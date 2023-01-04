@@ -19,7 +19,7 @@
 .modal-registrar-producto .modal-container {
   width: 800px;
 
-  height: 510px;
+  height: 480px;
   background-color: white;
   position: absolute;
   z-index: 2;
@@ -33,9 +33,6 @@
   gap: 5px;
 }
 
-/* .modal-registrar-producto .modal-container .grid .text {
-  height: 30px;
-} */
 .modal-registrar-producto .modal-container .grid section:nth-child(1) {
   display: grid;
   grid-template-columns: 1fr;
@@ -46,6 +43,16 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5px;
+}
+
+.modal-registrar-producto .modal-container .grid section div label {
+  margin-top: 7px;
+}
+
+.modal-registrar-producto .modal-container .grid section div select {
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+  padding: 3px;
 }
 
 .modal-registrar-producto .modal-container .grid section:nth-child(2) {
@@ -63,7 +70,6 @@
   align-items: center;
   border: 1px solid lightgray;
   border-radius: 5px;
-  margin-top: -10px;
 }
 .modal-registrar-producto
   .modal-container
@@ -74,6 +80,10 @@
   width: 100%;
   padding-left: 8px;
   padding-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -10px;
 }
 .modal-registrar-producto
   .modal-container
@@ -103,14 +113,21 @@
   margin-top: 25px;
 }
 
-.modal-registrar-producto .modal-container .button-container {
+.modal-registrar-producto .modal-container section .button-container {
   width: 100%;
   margin-top: 15px;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  padding-right: 20px;
 }
 
-.modal-registrar-producto .modal-container .button-container button {
-  width: 20%;
+.modal-registrar-producto .modal-container section .button-container button {
+  width: 100px;
+  height: 25px;
+  background-color: black;
+  color: white;
+  border-radius: 6px;
+
+  border: none;
 }

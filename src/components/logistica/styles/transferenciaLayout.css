@@ -1,0 +1,50 @@
+.transferencia-almacen {
+  padding-left: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.transferencia-almacen span{
+  color: black;
+}
+
+.transferencia-almacen .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+
+}
+
+.transferencia-almacen .container div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  width: 150px;
+}
+
+.transferencia-almacen .container div select {
+  height: 25px;
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+}
+.transferencia-almacen .container div input {
+  height: 25px;
+}
+
+.button-transferir{
+
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 30px;
+}
+
+.button-transferir button{
+
+  height: 30px;
+  width: 100px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}

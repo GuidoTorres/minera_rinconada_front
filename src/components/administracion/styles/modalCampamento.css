@@ -39,7 +39,7 @@
   flex-direction: column;
 }
 
-.modal-campamento .modal-body div {
+.modal-body .inputs {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -55,7 +55,7 @@
   height: 30px;
 }
 
-.modal-campamento .modal-body button {
+/* .modal-campamento .modal-body div button {
   margin-top: 10px;
   border: 1px solid white;
   background-color: black;
@@ -63,9 +63,9 @@
   border-radius: 6px;
   height: 35px;
   font-size: 17px;
-}
+} */
 
-.modal-campamento .modal-body button:hover {
+.modal-campamento .modal-body div button:hover {
   background-color: white;
   color: black;
   border: 1px solid black;

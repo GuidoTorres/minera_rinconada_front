@@ -6,6 +6,7 @@ import { CrudContext } from "../../../context/CrudContext";
 import { almacenValues } from "../../../data/initalValues";
 import { AiOutlineClose } from "react-icons/ai";
 import { alertaExito } from "../../../helpers/alertMessage";
+import "../styles/modalRegistrarAlmacen.css"
 
 const ModalRegistrarAlmacen = ({ actualizarTabla }) => {
   const [almacen, setAlmacen] = useState(almacenValues);
@@ -53,14 +54,14 @@ const ModalRegistrarAlmacen = ({ actualizarTabla }) => {
   };
 
   return (
-    <div className="modal-usuario">
+    <div className="modal-almacen">
       <div className="overlay"></div>
       <div className="modal-container">
         <section className="modal-header">
-          {dataToEdit ? "Editar almacen" : "Registrar almacen"}
+          {dataToEdit ? "Editar almacén" : "Registrar almacén"}
           <AiOutlineClose onClick={closeModal} />
         </section>
-        <section>
+        <section className="almacen-form">
           <form className="modal-body" onSubmit={handleSubmit}>
             <section>
               <div>
@@ -90,7 +91,7 @@ const ModalRegistrarAlmacen = ({ actualizarTabla }) => {
                   value={almacen.descripcion}
                 ></input>
               </div>
-              <div>
+              <div className="button-container">
                 <button>{dataToEdit ? "Editar" : "Registrar"}</button>
               </div>
             </section>

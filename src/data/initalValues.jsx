@@ -207,7 +207,7 @@ export const productoValues = (id) => {
   });
 };
 
-export const entradaSalidaValues = (id) => {
+export const entradaSalidaValues = (tipo, id) => {
   let data;
 
   return (data = {
@@ -222,6 +222,28 @@ export const entradaSalidaValues = (id) => {
     categoria: "",
     cantidad: "",
     unidad: "",
-    tipo: "",
+    tipo: tipo,
+    producto: "",
+    almacen_id: id,
+  });
+};
+
+export const requerimientoValues = (id) => {
+  let data;
+
+  return (data = {
+    codigo: "000" +(parseInt(id)+1),
+    fecha_pedido: "",
+    fecha_entrega: "",
+    solicitante: "",
+    area: "",
+    celular: "",
+    proyecto: "",
+    producto_id: "",
+    cantidad: "",
+    unidad: "",
+    estado: "",
+    producto: "",
+    personal: ""
   });
 };
