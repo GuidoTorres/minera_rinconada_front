@@ -30,14 +30,12 @@ const ModalRequerimiento = ({ id, data }) => {
   const [key, setKey] = useState("");
   const [agregar, setAgregar] = useState("");
   const [area, setArea] = useState([]);
+  const [idRequerimiento, setIdRequerimiento] = useState("");
+
   const closeModal = () => {
     setModal3(false);
     setDataToEdit(null);
   };
-
-  console.log('====================================');
-  console.log(requerimiento);
-  console.log('====================================');
 
   const getRequerimientoCodigo = async () => {
     const route = "requerimiento";
@@ -49,8 +47,6 @@ const ModalRequerimiento = ({ id, data }) => {
     setCodRequerimiento(response.data[response.data.length - 1].id);
     setArea(response1.data);
   };
-
-  console.log(codRequerimiento);
 
   useEffect(() => {
     getRequerimientoCodigo();
@@ -107,7 +103,13 @@ const ModalRequerimiento = ({ id, data }) => {
     } else {
       setSearch([]);
     }
+
+    if (idRequerimiento !== "") {
+      console.log((newJson[idRequerimiento].cantidad));
+      newJson[idRequerimiento].cantidad = requerimiento.cantidad;
+    }
   }, [text, requerimiento, key, agregar]);
+
 
   useEffect(() => {
     if (newJson.length !== 0) {
@@ -116,11 +118,15 @@ const ModalRequerimiento = ({ id, data }) => {
     }
   }, [newJson]);
 
-  const handleData = (e) => {
+  const handleData = (e, i) => {
     const { name, value } = e.target;
     setRequerimiento((values) => {
       return { ...values, [name]: value };
     });
+
+    if (i !== undefined) {
+      setIdRequerimiento(i);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -142,13 +148,14 @@ const ModalRequerimiento = ({ id, data }) => {
     }
   };
 
+
   const handleDelete = (e) => {
     setNewJson((current) =>
       current.filter((item) => item.producto_id !== e.producto_id)
     );
   };
 
-  const columns = requerimientoTable(handleDelete);
+  const columns = requerimientoTable(handleData, handleDelete);
 
   return (
     <div className="modal-requerimientos">
@@ -211,8 +218,10 @@ const ModalRequerimiento = ({ id, data }) => {
                   onChange={handleData}
                 >
                   <option value="-1">Seleccione</option>
-                  {area.map((item) => (
-                    <option value={item.nombre}>{item.nombre}</option>
+                  {area.map((item, i) => (
+                    <option key={i} value={item.nombre}>
+                      {item.nombre}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -251,7 +260,7 @@ const ModalRequerimiento = ({ id, data }) => {
                 ></input>
               </div>
 
-              <div>
+              {/* <div>
                 <label>Cantidad</label>
                 <input
                   value={requerimiento.cantidad}
@@ -259,7 +268,7 @@ const ModalRequerimiento = ({ id, data }) => {
                   name="cantidad"
                   onChange={handleData}
                 ></input>
-              </div>
+              </div> */}
               {/* <div>
                 <label>Unidades</label>
                 <input

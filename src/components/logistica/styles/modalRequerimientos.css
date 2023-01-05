@@ -161,16 +161,21 @@
   
   }
   
-  .modal-requerimientos .modal-container .modal-body .button-container {
+  .modal-requerimientos .modal-container  .button-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    padding-right: 20px;
   
   }
   
-  .modal-requerimientos .modal-container .modal-body .button-container button {
+  .modal-requerimientos .modal-container  .button-container button {
     height: 32px;
     width: 100px;
+    background-color: black;
+    border: none;
+    border-radius: 6px;
+    color: white;
   
   }
   

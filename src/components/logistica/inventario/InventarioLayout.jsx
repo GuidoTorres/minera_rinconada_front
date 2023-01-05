@@ -74,7 +74,7 @@ const InventarioLayout = () => {
     <>
       <Header text={"Inventario"} user={"Usuario"} ruta={"/logistica"} />
 
-      <div className="selector">
+      <div className="selector" style={{ paddingLeft:"30px"}}>
         <label htmlFor="">Seleccione un almacén:</label>
         <br />
         <select name="almacen" onChange={(e) => setAlmacen_id(e.target.value)}>

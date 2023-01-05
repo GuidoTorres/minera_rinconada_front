@@ -75,7 +75,7 @@ const ModalHistorialEntradas = ({ id, data }) => {
           </div>
         </div>
 
-        {modal2 && <ModalRegistrarEntradaSalida data={data} almacen_id={id} />}
+        {modal2 && <ModalRegistrarEntradaSalida data={data} almacen_id={id} actualizarTabla={getHistorial}/>}
       </div>
     </>
   );

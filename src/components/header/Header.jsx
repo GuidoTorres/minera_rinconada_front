@@ -9,26 +9,19 @@ const Header = ({ back, text, user, ruta }) => {
 
   return (
     <div className="header-container">
-      <div className="header-role">
-        {text && back !== false ? (
-          <Link
-            className="link"
-            to={ruta}
-            // onClick={(e) => {
-            //   setRender(text);
-            // }}
-          >
-            <AiOutlineArrowLeft
-              // onClick={(e) => setRender(null)}
-              className="back"
-            />
-          </Link>
-        ) : null}
-        <label htmlFor="">{text}</label>
-      </div>
-      <div className="header-user">
-        <label htmlFor="">{user}</label>
-        <div></div>
+      <div className="header-div">
+        <div className="header-role">
+          {text && back !== false ? (
+            <Link className="link" to={ruta}>
+              <AiOutlineArrowLeft className="back" />
+            </Link>
+          ) : null}
+          <label htmlFor="">{text}</label>
+        </div>
+        <div className="header-user">
+          <label htmlFor="">{user}</label>
+          <div></div>
+        </div>
       </div>
     </div>
   );

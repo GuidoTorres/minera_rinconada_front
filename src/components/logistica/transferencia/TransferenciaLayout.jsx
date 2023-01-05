@@ -27,10 +27,11 @@ const TransferenciaLayout = () => {
       <Header text={"Transferencias"} user={"Usuario"} ruta={"/logistica"} />
 
       <br />
-      <br />
 
       <BuscadorEntradaSalida abrirModal={setModal}/>
 
+      <br />
+      <br />
       <TablaTransferencia columns={columns} table={data} />
 
       {modal && <ModalTransferencia/>}

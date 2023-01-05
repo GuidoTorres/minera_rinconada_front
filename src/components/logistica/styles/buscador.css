@@ -2,12 +2,15 @@
   display: flex;
   justify-content: space-between;
   padding: 4px 20px;
+  padding-left: 30px;
 }
 
 .buscador-inventario .buscador {
   border: 1px solid lightgray;
   border-radius: 6px;
   width: 250px;
+  background-color: white;
+  padding: 1px;
 }
 .buscador-inventario .buscador span {
   display: flex;
@@ -16,6 +19,7 @@
   border: none;
   width: 98%;
   height: 25px;
+  background-color: white;
 }
 
 .buscador-inventario .buscador span input {

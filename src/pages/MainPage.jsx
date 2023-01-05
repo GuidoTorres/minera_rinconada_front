@@ -33,6 +33,7 @@ import AlmacenLayout from "../components/logistica/almacen/AlmacenLayout";
 import RequerimientoLayout from "../components/logistica/requerimientos/RequerimientoLayout";
 import AprobacionLayout from "../components/logistica/aprobaciones/AprobacionLayout";
 import TransferenciaLayout from "../components/logistica/transferencia/TransferenciaLayout";
+import Header from "../components/header/Header";
 
 const MainPage = () => {
   return (
@@ -43,6 +44,7 @@ const MainPage = () => {
             <Sidebar />
           </section>
           <section className="main-content">
+     
             <CrudProvider>
               <Routes>
                 <Route path="administracion">

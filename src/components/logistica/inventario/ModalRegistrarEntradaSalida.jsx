@@ -15,7 +15,7 @@ import Tabla from "../../tabla/Tabla";
 import "../styles/modalRegistrarEntrada.css";
 import ModalRegistrarProducto from "./ModalRegistrarProducto";
 
-const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
+const ModalRegistrarEntradaSalida = ({ data, almacen_id, actualizarTabla }) => {
   const {
     dataToEdit,
     setModal2,
@@ -36,6 +36,7 @@ const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
   const [agregar, setAgregar] = useState("");
   const [area, setArea] = useState([]);
   const [entradaId, setEntradaId] = useState([]);
+  const [idCantidad, setIdCantidad] = useState("");
 
   const getArea = async () => {
     const route = "area";
@@ -57,33 +58,36 @@ const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
   useEffect(() => {
     if (dataToEdit !== null) {
       setEntrada(dataToEdit);
+      const filterData = [dataToEdit]
+        ?.map((item) =>
+          item.producto_entrada_salidas.map((data) => {
+            return {
+              entrada_id: item.id,
+              codigo: item.codigo,
+              motivo: item.motivo,
+              fecha: item.fecha,
+              encargado: item.encargado,
+              codigo_compra: item.codigo_compra,
+              tipo: item.tipo,
+              boleta: item.boleta,
+              codigo_requerimiento: item.codigo_requerimiento,
+              id: "000" + data.producto_id,
+              nombre: data.producto.nombre,
+              producto_id: data.producto_id,
+              categoria: data.categoria,
+              cantidad: data.cantidad,
+              unidad: data.producto.unidad,
+              almacen_id: almacen_id,
+            };
+          })
+        )
+        .flat();
 
-      const product = dataToEdit?.producto_entrada_salidas.map(
-        (item) => {
-          return{
-            cantidad: item.cantidad,
-            almacen_id: item.producto.almacen_id,
-            categoria: item.producto.categoria,
-            codigo: item.producto.codigo,
-            codigo_barras: item.producto.codigo_barras,
-            descripcion: item.producto.descripcion,
-            fecha:item.producto.fecha,
-            id: item.producto.id,
-            nombre: item.producto.nombre,
-            stock: item.producto.stock,
-            unidad: item.producto.unidad
-
-
-
-          }
-        }
-      );
-      setNewJson(product);
+      setNewJson(filterData);
     } else {
       setEntrada(initialValues);
     }
   }, [dataToEdit]);
-  console.log(newJson);
 
   useEffect(() => {
     if (text !== "") {
@@ -168,6 +172,10 @@ const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
     } else {
       setSearch([]);
     }
+
+    if (idCantidad !== "") {
+      newJson[idCantidad].cantidad = entrada.cantidad;
+    }
   }, [text, entrada, key, agregar]);
 
   useEffect(() => {
@@ -197,11 +205,15 @@ const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
     }
   };
 
-  const handleData = (e) => {
+  const handleData = (e, i) => {
     const { name, value } = e.target;
     setEntrada((values) => {
       return { ...values, [name]: value };
     });
+
+    if (i !== undefined) {
+      setIdCantidad(i);
+    }
   };
 
   const handleDelete = (e) => {
@@ -215,7 +227,12 @@ const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
       );
     }
   };
-  const columns = registrarEntrada(handleData, handleDelete, entrada.cantidad);
+  const columns = registrarEntrada(
+    handleData,
+    handleDelete,
+    entrada.cantidad,
+    dataToEdit
+  );
 
   return (
     <div className="modal-producto">
@@ -372,7 +389,7 @@ const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
               </div>
 
               <div className="productos">
-                <div>
+                {/* <div>
                   <label>Categoría</label>
                   <input
                     type="text"
@@ -380,7 +397,7 @@ const ModalRegistrarEntradaSalida = ({ data, almacen_id }) => {
                     onChange={handleData}
                     value={entrada.categoria}
                   ></input>
-                </div>
+                </div> */}
                 <div className="agregar">
                   <button type="button" onClick={() => setAgregar("agregar")}>
                     <AiOutlineCheck />

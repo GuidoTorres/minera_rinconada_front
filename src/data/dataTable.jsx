@@ -1178,7 +1178,12 @@ export const entradas = (handleEdit, handleDelete) => {
   ]);
 };
 
-export const registrarEntrada = (handleData, handleDelete, entrada) => {
+export const registrarEntrada = (
+  handleData,
+  handleDelete,
+  entrada,
+  dataToEdit
+) => {
   let data;
   return (data = [
     {
@@ -1195,13 +1200,13 @@ export const registrarEntrada = (handleData, handleDelete, entrada) => {
     {
       id: "cantidad",
       name: "Cantidad",
-      cell: (e) => (
+      cell: (e,i) => (
         <>
           <input
             type="number"
             name="cantidad"
-            defaultValue={e.cantidad}
-            onChange={handleData}
+            defaultValue={dataToEdit !== null ? e.cantidad : ""}
+            onChange={a => handleData(a,i)}
             style={{ width: "60px" }}
           />
         </>
@@ -1316,7 +1321,7 @@ export const productoSalida = (handleEdit, handleDelete) => {
   ]);
 };
 
-export const requerimientoTable = (handleDelete) => {
+export const requerimientoTable = (handleData,handleDelete) => {
   let data;
   return (data = [
     {
@@ -1332,7 +1337,16 @@ export const requerimientoTable = (handleDelete) => {
     {
       id: "cantidad",
       name: "Cantidad",
-      selector: (row) => row?.cantidad,
+      cell: (e,i) => (
+        <>
+          <input
+            type="number"
+            name="cantidad"
+            onChange={a => handleData(a,i)}
+            style={{ width: "60px" }}
+          />
+        </>
+      ),
     },
     {
       id: "unidad",
@@ -1469,7 +1483,7 @@ export const transferenciaLayout = (
           type="number"
           min="0"
           name="cantidad"
-          style={{width: "60px"}}
+          style={{ width: "60px" }}
           onChange={(a) => handleChange(a, i)}
         />
       ),
@@ -1488,7 +1502,7 @@ export const transferenciaLayout = (
   ]);
 };
 
-export const aprobacionLayout = (handleDelete) => {
+export const aprobacionLayout = (updateAprobacion) => {
   let data;
   return (data = [
     {
@@ -1504,22 +1518,22 @@ export const aprobacionLayout = (handleDelete) => {
     {
       id: "estado",
       name: "Estado",
-      selector: (row) => row?.estado,
+      selector: (row) => row?.estado === "1" ? "Aprobado": "Pendiente",
     },
     {
       id: "aprobacion1",
       name: "Aprobación",
-      cell: (e) => <input type="checkbox" />,
+      cell: (e) => <input type="checkbox" name="aprobacion1" checked={e.aprobacion1} onChange={a => updateAprobacion(a,e)}/>,
     },
     {
       id: "aprobacion2",
       name: "Aprobación",
-      cell: (e) => <input type="checkbox" />,
+      cell: (e) => <input type="checkbox" name="aprobacion2" checked={e.aprobacion2} onChange={a => updateAprobacion(a,e)} />,
     },
     {
       id: "aprobacion3",
       name: "Aprobación",
-      cell: (e) => <input type="checkbox" />,
+      cell: (e) => <input type="checkbox" name="aprobacion3" checked={e.aprobacion3} onChange={a => updateAprobacion(a,e)} />,
     },
 
     {
