@@ -24,8 +24,8 @@ import ListaAsistencia from "../components/planillas/asistencia/ListaAsistencia"
 import SocioLayout from "../components/personal/socios/SocioLayout";
 import Finanzas from "../components/finanzas/ingresosEgresos/FinanzasLayout";
 import MainLayoutInventario from "../components/logistica/MainLayout";
-import Proveedores from "../components/Finanzas/proveedor/Proveedores";
-import Sucursales from "../components/Finanzas/sucursal/Sucursales";
+import Proveedores from "../components/finanzas/proveedor/Proveedores";
+import Sucursales from "../components/finanzas/sucursal/Sucursales";
 import InventarioLayout from "../components/logistica/inventario/InventarioLayout";
 import AlmacenLayout from "../components/logistica/almacen/AlmacenLayout";
 import RequerimientoLayout from "../components/logistica/requerimientos/RequerimientoLayout";
