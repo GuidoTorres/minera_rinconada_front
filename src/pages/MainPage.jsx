@@ -22,7 +22,7 @@ import IndexLayout from "../components/planillas/IndexLayout";
 import ControlPlanilla from "../components/planillas/control/ControlPlanilla";
 import ListaAsistencia from "../components/planillas/asistencia/ListaAsistencia";
 import SocioLayout from "../components/personal/socios/SocioLayout";
-import Finanzas from "../components/Finanzas/ingresos-egresos/FinanzasLayout";
+import Finanzas from "../components/finanzas/ingresos-egresos/FinanzasLayout";
 import MainLayoutInventario from "../components/logistica/MainLayout";
 import Proveedores from "../components/Finanzas/proveedor/Proveedores";
 import Sucursales from "../components/Finanzas/sucursal/Sucursales";
